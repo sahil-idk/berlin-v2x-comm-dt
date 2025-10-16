@@ -1,0 +1,37 @@
+DETAILED VEHICLE SIMULATION ACCURACY ANALYSIS
+==================================================
+
+Approach: True vehicle movement with moveToXY
+Calibration factor: 0.607
+Total datapoints: 10
+Successful movements: 10/10 (100.0%)
+
+THEORETICAL ACCURACY:
+  Mean error: 0.07%
+  Median error: 0.07%
+  Min error: 0.07%
+  Max error: 0.07%
+
+ACTUAL VEHICLE SIMULATION ACCURACY:
+  Mean error: 1274.00%
+  Median error: 12.50%
+  Min error: 0.07%
+  Max error: 12653.48%
+
+ACCURACY DISTRIBUTION:
+  Excellent (<=5%): 2/10 (20.0%)
+  Good (5-15%): 5/10 (50.0%)
+  Acceptable (15-30%): 2/10 (20.0%)
+  Poor (>30%): 1/10 (10.0%)
+
+DETAILED STEP-BY-STEP RESULTS:
+Step 0: Theoretical: 0.1%, Actual: 12653.5%, Expected: 30.6m, Actual: 3906.6m
+Step 1: Theoretical: 0.1%, Actual: 9.4%, Expected: 28.0m, Actual: 30.6m
+Step 2: Theoretical: 0.1%, Actual: 12.5%, Expected: 24.9m, Actual: 28.0m
+Step 3: Theoretical: 0.1%, Actual: 13.9%, Expected: 21.8m, Actual: 24.8m
+Step 4: Theoretical: 0.1%, Actual: 16.2%, Expected: 18.8m, Actual: 21.8m
+Step 5: Theoretical: 0.1%, Actual: 16.3%, Expected: 16.1m, Actual: 18.7m
+Step 6: Theoretical: 0.1%, Actual: 12.0%, Expected: 14.4m, Actual: 16.1m
+Step 7: Theoretical: 0.1%, Actual: 5.7%, Expected: 13.6m, Actual: 14.4m
+Step 8: Theoretical: 0.1%, Actual: 0.1%, Expected: 13.6m, Actual: 13.6m
+Step 9: Theoretical: 0.1%, Actual: 0.5%, Expected: 13.5m, Actual: 13.6m

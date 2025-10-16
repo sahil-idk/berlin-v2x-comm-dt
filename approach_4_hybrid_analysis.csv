@@ -1,0 +1,4 @@
+waypoint,step,actual_distance_m,simulated_distance_m,distance_error_m,distance_error_pct,distance_accuracy_pct,actual_speed_src_kmh,simulated_speed_src_kmh,speed_error_src_kmh,actual_speed_dst_kmh,simulated_speed_dst_kmh,speed_error_dst_kmh,calibration_enabled,realistic_speed_enabled,approach,gps_corrections_source,gps_corrections_dest,calibration_zone,calibration_factor_used
+0,2,23.06607609797377,94.8171461305536,71.75107003257983,311.0675163292415,0.0,37.7808,37.7808,0.0,39.818000000000005,0.0,-39.818000000000005,True,True,hybrid,1,1,zone_1,0.58
+2,4,22.375356066218483,6.086537737326534,-16.28881832889195,-72.7980295852553,27.201970414744693,40.744,37.7808,-2.9632000000000005,38.1512,37.7808,-0.3704000000000036,True,True,hybrid,2,1,zone_1,0.58
+1,5,23.06607609797377,25.609632666210768,2.5435565682369976,11.027261669618941,88.97273833038106,39.818000000000005,39.818000000000005,0.0,37.7808,37.7808,0.0,True,True,hybrid,2,2,zone_1,0.58

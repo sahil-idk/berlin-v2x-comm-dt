@@ -1,0 +1,49 @@
+{
+  "simulation_settings": {
+    "num_waypoints": 50,
+    "calibration_enabled": true,
+    "calibration_factor": 0.607,
+    "realistic_speed_enabled": true,
+    "total_steps": 1039
+  },
+  "distance_accuracy": {
+    "mean_accuracy_pct": 78.25264447485579,
+    "median_accuracy_pct": 79.42054276273595,
+    "min_accuracy_pct": 55.88488299941024,
+    "max_accuracy_pct": 98.86571264905993,
+    "mean_error_m": -4.22142040734839,
+    "mean_absolute_error_m": 4.22142040734839,
+    "rmse_m": 4.75476363061505,
+    "std_dev_m": 2.199495504438876
+  },
+  "speed_accuracy": {
+    "source_vehicle": {
+      "mean_error_kmh": -0.06499999999999988,
+      "mean_absolute_error_kmh": 1.3886166666666657,
+      "rmse_kmh": 1.6721564201154533,
+      "std_dev_kmh": 1.6796637538194163
+    },
+    "destination_vehicle": {
+      "mean_error_kmh": 0.026991666666666598,
+      "mean_absolute_error_kmh": 1.4217583333333323,
+      "rmse_kmh": 1.7081805895942797,
+      "std_dev_kmh": 1.7169330923828372
+    }
+  },
+  "waypoint_distribution": {
+    "high_accuracy_90_plus": 8,
+    "medium_accuracy_70_89": 75,
+    "low_accuracy_below_70": 13,
+    "total_waypoints_analyzed": 96
+  },
+  "best_waypoint": {
+    "waypoint": 49,
+    "accuracy_pct": 98.86571264905993,
+    "distance_error_m": -0.17441087431061675
+  },
+  "worst_waypoint": {
+    "waypoint": 1,
+    "accuracy_pct": 55.88488299941024,
+    "distance_error_m": -10.175626458066198
+  }
+}

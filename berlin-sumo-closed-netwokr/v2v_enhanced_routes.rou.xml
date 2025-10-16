@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <!-- Vehicle Types with 3D visualization -->
+    <vType id="v2v_source_type" accel="2.6" decel="4.5" sigma="0.5" length="4.5" width="1.8" height="1.5" minGap="2.5" maxSpeed="15" guiShape="passenger" color="0,0,255"/>
+    <vType id="v2v_dest_type" accel="2.6" decel="4.5" sigma="0.5" length="4.5" width="1.8" height="1.5" minGap="2.5" maxSpeed="15" guiShape="passenger" color="255,0,0"/>
+
+    <!-- Routes through GPS waypoints -->
+    <route id="source_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+    <route id="dest_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+
+    <!-- Vehicles -->
+    <vehicle id="v2v_source" type="v2v_source_type" route="source_route" depart="0" departLane="best" departSpeed="0"/>
+    <vehicle id="v2v_dest" type="v2v_dest_type" route="dest_route" depart="0" departLane="best" departSpeed="0"/>
+</routes>

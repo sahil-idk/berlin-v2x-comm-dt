@@ -1,0 +1,15 @@
+ENHANCED DYNAMIC V2V VALIDATION SUMMARY
+==========================================
+
+Using SAME calibration approach as static validation
+Calibration factor: 0.607
+Total validate ions: 4
+Success rate: 100.0%
+
+ACCURACY STATISTICS
+--------------------
+Mean error: 0.02m (0.1%)
+Median error: 0.02m (0.1%)
+Error std dev: 0.00m
+Min error: 0.02m
+Max error: 0.02m

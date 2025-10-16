@@ -1,0 +1,437 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Berlin V2X - Cellular V2I Communication Visualization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html,body { height:100%; margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; }
+    #leftPanel {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 400px;
+      background: #fff; z-index: 1100; overflow:auto; border-right:1px solid #e6e6e6;
+      padding: 12px 12px 80px 12px; box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+    }
+    #map { position:absolute; left:400px; right:0; top:0; bottom:0; }
+    h2 { margin: 6px 0 10px 0; font-size: 16px; }
+    .controls { position: absolute; top: 8px; left: 420px; z-index: 1200; background: rgba(255,255,255,0.95); padding:8px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+    .kv { display:flex; justify-content:space-between; padding:6px 8px; border-bottom:1px solid #f3f3f3; align-items:center; }
+    .kv .k { color:#333; font-weight:600; }
+    .kv .v { color:#222; text-align:right; max-width:160px; word-break:break-word; }
+    .groupTitle { font-weight:700; margin-top:8px; margin-bottom:6px; color:#333; }
+    .small { font-size:12px; color:#666; }
+    .dropdown { width:100%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:8px; }
+    .vehicle-marker { background-color:#4ecdc4; }
+    .cell-tower { background-color:#ff6b6b; }
+    .signal-strength { font-weight:bold; }
+    .signal-excellent { color:#28a745; }
+    .signal-good { color:#ffc107; }
+    .signal-poor { color:#dc3545; }
+    .location-info { background:#e3f2fd; border:1px solid #2196f3; border-radius:4px; padding:8px; margin:8px 0; color:#1976d2; font-size:13px; }
+    .communication-status { background:#f3e5f5; border:1px solid #9c27b0; border-radius:4px; padding:8px; margin:8px 0; color:#7b1fa2; font-size:13px; }
+    .weather-info { background:#e8f5e8; border:1px solid #4caf50; border-radius:4px; padding:8px; margin:8px 0; color:#2e7d32; font-size:13px; }
+  </style>
+</head>
+<body>
+
+<div id="leftPanel">
+  <h2>V2I Communication Parameters</h2>
+  
+  <div class="small">Cellular Dataframe: V2I Communication Visualization</div>
+  
+  <div style="margin-top:10px;">
+    <label>Vehicle:</label>
+    <select id="vehicleSelector" class="dropdown">
+      <option value="pc1">PC1</option>
+      <option value="pc2" selected>PC2</option>
+      <option value="pc3">PC3</option>
+      <option value="pc4">PC4</option>
+    </select>
+  </div>
+  
+  <div style="margin-top:10px;">
+    <label>Data Type:</label>
+    <select id="dataTypeSelector" class="dropdown">
+      <option value="all">All Data</option>
+      <option value="network">Network Performance</option>
+      <option value="environmental">Environmental Data</option>
+      <option value="vehicle">Vehicle Telemetry</option>
+    </select>
+  </div>
+
+  <div id="v2iStatus" style="margin-top:12px;"></div>
+  <div id="locationInfo" style="margin-top:12px;"></div>
+  <div id="weatherInfo" style="margin-top:12px;"></div>
+
+  <div style="margin-top:12px;">
+    <div class="groupTitle">Network Performance</div>
+    <div id="networkGroup"></div>
+
+    <div class="groupTitle">Vehicle Telemetry</div>
+    <div id="telemetryGroup"></div>
+
+    <div class="groupTitle">Environmental Data</div>
+    <div id="environmentalGroup"></div>
+  </div>
+
+  <div style="position: absolute; left:12px; right:12px; bottom:12px;">
+    <div class="small muted">V2I Communication: Vehicle-to-Infrastructure via cellular network</div>
+    <div class="small muted">Blue marker: Vehicle position with cellular connectivity</div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div class="controls" id="controls">
+  <button id="btnPlay">Play</button>
+  <button id="btnPause">Pause</button>
+  <label style="margin-left:8px">Speed: <input id="speed" type="range" min="1" max="1000" value="120"></label>
+  <button id="start" style="margin-left:8px">Start</button>
+  <button id="end">End</button>
+  <div id="info" style="margin-top:6px; font-size:13px;"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+/*
+  cellular_v2i_visualization.html
+  - Visualizes V2I communication between vehicles and cellular infrastructure
+  - Shows real-time network performance parameters as vehicles move
+  - Displays environmental and vehicle telemetry data
+  - Filters data by vehicle and data type
+*/
+
+// V2I communication parameters
+const networkParams = ['ping_ms', 'datarate', 'jitter'];
+const telemetryParams = ['Altitude', 'speed_kmh', 'COG'];
+const environmentalParams = ['temperature', 'humidity', 'precipIntensity', 'precipProbability', 'apparentTemperature', 'dewPoint'];
+
+const map = L.map('map').setView([52.52,13.405], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+
+// Vehicle trajectory polyline
+const trajectory = L.polyline([], {color:'#4ecdc4', weight:4, opacity:0.9}).addTo(map);
+
+// Vehicle marker
+const vehicleMarker = L.circleMarker([0,0], {radius:8, fillColor:'#4ecdc4', color:'#fff', weight:2}).addTo(map);
+
+// Add label for vehicle
+const vehicleLabel = L.marker([0,0], {icon: L.divIcon({html: '<div style="background:rgba(78,205,196,0.8);color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:bold;">V</div>', iconSize:[20,20], className:'custom-div-icon'})}).addTo(map);
+
+let allData = [];
+let filteredData = [];
+let idx = 0;
+let timer = null;
+let running = false;
+
+const networkGroup = document.getElementById('networkGroup');
+const telemetryGroup = document.getElementById('telemetryGroup');
+const environmentalGroup = document.getElementById('environmentalGroup');
+const info = document.getElementById('info');
+const speedControl = document.getElementById('speed');
+const v2iStatus = document.getElementById('v2iStatus');
+const locationInfo = document.getElementById('locationInfo');
+const weatherInfo = document.getElementById('weatherInfo');
+
+function setInfoText(t){ info.innerText = t || ''; }
+
+// Get network quality class based on ping value
+function getNetworkQuality(ping) {
+  if (ping <= 50) return {class: 'signal-excellent', text: 'Excellent'};
+  if (ping <= 100) return {class: 'signal-good', text: 'Good'};
+  return {class: 'signal-poor', text: 'Poor'};
+}
+
+// Get datarate quality class
+function getDatarateQuality(datarate) {
+  if (datarate >= 10) return {class: 'signal-excellent', text: 'High'};
+  if (datarate >= 5) return {class: 'signal-good', text: 'Medium'};
+  return {class: 'signal-poor', text: 'Low'};
+}
+
+// utility: build element for a kv pair
+function kvElem(k, v, className = ''){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'kv ' + className;
+  const left = document.createElement('div'); left.className = 'k'; left.innerText = k;
+  const right = document.createElement('div'); right.className = 'v'; right.innerText = (v===null || v===undefined ? '' : String(v));
+  wrapper.appendChild(left); wrapper.appendChild(right);
+  return wrapper;
+}
+
+function refreshParamsDisplay(point){
+  const row = point.raw;
+  
+  // Clear previous content
+  networkGroup.innerHTML = '';
+  telemetryGroup.innerHTML = '';
+  environmentalGroup.innerHTML = '';
+  
+  // Network Performance
+  networkParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      let value = row[param];
+      let className = '';
+      
+      if (param === 'ping_ms') {
+        const quality = getNetworkQuality(value);
+        value = `${value} ms (${quality.text})`;
+        className = quality.class;
+      } else if (param === 'datarate') {
+        const quality = getDatarateQuality(value);
+        value = `${value} Mbps (${quality.text})`;
+        className = quality.class;
+      }
+      
+      networkGroup.appendChild(kvElem(param, value, className));
+    }
+  });
+  
+  // Vehicle Telemetry
+  telemetryParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      telemetryGroup.appendChild(kvElem(param, row[param]));
+    }
+  });
+  
+  // Environmental Data
+  environmentalParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      environmentalGroup.appendChild(kvElem(param, row[param]));
+    }
+  });
+}
+
+function updateV2IVisualization(point) {
+  const row = point.raw;
+  
+  // Update vehicle position
+  const lat = parseFloat(row['lat']);
+  const lon = parseFloat(row['lon']);
+  
+  if (!isNaN(lat) && !isNaN(lon)) {
+    // Update marker
+    vehicleMarker.setLatLng([lat, lon]);
+    vehicleLabel.setLatLng([lat, lon]);
+    
+    // Update trajectory
+    const currentTrajectory = trajectory.getLatLngs();
+    currentTrajectory.push([lat, lon]);
+    trajectory.setLatLngs(currentTrajectory);
+    
+    // Update location info
+    locationInfo.innerHTML = `
+      <div class="location-info">
+        <strong>Vehicle Location:</strong> ${row['device'] || 'Unknown'}
+        <br><strong>GPS:</strong> ${lat.toFixed(6)}, ${lon.toFixed(6)}
+        <br><strong>Altitude:</strong> ${row['Altitude'] || 'N/A'} m
+        <br><strong>Speed:</strong> ${row['speed_kmh'] || 'N/A'} km/h
+        <br><strong>COG:</strong> ${row['COG'] || 'N/A'}°
+      </div>
+    `;
+    
+    // Update V2I status
+    const ping = parseFloat(row['ping_ms']);
+    const datarate = parseFloat(row['datarate']);
+    const jitter = parseFloat(row['jitter']);
+    const networkQuality = getNetworkQuality(ping);
+    const datarateQuality = getDatarateQuality(datarate);
+    
+    v2iStatus.innerHTML = `
+      <div class="communication-status">
+        <strong>V2I Communication Status:</strong>
+        <br>Network Quality: <span class="signal-strength ${networkQuality.class}">${networkQuality.text}</span>
+        <br>Ping: ${ping} ms | Datarate: ${datarate} Mbps
+        <br>Jitter: ${jitter} ms | Data Quality: <span class="signal-strength ${datarateQuality.class}">${datarateQuality.text}</span>
+      </div>
+    `;
+    
+    // Update weather info
+    const temp = row['temperature'];
+    const humidity = row['humidity'];
+    const precip = row['precipIntensity'];
+    
+    if (temp || humidity || precip) {
+      weatherInfo.innerHTML = `
+        <div class="weather-info">
+          <strong>Environmental Conditions:</strong>
+          <br>Temperature: ${temp || 'N/A'}°C | Humidity: ${humidity || 'N/A'}%
+          <br>Precipitation: ${precip || 'N/A'} mm/h | Apparent: ${row['apparentTemperature'] || 'N/A'}°C
+        </div>
+      `;
+    }
+    
+    // Center map on vehicle
+    map.panTo([lat, lon], {animate:true});
+  }
+}
+
+// Filter data based on selected vehicle and data type
+function filterData() {
+  const vehicle = document.getElementById('vehicleSelector').value;
+  const dataType = document.getElementById('dataTypeSelector').value;
+  
+  filteredData = allData.filter(row => {
+    const vehicleMatch = row['device'] === vehicle;
+    
+    if (dataType === 'all') return vehicleMatch;
+    if (dataType === 'network') return vehicleMatch && (row['ping_ms'] || row['datarate'] || row['jitter']);
+    if (dataType === 'environmental') return vehicleMatch && (row['temperature'] || row['humidity'] || row['precipIntensity']);
+    if (dataType === 'vehicle') return vehicleMatch && (row['Altitude'] || row['speed_kmh'] || row['COG']);
+    
+    return vehicleMatch;
+  });
+  
+  if (filteredData.length === 0) {
+    setInfoText(`No V2I communication data found for ${vehicle} with ${dataType} filter. Try different vehicle or data type.`);
+    
+    // Show available vehicles in console for debugging
+    const availableVehicles = [...new Set(allData.map(row => row['device']))].filter(v => v);
+    console.log('Available vehicles:', availableVehicles);
+    console.log('Filtered data count:', filteredData.length);
+    
+    return false;
+  }
+  
+  setInfoText(`Found ${filteredData.length} V2I communication records for ${vehicle} (${dataType})`);
+  return true;
+}
+
+// Update visualization for given index
+function updateForIndex(i){
+  if (!filteredData.length) return;
+  const row = filteredData[i];
+  
+  const point = {
+    raw: row,
+    lat: parseFloat(row['lat']),
+    lon: parseFloat(row['lon'])
+  };
+  
+  updateV2IVisualization(point);
+  refreshParamsDisplay(point);
+  
+  const timestamp = row['timestamp_iso'] || row['timestamp'] || '';
+  setInfoText(`V2I Communication ${i+1} / ${filteredData.length} | ${timestamp}`);
+}
+
+// Animation control
+function startAnim(){
+  if (running || !filteredData.length) return;
+  running = true;
+  const speed = Number(speedControl.value);
+  const delay = Math.max(10, 1000 / speed);
+  timer = setInterval(()=> {
+    idx = Math.min(idx+1, filteredData.length-1);
+    updateForIndex(idx);
+    if (idx >= filteredData.length-1) stopAnim();
+  }, delay);
+}
+
+function stopAnim(){
+  running = false;
+  if (timer){ clearInterval(timer); timer = null; }
+}
+
+// Event listeners
+document.getElementById('btnPlay').addEventListener('click', startAnim);
+document.getElementById('btnPause').addEventListener('click', stopAnim);
+document.getElementById('start').addEventListener('click', ()=>{ idx = 0; updateForIndex(0); });
+document.getElementById('end').addEventListener('click', ()=>{ idx = Math.max(0, filteredData.length-1); updateForIndex(idx); });
+speedControl.addEventListener('input', ()=>{ if (running){ stopAnim(); startAnim(); }});
+
+// Dropdown change handlers
+document.getElementById('vehicleSelector').addEventListener('change', ()=>{
+  if (filterData()) {
+    idx = 0;
+    updateForIndex(0);
+  }
+});
+
+document.getElementById('dataTypeSelector').addEventListener('change', ()=>{
+  if (filterData()) {
+    idx = 0;
+    updateForIndex(0);
+  }
+});
+
+// Load CSV data
+function loadCsvData() {
+  setInfoText('Loading cellular V2I data...');
+  
+  Papa.parse('cellular_parsed.csv', {
+    download: true, header: true, skipEmptyLines: true,
+    complete: function(results){
+      const data = results.data;
+      if (!data || data.length === 0){ 
+        setInfoText('No data found in CSV'); 
+        return; 
+      }
+      
+      // Filter out rows without valid GPS coordinates
+      allData = data.filter(row => {
+        const lat = parseFloat(row['lat']);
+        const lon = parseFloat(row['lon']);
+        
+        return !isNaN(lat) && !isNaN(lon);
+      });
+      
+      setInfoText(`Loaded ${allData.length} V2I communication records`);
+      
+      // Show available vehicles
+      const availableVehicles = [...new Set(allData.map(row => row['device']))].filter(v => v);
+      console.log('Available vehicles:', availableVehicles);
+      
+      // Update vehicle selector to match available vehicles
+      updateVehicleSelector(availableVehicles);
+      
+      // Initial filter and display
+      if (filterData()) {
+        idx = 0;
+        updateForIndex(0);
+      } else {
+        // If default vehicle doesn't work, try to find a working one
+        const workingVehicle = availableVehicles[0];
+        if (workingVehicle) {
+          document.getElementById('vehicleSelector').value = workingVehicle;
+          if (filterData()) {
+            idx = 0;
+            updateForIndex(0);
+          }
+        }
+      }
+    },
+    error: function(err){ 
+      setInfoText('CSV load error: ' + err); 
+      console.error('CSV load error:', err);
+    }
+  });
+}
+
+// Update vehicle selector dropdown with available vehicles from data
+function updateVehicleSelector(availableVehicles) {
+  const vehicleSelector = document.getElementById('vehicleSelector');
+  
+  // Clear existing options
+  vehicleSelector.innerHTML = '';
+  
+  // Add available vehicles
+  availableVehicles.forEach(vehicle => {
+    const option = document.createElement('option');
+    option.value = vehicle;
+    option.textContent = vehicle.toUpperCase();
+    if (vehicle === 'pc2') {
+      option.selected = true;
+    }
+    vehicleSelector.appendChild(option);
+  });
+  
+  console.log('Updated vehicle selector with:', availableVehicles);
+}
+
+// Initial load
+loadCsvData();
+</script>
+</body>
+</html>

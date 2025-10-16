@@ -1,0 +1,10 @@
+{
+  "num_waypoints": 20,
+  "vehicle_speed": 15,
+  "total_steps": 948,
+  "avg_distance": 47.728072440484326,
+  "min_distance": 6.877477500488543,
+  "max_distance": 82.79360588552737,
+  "source_progress": 19,
+  "dest_progress": 0
+}

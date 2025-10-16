@@ -1,0 +1,1151 @@
+{
+  "simulation_data": [
+    {
+      "step": 2,
+      "timestamp": 2,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13220.211308945167,
+            6206.606282105505
+          ],
+          "speed": 5.2,
+          "lane": "1099698929_0",
+          "step": 2
+        },
+        "veh_2": {
+          "position": [
+            13227.962145396927,
+            6207.448995251013
+          ],
+          "speed": 0.0,
+          "lane": "1099698929_0",
+          "step": 2
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 7.796514038180218,
+          "calibrated_distance": 4.7324840211753925,
+          "positions": {
+            "veh_1": [
+              13220.211308945167,
+              6206.606282105505
+            ],
+            "veh_2": [
+              13227.962145396927,
+              6207.448995251013
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 26.4982168743919,
+          "rsrp": 6.4982168743919,
+          "rssi": 21.4982168743919,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 3,
+      "timestamp": 3,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13212.460472493407,
+            6205.763568959996
+          ],
+          "speed": 7.800000000000001,
+          "lane": "1099698929_0",
+          "step": 3
+        },
+        "veh_2": {
+          "position": [
+            13226.969442112913,
+            6207.3410631443
+          ],
+          "speed": 0.9989999999999991,
+          "lane": "1099698929_0",
+          "step": 3
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 14.594474547625016,
+          "calibrated_distance": 8.858846050408385,
+          "positions": {
+            "veh_1": [
+              13212.460472493407,
+              6205.763568959996
+            ],
+            "veh_2": [
+              13226.969442112913,
+              6207.3410631443
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 21.052456908937693,
+          "rsrp": 1.0524569089376925,
+          "rssi": 16.052456908937693,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 4,
+      "timestamp": 4,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13202.12602389106,
+            6204.63995143265
+          ],
+          "speed": 10.4,
+          "lane": "1099698929_0",
+          "step": 4
+        },
+        "veh_2": {
+          "position": [
+            13223.393126678313,
+            6206.952226655751
+          ],
+          "speed": 3.5989999999999993,
+          "lane": "1099698929_0",
+          "step": 4
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 21.392435057069715,
+          "calibrated_distance": 12.985208079641316,
+          "positions": {
+            "veh_1": [
+              13202.12602389106,
+              6204.63995143265
+            ],
+            "veh_2": [
+              13223.393126678313,
+              6206.952226655751
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 17.731021733760997,
+          "rsrp": -2.268978266239003,
+          "rssi": 12.731021733760997,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 5,
+      "timestamp": 5,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13191.086050432208,
+            6203.439625401034
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 5
+        },
+        "veh_2": {
+          "position": [
+            13217.233199093125,
+            6206.282485785365
+          ],
+          "speed": 6.199,
+          "lane": "1099698929_0",
+          "step": 5
+        },
+        "veh_3": {
+          "position": [
+            13227.962145396927,
+            6207.448995251013
+          ],
+          "speed": 0.0,
+          "lane": "1099698929_0",
+          "step": 5
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 26.301240241876297,
+          "calibrated_distance": 15.964852826818912,
+          "positions": {
+            "veh_1": [
+              13191.086050432208,
+              6203.439625401034
+            ],
+            "veh_2": [
+              13217.233199093125,
+              6206.282485785365
+            ]
+          }
+        },
+        "veh_1_veh_3": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_3",
+          "raw_distance": 37.09341486626508,
+          "calibrated_distance": 22.515702823822902,
+          "positions": {
+            "veh_1": [
+              13191.086050432208,
+              6203.439625401034
+            ],
+            "veh_3": [
+              13227.962145396927,
+              6207.448995251013
+            ]
+          }
+        },
+        "veh_2_veh_3": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_3",
+          "raw_distance": 10.792174624388782,
+          "calibrated_distance": 6.55084999700399,
+          "positions": {
+            "veh_2": [
+              13217.233199093125,
+              6206.282485785365
+            ],
+            "veh_3": [
+              13227.962145396927,
+              6207.448995251013
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 15.936701613640166,
+          "rsrp": -4.063298386359834,
+          "rssi": 10.936701613640166,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_1_veh_3": {
+          "snr": 12.950289841225857,
+          "rsrp": -7.049710158774143,
+          "rssi": 7.950289841225857,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_2_veh_3": {
+          "snr": 23.674046900749964,
+          "rsrp": 3.674046900749964,
+          "rssi": 18.674046900749964,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 6,
+      "timestamp": 6,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13180.046538250717,
+            6202.235065841987
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 6
+        },
+        "veh_2": {
+          "position": [
+            13208.489659357352,
+            6205.331840533143
+          ],
+          "speed": 8.799,
+          "lane": "1099698929_0",
+          "step": 6
+        },
+        "veh_3": {
+          "position": [
+            13225.37853324634,
+            6207.168090869177
+          ],
+          "speed": 2.6,
+          "lane": "1099698929_0",
+          "step": 6
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 28.611206751454567,
+          "calibrated_distance": 17.367002498132923,
+          "positions": {
+            "veh_1": [
+              13180.046538250717,
+              6202.235065841987
+            ],
+            "veh_2": [
+              13208.489659357352,
+              6205.331840533143
+            ]
+          }
+        },
+        "veh_1_veh_3": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_3",
+          "raw_distance": 45.599610811957504,
+          "calibrated_distance": 27.678963762858203,
+          "positions": {
+            "veh_1": [
+              13180.046538250717,
+              6202.235065841987
+            ],
+            "veh_3": [
+              13225.37853324634,
+              6207.168090869177
+            ]
+          }
+        },
+        "veh_2_veh_3": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_3",
+          "raw_distance": 16.988404178577273,
+          "calibrated_distance": 10.311961336396404,
+          "positions": {
+            "veh_2": [
+              13208.489659357352,
+              6205.331840533143
+            ],
+            "veh_3": [
+              13225.37853324634,
+              6207.168090869177
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 15.205502664860575,
+          "rsrp": -4.794497335139425,
+          "rssi": 10.205502664860575,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_1_veh_3": {
+          "snr": 11.157003458074822,
+          "rsrp": -8.842996541925178,
+          "rssi": 6.157003458074822,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_2_veh_3": {
+          "snr": 19.733174479852515,
+          "rsrp": -0.26682552014748495,
+          "rssi": 14.733174479852515,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 7,
+      "timestamp": 7,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13169.006483871353,
+            6201.035492647824
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 7
+        },
+        "veh_2": {
+          "position": [
+            13197.449685898499,
+            6204.131514501527
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 7
+        },
+        "veh_3": {
+          "position": [
+            13220.211308945167,
+            6206.606282105505
+          ],
+          "speed": 5.2,
+          "lane": "1099698929_0",
+          "step": 7
+        },
+        "veh_4": {
+          "position": [
+            13227.962145396927,
+            6207.448995251013
+          ],
+          "speed": 0.0,
+          "lane": "1099698929_0",
+          "step": 7
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 28.6112057221572,
+          "calibrated_distance": 17.36700187334942,
+          "positions": {
+            "veh_1": [
+              13169.006483871353,
+              6201.035492647824
+            ],
+            "veh_2": [
+              13197.449685898499,
+              6204.131514501527
+            ]
+          }
+        },
+        "veh_1_veh_3": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_3",
+          "raw_distance": 51.506968519042594,
+          "calibrated_distance": 31.264729891058852,
+          "positions": {
+            "veh_1": [
+              13169.006483871353,
+              6201.035492647824
+            ],
+            "veh_3": [
+              13220.211308945167,
+              6206.606282105505
+            ]
+          }
+        },
+        "veh_1_veh_4": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_4",
+          "raw_distance": 59.30348254157657,
+          "calibrated_distance": 35.99721390273698,
+          "positions": {
+            "veh_1": [
+              13169.006483871353,
+              6201.035492647824
+            ],
+            "veh_4": [
+              13227.962145396927,
+              6207.448995251013
+            ]
+          }
+        },
+        "veh_2_veh_3": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_3",
+          "raw_distance": 22.89576289212309,
+          "calibrated_distance": 13.897728075518716,
+          "positions": {
+            "veh_2": [
+              13197.449685898499,
+              6204.131514501527
+            ],
+            "veh_3": [
+              13220.211308945167,
+              6206.606282105505
+            ]
+          }
+        },
+        "veh_2_veh_4": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_4",
+          "raw_distance": 30.692276930303308,
+          "calibrated_distance": 18.63021209669411,
+          "positions": {
+            "veh_2": [
+              13197.449685898499,
+              6204.131514501527
+            ],
+            "veh_4": [
+              13227.962145396927,
+              6207.448995251013
+            ]
+          }
+        },
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 7.796514038180218,
+          "calibrated_distance": 4.7324840211753925,
+          "positions": {
+            "veh_3": [
+              13220.211308945167,
+              6206.606282105505
+            ],
+            "veh_4": [
+              13227.962145396927,
+              6207.448995251013
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 15.205502977338256,
+          "rsrp": -4.794497022661744,
+          "rssi": 10.205502977338256,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_1_veh_3": {
+          "snr": 10.098906380337535,
+          "rsrp": -9.901093619662465,
+          "rssi": 5.098906380337535,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_1_veh_4": {
+          "snr": 8.874622225482693,
+          "rsrp": -11.125377774517307,
+          "rssi": 3.8746222254826925,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_2_veh_3": {
+          "snr": 17.141123800543994,
+          "rsrp": -2.858876199456006,
+          "rssi": 12.141123800543994,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_2_veh_4": {
+          "snr": 14.595644016514708,
+          "rsrp": -5.404355983485292,
+          "rssi": 9.595644016514708,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_3_veh_4": {
+          "snr": 26.4982168743919,
+          "rsrp": 6.4982168743919,
+          "rssi": 21.4982168743919,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 8,
+      "timestamp": 8,
+      "vehicles": {
+        "veh_1": {
+          "position": [
+            13157.967383733212,
+            6199.827173093944
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 8
+        },
+        "veh_2": {
+          "position": [
+            13186.40985478768,
+            6202.929882023163
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 8
+        },
+        "veh_3": {
+          "position": [
+            13212.460472493407,
+            6205.763568959996
+          ],
+          "speed": 7.800000000000001,
+          "lane": "1099698929_0",
+          "step": 8
+        },
+        "veh_4": {
+          "position": [
+            13226.969442112913,
+            6207.3410631443
+          ],
+          "speed": 0.9989999999999991,
+          "lane": "1099698929_0",
+          "step": 8
+        }
+      },
+      "distances": {
+        "veh_1_veh_2": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_2",
+          "raw_distance": 28.611203441723898,
+          "calibrated_distance": 17.367000489126404,
+          "positions": {
+            "veh_1": [
+              13157.967383733212,
+              6199.827173093944
+            ],
+            "veh_2": [
+              13186.40985478768,
+              6202.929882023163
+            ]
+          }
+        },
+        "veh_1_veh_3": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_3",
+          "raw_distance": 54.81548611938928,
+          "calibrated_distance": 33.27300007446929,
+          "positions": {
+            "veh_1": [
+              13157.967383733212,
+              6199.827173093944
+            ],
+            "veh_3": [
+              13212.460472493407,
+              6205.763568959996
+            ]
+          }
+        },
+        "veh_1_veh_4": {
+          "vehicle1": "veh_1",
+          "vehicle2": "veh_4",
+          "raw_distance": 69.40996041148959,
+          "calibrated_distance": 42.13184596977418,
+          "positions": {
+            "veh_1": [
+              13157.967383733212,
+              6199.827173093944
+            ],
+            "veh_4": [
+              13226.969442112913,
+              6207.3410631443
+            ]
+          }
+        },
+        "veh_2_veh_3": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_3",
+          "raw_distance": 26.204283323645814,
+          "calibrated_distance": 15.905999977453009,
+          "positions": {
+            "veh_2": [
+              13186.40985478768,
+              6202.929882023163
+            ],
+            "veh_3": [
+              13212.460472493407,
+              6205.763568959996
+            ]
+          }
+        },
+        "veh_2_veh_4": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_4",
+          "raw_distance": 40.79875785948261,
+          "calibrated_distance": 24.764846020705946,
+          "positions": {
+            "veh_2": [
+              13186.40985478768,
+              6202.929882023163
+            ],
+            "veh_4": [
+              13226.969442112913,
+              6207.3410631443
+            ]
+          }
+        },
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 14.594474547625016,
+          "calibrated_distance": 8.858846050408385,
+          "positions": {
+            "veh_3": [
+              13212.460472493407,
+              6205.763568959996
+            ],
+            "veh_4": [
+              13226.969442112913,
+              6207.3410631443
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_1_veh_2": {
+          "snr": 15.20550366964018,
+          "rsrp": -4.79449633035982,
+          "rssi": 10.20550366964018,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_1_veh_3": {
+          "snr": 9.55816078031122,
+          "rsrp": -10.44183921968878,
+          "rssi": 4.558160780311219,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_1_veh_4": {
+          "snr": 7.507790244510915,
+          "rsrp": -12.492209755489085,
+          "rssi": 2.5077902445109146,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_2_veh_3": {
+          "snr": 15.968780449977636,
+          "rsrp": -4.031219550022364,
+          "rssi": 10.968780449977636,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_2_veh_4": {
+          "snr": 12.123287359336643,
+          "rsrp": -7.8767126406633565,
+          "rssi": 7.1232873593366435,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_3_veh_4": {
+          "snr": 21.052456908937693,
+          "rsrp": 1.0524569089376925,
+          "rssi": 16.052456908937693,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 9,
+      "timestamp": 9,
+      "vehicles": {
+        "veh_2": {
+          "position": [
+            13175.370332876011,
+            6201.725413302064
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 9
+        },
+        "veh_3": {
+          "position": [
+            13202.12602389106,
+            6204.63995143265
+          ],
+          "speed": 10.4,
+          "lane": "1099698929_0",
+          "step": 9
+        },
+        "veh_4": {
+          "position": [
+            13223.393126678313,
+            6206.952226655751
+          ],
+          "speed": 3.5989999999999993,
+          "lane": "1099698929_0",
+          "step": 9
+        }
+      },
+      "distances": {
+        "veh_2_veh_3": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_3",
+          "raw_distance": 26.91396541216852,
+          "calibrated_distance": 16.336777005186292,
+          "positions": {
+            "veh_2": [
+              13175.370332876011,
+              6201.725413302064
+            ],
+            "veh_3": [
+              13202.12602389106,
+              6204.63995143265
+            ]
+          }
+        },
+        "veh_2_veh_4": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_4",
+          "raw_distance": 48.306400222047856,
+          "calibrated_distance": 29.321984934783046,
+          "positions": {
+            "veh_2": [
+              13175.370332876011,
+              6201.725413302064
+            ],
+            "veh_4": [
+              13223.393126678313,
+              6206.952226655751
+            ]
+          }
+        },
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 21.392435057069715,
+          "calibrated_distance": 12.985208079641316,
+          "positions": {
+            "veh_3": [
+              13202.12602389106,
+              6204.63995143265
+            ],
+            "veh_4": [
+              13223.393126678313,
+              6206.952226655751
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_2_veh_3": {
+          "snr": 15.736672379482354,
+          "rsrp": -4.2633276205176465,
+          "rssi": 10.736672379482354,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_2_veh_4": {
+          "snr": 10.65613267444855,
+          "rsrp": -9.34386732555145,
+          "rssi": 5.65613267444855,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_3_veh_4": {
+          "snr": 17.731021733760997,
+          "rsrp": -2.268978266239003,
+          "rssi": 12.731021733760997,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 10,
+      "timestamp": 10,
+      "vehicles": {
+        "veh_2": {
+          "position": [
+            13164.33060966984,
+            6200.5228079638
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 10
+        },
+        "veh_3": {
+          "position": [
+            13191.086050432208,
+            6203.439625401034
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 10
+        },
+        "veh_4": {
+          "position": [
+            13217.233199093125,
+            6206.282485785365
+          ],
+          "speed": 6.199,
+          "lane": "1099698929_0",
+          "step": 10
+        }
+      },
+      "distances": {
+        "veh_2_veh_3": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_3",
+          "raw_distance": 26.91396355706008,
+          "calibrated_distance": 16.336775879135466,
+          "positions": {
+            "veh_2": [
+              13164.33060966984,
+              6200.5228079638
+            ],
+            "veh_3": [
+              13191.086050432208,
+              6203.439625401034
+            ]
+          }
+        },
+        "veh_2_veh_4": {
+          "vehicle1": "veh_2",
+          "vehicle2": "veh_4",
+          "raw_distance": 53.2152032439691,
+          "calibrated_distance": 32.301628369089244,
+          "positions": {
+            "veh_2": [
+              13164.33060966984,
+              6200.5228079638
+            ],
+            "veh_4": [
+              13217.233199093125,
+              6206.282485785365
+            ]
+          }
+        },
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 26.301240241876297,
+          "calibrated_distance": 15.964852826818912,
+          "positions": {
+            "veh_3": [
+              13191.086050432208,
+              6203.439625401034
+            ],
+            "veh_4": [
+              13217.233199093125,
+              6206.282485785365
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_2_veh_3": {
+          "snr": 15.736672978177772,
+          "rsrp": -4.263327021822228,
+          "rssi": 10.736672978177772,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        },
+        "veh_2_veh_4": {
+          "snr": 9.815511674811743,
+          "rsrp": -10.184488325188257,
+          "rssi": 4.815511674811743,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "close"
+        },
+        "veh_3_veh_4": {
+          "snr": 15.936701613640166,
+          "rsrp": -4.063298386359834,
+          "rssi": 10.936701613640166,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 11,
+      "timestamp": 11,
+      "vehicles": {
+        "veh_3": {
+          "position": [
+            13180.046538250717,
+            6202.235065841987
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 11
+        },
+        "veh_4": {
+          "position": [
+            13208.489659357352,
+            6205.331840533143
+          ],
+          "speed": 8.799,
+          "lane": "1099698929_0",
+          "step": 11
+        }
+      },
+      "distances": {
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 28.611206751454567,
+          "calibrated_distance": 17.367002498132923,
+          "positions": {
+            "veh_3": [
+              13180.046538250717,
+              6202.235065841987
+            ],
+            "veh_4": [
+              13208.489659357352,
+              6205.331840533143
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_3_veh_4": {
+          "snr": 15.205502664860575,
+          "rsrp": -4.794497335139425,
+          "rssi": 10.205502664860575,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 12,
+      "timestamp": 12,
+      "vehicles": {
+        "veh_3": {
+          "position": [
+            13169.006483871353,
+            6201.035492647824
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 12
+        },
+        "veh_4": {
+          "position": [
+            13197.449685898499,
+            6204.131514501527
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 12
+        }
+      },
+      "distances": {
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 28.6112057221572,
+          "calibrated_distance": 17.36700187334942,
+          "positions": {
+            "veh_3": [
+              13169.006483871353,
+              6201.035492647824
+            ],
+            "veh_4": [
+              13197.449685898499,
+              6204.131514501527
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_3_veh_4": {
+          "snr": 15.205502977338256,
+          "rsrp": -4.794497022661744,
+          "rssi": 10.205502977338256,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    },
+    {
+      "step": 13,
+      "timestamp": 13,
+      "vehicles": {
+        "veh_3": {
+          "position": [
+            13157.967383733212,
+            6199.827173093944
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 13
+        },
+        "veh_4": {
+          "position": [
+            13186.40985478768,
+            6202.929882023163
+          ],
+          "speed": 11.11,
+          "lane": "1099698929_0",
+          "step": 13
+        }
+      },
+      "distances": {
+        "veh_3_veh_4": {
+          "vehicle1": "veh_3",
+          "vehicle2": "veh_4",
+          "raw_distance": 28.611203441723898,
+          "calibrated_distance": 17.367000489126404,
+          "positions": {
+            "veh_3": [
+              13157.967383733212,
+              6199.827173093944
+            ],
+            "veh_4": [
+              13186.40985478768,
+              6202.929882023163
+            ]
+          }
+        }
+      },
+      "communication": {
+        "veh_3_veh_4": {
+          "snr": 15.20550366964018,
+          "rsrp": -4.79449633035982,
+          "rssi": 10.20550366964018,
+          "packet_success_rate": 0.95,
+          "communication_success": true,
+          "distance_range": "very_close"
+        }
+      }
+    }
+  ],
+  "analysis": {
+    "total_simulation_steps": 12,
+    "distance_statistics": {
+      "mean_distance": 18.883500393133076,
+      "median_distance": 17.367000489126404,
+      "min_distance": 4.7324840211753925,
+      "max_distance": 42.13184596977418,
+      "std_distance": 9.277389549085456,
+      "distance_range": "4.7m - 42.1m"
+    },
+    "communication_statistics": {
+      "success_rate": 100.0,
+      "total_measurements": 30,
+      "quality_classification": "excellent"
+    }
+  },
+  "simulation_instances": [
+    {
+      "vehicle_id": "veh_1",
+      "sample_data": 

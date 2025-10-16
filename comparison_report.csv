@@ -1,0 +1,2 @@
+Approach,Mean_Accuracy_%,Median_Accuracy_%,RMSE_m,MAE_m,High_Acc_90plus,Medium_Acc_70_89,Low_Acc_below_70,Total_Waypoints,Speed_MAE_Src_kmh,Speed_MAE_Dst_kmh,Best_Waypoint,Best_Accuracy_%,Worst_Waypoint,Worst_Accuracy_%
+1. Baseline 200pts,78.25264447485579,79.42054276273595,4.75476363061505,4.22142040734839,8,75,13,96,1.3886166666666657,1.4217583333333323,49,98.86571264905993,1,55.88488299941024

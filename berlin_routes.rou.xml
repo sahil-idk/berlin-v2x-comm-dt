@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- Vehicle types -->
+    <vType id="DEFAULT_VEHTYPE" accel="2.5" decel="4.5" sigma="0.5" length="4.3" maxSpeed="50"/>
+    
+    <!-- Routes for minimal network -->
+    <route id="route_1" edges="edge_1 edge_2"/>
+    
+    <!-- Background traffic vehicles -->
+    <vehicle id="bg_vehicle_1" type="DEFAULT_VEHTYPE" route="route_1" depart="10" departSpeed="5"/>
+    <vehicle id="bg_vehicle_2" type="DEFAULT_VEHTYPE" route="route_1" depart="20" departSpeed="8"/>
+</routes>

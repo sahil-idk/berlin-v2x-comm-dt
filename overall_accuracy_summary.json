@@ -1,0 +1,11 @@
+{
+  "total_waypoints": 30,
+  "mean_accuracy": 28.009681237636453,
+  "median_accuracy": 21.51662369713749,
+  "mean_absolute_error": 13.721089238413736,
+  "rmse": 15.024856271701431,
+  "high_accuracy_count": 0,
+  "medium_accuracy_count": 3,
+  "low_accuracy_count": 27,
+  "assessment": "NEEDS IMPROVEMENT \u274c"
+}

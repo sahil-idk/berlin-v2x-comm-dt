@@ -1,0 +1,11 @@
+CORRECTED DYNAMIC V2V SIMULATION SUMMARY
+==========================================
+
+Approach: 2 vehicles per validation (source + destination)
+Calibration factor: 0.607
+Simulation steps: 60
+Vehicle pairs: 2
+Total vehicles: 4
+Static validation accuracy: 0.1%
+Dynamic validation accuracy: 55.9%
+Distance range: 4.7m - 17.4m

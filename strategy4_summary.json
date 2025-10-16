@@ -1,0 +1,15 @@
+{
+  "strategy_number": 4,
+  "strategy_name": "Adaptive Learning Calibration",
+  "mean_accuracy_pct": 69.18403064982571,
+  "median_accuracy_pct": 69.95150299893592,
+  "min_accuracy_pct": 46.033676276285206,
+  "max_accuracy_pct": 85.83563519943093,
+  "std_accuracy_pct": 8.036861207214029,
+  "mae_m": 5.8881344681682,
+  "rmse_m": 6.25388236142756,
+  "waypoints_analyzed": 96,
+  "high_accuracy_90_plus": 0,
+  "medium_accuracy_70_89": 47,
+  "low_accuracy_below_70": 49
+}

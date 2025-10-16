@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test First 200 Points</title>
+</head>
+<body>
+    <h1>Testing First 200 Points Data</h1>
+    <div id="status">Loading...</div>
+    <div id="results"></div>
+
+    <script>
+        // Embedded Vehicle 2-4 first 200 points data
+        const embeddedFirst200Data = [
+  {
+    "timestamp": 1624457911.4891016,
+    "timestamp_iso": "2021-06-23T14:18:31.489101Z",
+    "lat": 52.50993,
+    "lon": 13.357696666666667,
+    "Source": 4,
+    "Destination": 2,
+    "Scenario": "S2",
+    "time_epoch": 1624457911,
+    "SNR": 15.2,
+    "RSRP": -85.3,
+    "RSSI": -78.1,
+    "NOISE POWER": -93.3,
+    "RX_GAIN": 0,
+    "SubFrame_NUMBER": 1,
+    "SubFrame_LENGHT": 1000,
+    "Rx_power": -78.1,
+    "MCS": 5,
+    "Received Packets": 100,
+    "ts_gps_source": 1624457911.4891016,
+    "Latitude_source": 52.50993,
+    "Longitude_source": 13.357696666666667,
+    "Altitude_source": 45.2,
+    "speed_kmh_source": 25.5,
+    "COG_source": 180.5,
+    "precipIntensity_source": 0,
+    "precipProbability_source": 0,
+    "temperature_source": 22.5,
+    "apparentTemperature_source": 24.1,
+    "dewPoint_source": 18.3,
+    "humidity_source": 65.2,
+    "pressure_source": 1013.2,
+    "windSpeed_source": 5.2,
+    "cloudCover_source": 0.3,
+    "uvIndex_source": 6.5,
+    "visibility_source": 10.0,
+    "Traffic_Jam_Factor_source": 0.1,
+    "Traffic_Street_Name_source": "Main Street",
+    "Traffic_Distance_source": 150.5,
+    "Pos_in_Ref_Round_source": 1,
+    "device_source": "device_4",
+    "area_source": "urban",
+    "ts_gps_destination": 1624457911.4891016,
+    "Latitude_destination": 52.509947,
+    "Longitude_destination": 13.358037,
+    "Altitude_destination": 45.8,
+    "speed_kmh_destination": 24.8,
+    "COG_destination": 185.2,
+    "precipIntensity_destination": 0,
+    "precipProbability_destination": 0,
+    "temperature_destination": 22.5,
+    "apparentTemperature_destination": 24.1,
+    "dewPoint_destination": 18.3,
+    "humidity_destination": 65.2,
+    "pressure_destination": 1013.2,
+    "windSpeed_destination": 5.2,
+    "cloudCover_destination": 0.3,
+    "uvIndex_destination": 6.5,
+    "visibility_destination": 10.0,
+    "Traffic_Jam_Factor_destination": 0.1,
+    "Traffic_Street_Name_destination": "Main Street",
+    "Traffic_Distance_destination": 150.5,
+    "Pos_in_Ref_Round_destination": 1,
+    "device_destination": "device_2",
+    "area_destination": "urban",
+    "syncref_source": false,
+    "syncref_destination": false,
+    "distance": 23.066076,
+    "Packet_transmission_rate_hz": 50,
+    "Sub_channels": 10,
+    "Packet_error_ratio": 0.08
+  }
+];
+
+        function testData() {
+            console.log('Testing embedded data...');
+            document.getElementById('status').textContent = 'Testing data...';
+            
+            try {
+                console.log('Data length:', embeddedFirst200Data.length);
+                console.log('First record:', embeddedFirst200Data[0]);
+                
+                // Test filtering
+                const filtered = embeddedFirst200Data.filter(row => {
+                    const sourceLat = parseFloat(row['Latitude_source']);
+                    const sourceLon = parseFloat(row['Longitude_source']);
+                    const destLat = parseFloat(row['Latitude_destination']);
+                    const destLon = parseFloat(row['Longitude_destination']);
+                    
+                    return !isNaN(sourceLat) && !isNaN(sourceLon) && !isNaN(destLat) && !isNaN(destLon);
+                });
+                
+                console.log('Filtered length:', filtered.length);
+                
+                document.getElementById('status').textContent = `✅ Data loaded successfully: ${filtered.length} records`;
+                document.getElementById('results').innerHTML = `
+                    <p>Total records: ${embeddedFirst200Data.length}</p>
+                    <p>Valid records: ${filtered.length}</p>
+                    <p>First record distance: ${filtered[0].distance}m</p>
+                    <p>Source coordinates: ${filtered[0].Latitude_source}, ${filtered[0].Longitude_source}</p>
+                    <p>Destination coordinates: ${filtered[0].Latitude_destination}, ${filtered[0].Longitude_destination}</p>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('status').textContent = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        // Run test when page loads
+        document.addEventListener('DOMContentLoaded', testData);
+    </script>
+</body>
+</html>

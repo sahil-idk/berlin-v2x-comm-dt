@@ -1,0 +1,4047 @@
+{
+  "analysis_summary": {
+    "total_files": 15,
+    "successful_files": 15,
+    "total_unique_columns": 14,
+    "common_columns": [
+      "Destination",
+      "MCS",
+      "NOISE POWER",
+      "RSRP",
+      "RSSI",
+      "RX_GAIN",
+      "Rx_power",
+      "SNR",
+      "Source",
+      "SubFrame_LENGHT",
+      "SubFrame_NUMBER",
+      "TIME(FrS)",
+      "TIME(S)",
+      "time_epoch"
+    ],
+    "varying_columns": {},
+    "all_columns": [
+      "Destination",
+      "MCS",
+      "NOISE POWER",
+      "RSRP",
+      "RSSI",
+      "RX_GAIN",
+      "Rx_power",
+      "SNR",
+      "Source",
+      "SubFrame_LENGHT",
+      "SubFrame_NUMBER",
+      "TIME(FrS)",
+      "TIME(S)",
+      "time_epoch"
+    ]
+  },
+  "file_results": {
+    "ue1_s1_0623.parquet": {
+      "shape": [
+        943231,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 943218,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624440256.185394",
+            "1624440256.214447",
+            "1624440256.221651",
+            "1624440256.235617",
+            "1624440256.256416"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 242363,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "13.9781",
+            "18.6549",
+            "15.1792",
+            "14.5662",
+            "14.4455"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 257821,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-70.6848",
+            "-64.4366",
+            "-69.4704",
+            "-71.7403",
+            "-69.3793"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 240963,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-49.899",
+            "-43.6079",
+            "-44.5477",
+            "-50.221",
+            "-44.9035"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 386279,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00179051",
+            "0.00280593",
+            "0.00165155",
+            "0.00123652",
+            "0.00198487"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 10238,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624440256.0",
+            "1624440256.0",
+            "1624440256.0",
+            "1624440256.0",
+            "1624440256.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 1691,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.184",
+            "0.213",
+            "0.22",
+            "0.234",
+            "0.255"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 50,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "47.0",
+            "47.0",
+            "47.0",
+            "47.0",
+            "47.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "274.0",
+            "277.0",
+            "278.0",
+            "279.0",
+            "281.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "4.0",
+            "3.0",
+            "0.0",
+            "4.0",
+            "5.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 455575,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.050378",
+            "0.212355",
+            "0.0666325",
+            "0.0395086",
+            "0.0680439"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 4,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:34",
+            "53:4c:33",
+            "53:4c:32",
+            "53:4c:34",
+            "53:4c:32"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 943231,
+          "null_count": "418541",
+          "null_percentage": 44.373117507800316,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 943231,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8",
+            "8",
+            "8",
+            "8",
+            "8"
+          ]
+        }
+      },
+      "file_size_mb": 19.082493782043457
+    },
+    "ue1_s2_0622.parquet": {
+      "shape": [
+        1222075,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1222054,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624373830.205718",
+            "1624373830.225766",
+            "1624373830.245815",
+            "1624373830.265775",
+            "1624373830.285816"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 290105,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12.4648",
+            "12.8983",
+            "14.6469",
+            "11.5179",
+            "14.0532"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 289337,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-73.8788",
+            "-73.9871",
+            "-71.9287",
+            "-75.1184",
+            "-72.7743"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 288502,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-46.0921",
+            "-46.0563",
+            "-44.159",
+            "-47.4605",
+            "-45.1807"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 491422,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00123357",
+            "0.00109592",
+            "0.00119583",
+            "0.00114091",
+            "0.00112023"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 8490,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624373830.0",
+            "1624373830.0",
+            "1624373830.0",
+            "1624373830.0",
+            "1624373830.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 1297,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.204",
+            "0.224",
+            "0.244",
+            "0.264",
+            "0.284"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 53,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "46.0",
+            "46.0",
+            "46.0",
+            "46.0",
+            "46.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "364.0",
+            "366.0",
+            "368.0",
+            "370.0",
+            "372.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "4.0",
+            "4.0",
+            "4.0",
+            "4.0",
+            "4.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 546512,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0241456",
+            "0.023551",
+            "0.0378316",
+            "0.0181504",
+            "0.0311383"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:33",
+            "53:4c:33",
+            "53:4c:33",
+            "53:4c:33",
+            "53:4c:33"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1222075,
+          "null_count": "573123",
+          "null_percentage": 46.89753083894196,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1222075,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 23.129448890686035
+    },
+    "ue1_s2_0623.parquet": {
+      "shape": [
+        2077211,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 2077154,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624455070.498816",
+            "1624455070.501111",
+            "1624455070.518806",
+            "1624455070.519893",
+            "1624455070.520979"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 318888,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12.8197",
+            "9.00991",
+            "13.21",
+            "6.22679",
+            "10.8391"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 220067,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-78.4504",
+            "-82.0471",
+            "-78.2354",
+            "-83.8398",
+            "-80.2743"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 219722,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-50.681",
+            "-54.0641",
+            "-50.3707",
+            "-55.5795",
+            "-52.5036"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 540210,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000401331",
+            "0.000391549",
+            "0.000387859",
+            "0.00042939",
+            "0.000401144"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 11993,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624455070.0",
+            "1624455070.0",
+            "1624455070.0",
+            "1624455070.0",
+            "1624455070.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 1328,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.497",
+            "0.499",
+            "0.517",
+            "0.518",
+            "0.519"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 47,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "42.0",
+            "42.0",
+            "42.0",
+            "42.0",
+            "42.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1001.0",
+            "1001.0",
+            "1003.0",
+            "1003.0",
+            "1003.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "7.0",
+            "9.0",
+            "7.0",
+            "8.0",
+            "9.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 652937,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00842723",
+            "0.00368144",
+            "0.00885495",
+            "0.00243635",
+            "0.00553723"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:33",
+            "53:4c:34",
+            "53:4c:33",
+            "53:4c:32",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 2077211,
+          "null_count": "1140728",
+          "null_percentage": 54.916327710569604,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 2077211,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 33.67199897766113
+    },
+    "ue2_s1_0623.parquet": {
+      "shape": [
+        919932,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 919925,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624440305.22936",
+            "1624440305.267213",
+            "1624440305.317384",
+            "1624440305.36727",
+            "1624440305.417225"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 241828,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "7.41205",
+            "15.4305",
+            "13.1079",
+            "13.5667",
+            "8.99807"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 257321,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-81.1551",
+            "-76.8823",
+            "-78.0347",
+            "-76.2411",
+            "-79.5189"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 245680,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-59.8119",
+            "-55.7922",
+            "-56.7662",
+            "-55.4774",
+            "-57.9739"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 396266,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000690504",
+            "0.000332188",
+            "0.000425197",
+            "0.000584643",
+            "0.000725533"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 10223,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624440305.0",
+            "1624440305.0",
+            "1624440305.0",
+            "1624440305.0",
+            "1624440305.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 1766,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.228",
+            "0.266",
+            "0.316",
+            "0.366",
+            "0.416"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 42,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "58.0",
+            "62.0",
+            "67.0",
+            "72.0",
+            "77.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8.0",
+            "6.0",
+            "6.0",
+            "6.0",
+            "6.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 460090,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00452076",
+            "0.0120918",
+            "0.00927375",
+            "0.0140156",
+            "0.00658913"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 5,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:34",
+            "53:4c:34",
+            "53:4c:34",
+            "53:4c:34",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 919932,
+          "null_count": "389125",
+          "null_percentage": 42.299322123809155,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 919932,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8",
+            "8",
+            "8",
+            "8",
+            "8"
+          ]
+        }
+      },
+      "file_size_mb": 19.104421615600586
+    },
+    "ue2_s2_0622 (1).parquet": {
+      "shape": [
+        1697297,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1697278,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624370944.66958",
+            "1624370944.67065",
+            "1624370944.688493",
+            "1624370944.689364",
+            "1624370944.703712"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 246636,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12.2077",
+            "9.86167",
+            "7.00329",
+            "13.5795",
+            "12.1512"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 323887,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-78.3357",
+            "-81.2733",
+            "-79.7832",
+            "-77.4226",
+            "-79.4437"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 323665,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-50.446",
+            "-53.5503",
+            "-52.0425",
+            "-49.5759",
+            "-51.7352"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 580396,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000490141",
+            "0.000410685",
+            "0.00102573",
+            "0.000447861",
+            "0.000382611"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 10518,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624370944.0",
+            "1624370944.0",
+            "1624370944.0",
+            "1624370944.0",
+            "1624370944.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 1324,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.668",
+            "0.669",
+            "0.687",
+            "0.688",
+            "0.702"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 55,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "578.0",
+            "578.0",
+            "580.0",
+            "580.0",
+            "582.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8.0",
+            "9.0",
+            "7.0",
+            "8.0",
+            "2.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 689013,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0086527",
+            "0.00439944",
+            "0.00620016",
+            "0.0106773",
+            "0.00670422"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 4,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:31",
+            "53:4c:34",
+            "53:4c:33",
+            "53:4c:31",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1697297,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 29.99163246154785
+    },
+    "ue2_s2_0622.parquet": {
+      "shape": [
+        1697297,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1697278,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624370944.66958",
+            "1624370944.67065",
+            "1624370944.688493",
+            "1624370944.689364",
+            "1624370944.703712"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 246636,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12.2077",
+            "9.86167",
+            "7.00329",
+            "13.5795",
+            "12.1512"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 323887,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-78.3357",
+            "-81.2733",
+            "-79.7832",
+            "-77.4226",
+            "-79.4437"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 323665,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-50.446",
+            "-53.5503",
+            "-52.0425",
+            "-49.5759",
+            "-51.7352"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 580396,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000490141",
+            "0.000410685",
+            "0.00102573",
+            "0.000447861",
+            "0.000382611"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 10518,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624370944.0",
+            "1624370944.0",
+            "1624370944.0",
+            "1624370944.0",
+            "1624370944.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 1324,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.668",
+            "0.669",
+            "0.687",
+            "0.688",
+            "0.702"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 55,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "578.0",
+            "578.0",
+            "580.0",
+            "580.0",
+            "582.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8.0",
+            "9.0",
+            "7.0",
+            "8.0",
+            "2.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 689013,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0086527",
+            "0.00439944",
+            "0.00620016",
+            "0.0106773",
+            "0.00670422"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 4,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:31",
+            "53:4c:34",
+            "53:4c:33",
+            "53:4c:31",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1697297,
+          "null_count": "838500",
+          "null_percentage": 49.40207871692461,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1697297,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 29.99163246154785
+    },
+    "ue2_s2_0623.parquet": {
+      "shape": [
+        2083133,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 2083098,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624450131.44044",
+            "1624450131.442381",
+            "1624450131.459511",
+            "1624450131.460432",
+            "1624450131.4624"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 314454,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "21.6379",
+            "25.4849",
+            "10.4814",
+            "20.4736",
+            "22.5858"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 322739,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-64.6211",
+            "-61.5344",
+            "-78.6133",
+            "-65.4392",
+            "-62.9611"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 322165,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-36.9926",
+            "-33.7428",
+            "-50.9114",
+            "-37.7765",
+            "-35.1133"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 675161,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00137779",
+            "0.00115549",
+            "0.000660341",
+            "0.00148882",
+            "0.00161737"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 12496,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624450131.0",
+            "1624450131.0",
+            "1624450131.0",
+            "1624450131.0",
+            "1624450131.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 1453,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.439",
+            "0.441",
+            "0.458",
+            "0.459",
+            "0.461"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 61,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "44.0",
+            "44.0",
+            "44.0",
+            "44.0",
+            "44.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "663.0",
+            "664.0",
+            "665.0",
+            "665.0",
+            "666.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "9.0",
+            "1.0",
+            "8.0",
+            "9.0",
+            "1.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 837864,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.203523",
+            "0.414272",
+            "0.008117",
+            "0.16858",
+            "0.298274"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:31",
+            "53:4c:34",
+            "53:4c:33",
+            "53:4c:31",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 2083133,
+          "null_count": "939530",
+          "null_percentage": 45.10177698687506,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 2083133,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 39.35218048095703
+    },
+    "ue3_s1_0622.parquet": {
+      "shape": [
+        1684628,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1684441,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624354194.895177",
+            "1624354194.914224",
+            "1624354194.920186",
+            "1624354194.945179",
+            "1624354194.964314"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 187297,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "15.4798",
+            "16.7634",
+            "16.1642",
+            "14.1861",
+            "5.69084"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 215905,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-63.4655",
+            "-72.0901",
+            "-72.0362",
+            "-70.1002",
+            "-75.405"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 207759,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-42.7891",
+            "-48.3227",
+            "-51.5932",
+            "-49.0874",
+            "-53.114"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 313401,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00696239",
+            "0.000719867",
+            "0.000831745",
+            "0.002016",
+            "0.00342474"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 11209,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624354194.0",
+            "1624354194.0",
+            "1624354194.0",
+            "1624354194.0",
+            "1624354194.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 1058,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.894",
+            "0.913",
+            "0.919",
+            "0.944",
+            "0.963"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 30,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "45.0",
+            "45.0",
+            "45.0",
+            "45.0",
+            "45.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "865.0",
+            "867.0",
+            "867.0",
+            "870.0",
+            "872.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 8,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "4.0",
+            "3.0",
+            "9.0",
+            "4.0",
+            "3.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 359703,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.265568",
+            "0.0364509",
+            "0.0369068",
+            "0.0576375",
+            "0.0169913"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:32",
+            "53:4c:34",
+            "53:4c:31",
+            "53:4c:32",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1684628,
+          "null_count": "1280128",
+          "null_percentage": 75.98876428505285,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1684628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8",
+            "8",
+            "8",
+            "8",
+            "8"
+          ]
+        }
+      },
+      "file_size_mb": 18.139395713806152
+    },
+    "ue3_s1_0623.parquet": {
+      "shape": [
+        1672675,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1672645,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624442765.117176",
+            "1624442765.130371",
+            "1624442765.13832",
+            "1624442765.179229",
+            "1624442765.180306"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 185179,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "10.7067",
+            "14.0092",
+            "5.78662",
+            "7.04466",
+            "18.1862"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 228965,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-76.4192",
+            "-73.1888",
+            "-81.5247",
+            "-81.2315",
+            "-64.4407"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 217091,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-37.9117",
+            "-51.7849",
+            "-57.7157",
+            "-57.3798",
+            "-43.6778"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 340685,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000920482",
+            "0.000930876",
+            "0.000758082",
+            "0.000648819",
+            "0.00271812"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 10303,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624442765.0",
+            "1624442765.0",
+            "1624442765.0",
+            "1624442765.0",
+            "1624442765.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 1058,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.116",
+            "0.129",
+            "0.137",
+            "0.178",
+            "0.179"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 13,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "45.0",
+            "45.0",
+            "45.0",
+            "45.0",
+            "45.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "287.0",
+            "288.0",
+            "289.0",
+            "293.0",
+            "293.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 8,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "6.0",
+            "9.0",
+            "7.0",
+            "8.0",
+            "9.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 389230,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0134524",
+            "0.0283038",
+            "0.00415198",
+            "0.00444195",
+            "0.212154"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:34",
+            "53:4c:32",
+            "53:4c:31",
+            "53:4c:34",
+            "53:4c:32"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1672675,
+          "null_count": "1231613",
+          "null_percentage": 73.63133902282273,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1672675,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8",
+            "8",
+            "8",
+            "8",
+            "8"
+          ]
+        }
+      },
+      "file_size_mb": 19.15765953063965
+    },
+    "ue3_s2_0622.parquet": {
+      "shape": [
+        407628,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 407628,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624372988.903581",
+            "1624372988.968657",
+            "1624372988.988521",
+            "1624372989.008517",
+            "1624372989.023636"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 201901,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "6.10215",
+            "6.85236",
+            "4.80355",
+            "7.58474",
+            "9.16396"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 189695,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-69.3906",
+            "-69.9079",
+            "-68.4229",
+            "-69.1884",
+            "-69.677"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 188147,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-41.6044",
+            "-42.1637",
+            "-40.7412",
+            "-41.4251",
+            "-41.8968"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 332687,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0126353",
+            "0.00978175",
+            "0.0200526",
+            "0.010009",
+            "0.00648198"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "int64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 9942,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624372988",
+            "1624372988",
+            "1624372988",
+            "1624372989",
+            "1624372989"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1057,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.902",
+            "0.967",
+            "0.987",
+            "0.00700005",
+            "0.0220001"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "int64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 19,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "48",
+            "48",
+            "48",
+            "48",
+            "48"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "int64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "202",
+            "208",
+            "210",
+            "212",
+            "214"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "int64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 8,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "2",
+            "7",
+            "7",
+            "7",
+            "2"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 350732,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0678682",
+            "0.0602465",
+            "0.0848072",
+            "0.0711029",
+            "0.0635357"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:34",
+            "53:4c:34",
+            "53:4c:34",
+            "53:4c:34",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 407628,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 13.632951736450195
+    },
+    "ue3_s2_0623.parquet": {
+      "shape": [
+        607170,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 607170,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624459740.643399",
+            "1624459740.648439",
+            "1624459740.668431",
+            "1624459741.31354",
+            "1624459741.719416"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 240707,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "6.56286",
+            "5.36354",
+            "5.8758",
+            "5.12139",
+            "8.86802"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 221377,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-62.194",
+            "-62.3614",
+            "-62.4122",
+            "-63.9095",
+            "-71.0103"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 220885,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-34.5173",
+            "-34.5901",
+            "-34.6338",
+            "-36.1941",
+            "-43.1954"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 415027,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0590654",
+            "0.0712523",
+            "0.0640664",
+            "0.0532329",
+            "0.00514136"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "int64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 11935,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624459740",
+            "1624459740",
+            "1624459740",
+            "1624459741",
+            "1624459741"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1058,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.642",
+            "0.647",
+            "0.667",
+            "0.312",
+            "0.718"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "int64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 22,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "46",
+            "46",
+            "46",
+            "46",
+            "46"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "int64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "48",
+            "48",
+            "50",
+            "115",
+            "155"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "int64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 8,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "2",
+            "7",
+            "7",
+            "2",
+            "8"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 490992,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.355899",
+            "0.342441",
+            "0.338453",
+            "0.239758",
+            "0.0467409"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:32",
+            "53:4c:32",
+            "53:4c:32",
+            "53:4c:31",
+            "53:4c:34"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 607170,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 19.74801540374756
+    },
+    "ue4_s1_0622.parquet": {
+      "shape": [
+        981123,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 981106,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624350947.862311",
+            "1624350947.871365",
+            "1624350947.912242",
+            "1624350947.962398",
+            "1624350948.012412"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 229789,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "19.7709",
+            "4.15129",
+            "22.3966",
+            "17.9276",
+            "18.0566"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 237841,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-69.7246",
+            "-85.1222",
+            "-61.9934",
+            "-71.7947",
+            "-72.3861"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 222078,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-48.8863",
+            "-60.7727",
+            "-41.0736",
+            "-50.922",
+            "-51.7218"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 340008,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000609639",
+            "0.000474944",
+            "0.00198683",
+            "0.000577578",
+            "0.00048707"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 10026,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624350947.0",
+            "1624350947.0",
+            "1624350947.0",
+            "1624350947.0",
+            "1624350948.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 1505,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.861",
+            "0.87",
+            "0.911",
+            "0.961",
+            "0.011"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 50,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "42.0",
+            "42.0",
+            "42.0",
+            "42.0",
+            "42.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "770.0",
+            "771.0",
+            "775.0",
+            "780.0",
+            "785.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1.0",
+            "0.0",
+            "1.0",
+            "1.0",
+            "1.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 383997,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0628434",
+            "0.00181344",
+            "0.37272",
+            "0.0390164",
+            "0.0340499"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:32",
+            "53:4c:31",
+            "53:4c:32",
+            "53:4c:32",
+            "53:4c:32"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 981123,
+          "null_count": "552826",
+          "null_percentage": 56.34624812587209,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 981123,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8",
+            "8",
+            "8",
+            "8",
+            "8"
+          ]
+        }
+      },
+      "file_size_mb": 16.69566822052002
+    },
+    "ue4_s1_0623.parquet": {
+      "shape": [
+        852213,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 852194,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624433973.780097",
+            "1624433973.814102",
+            "1624433973.830212",
+            "1624433973.879286",
+            "1624433973.880068"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 248695,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "17.9474",
+            "6.43598",
+            "11.6856",
+            "4.29749",
+            "16.5416"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 252716,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-67.0155",
+            "-82.9205",
+            "-77.6645",
+            "-84.8585",
+            "-70.0237"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 238023,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-46.5389",
+            "-59.7719",
+            "-56.0617",
+            "-60.168",
+            "-49.0942"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 380974,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00158797",
+            "0.000526817",
+            "0.000535798",
+            "0.000494562",
+            "0.00109692"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 10063,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624433973.0",
+            "1624433973.0",
+            "1624433973.0",
+            "1624433973.0",
+            "1624433973.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 1612,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.779",
+            "0.813",
+            "0.829",
+            "0.878",
+            "0.879"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 50,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "43.0",
+            "43.0",
+            "43.0",
+            "43.0",
+            "43.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "769.0",
+            "773.0",
+            "774.0",
+            "779.0",
+            "779.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "9.0",
+            "3.0",
+            "9.0",
+            "8.0",
+            "9.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 428539,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.117266",
+            "0.00301073",
+            "0.0100989",
+            "0.00192696",
+            "0.0586617"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 4,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:32",
+            "53:4c:33",
+            "53:4c:32",
+            "53:4c:33",
+            "53:4c:32"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 852213,
+          "null_count": "368221",
+          "null_percentage": 43.20762532371602,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 852213,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "8",
+            "8",
+            "8",
+            "8",
+            "8"
+          ]
+        }
+      },
+      "file_size_mb": 17.886536598205566
+    },
+    "ue4_s2_0622.parquet": {
+      "shape": [
+        1157804,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1157785,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624372289.47545",
+            "1624372289.495436",
+            "1624372289.515444",
+            "1624372289.535454",
+            "1624372289.555448"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 211046,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "9.93616",
+            "9.95063",
+            "10.7339",
+            "10.6443",
+            "10.9069"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 185701,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-81.7508",
+            "-81.0915",
+            "-80.4684",
+            "-80.0468",
+            "-80.5074"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 185768,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-54.0652",
+            "-53.3144",
+            "-52.7449",
+            "-52.2344",
+            "-52.7444"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 302965,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000343594",
+            "0.000399066",
+            "0.000390265",
+            "0.000438336",
+            "0.000372335"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 7878,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624372289.0",
+            "1624372289.0",
+            "1624372289.0",
+            "1624372289.0",
+            "1624372289.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 1297,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.474",
+            "0.494",
+            "0.514",
+            "0.534",
+            "0.554"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 38,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "39.0",
+            "39.0",
+            "39.0",
+            "39.0",
+            "39.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "915.0",
+            "917.0",
+            "919.0",
+            "921.0",
+            "923.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "4.0",
+            "4.0",
+            "4.0",
+            "4.0",
+            "4.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 356975,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.00394131",
+            "0.00458751",
+            "0.00529515",
+            "0.00583501",
+            "0.00524785"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 3,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:33",
+            "53:4c:33",
+            "53:4c:33",
+            "53:4c:33",
+            "53:4c:33"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1157804,
+          "null_count": "743024",
+          "null_percentage": 64.17528355403851,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1157804,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 16.604844093322754
+    },
+    "ue4_s2_0623.parquet": {
+      "shape": [
+        1883595,
+        14
+      ],
+      "columns": [
+        "time_epoch",
+        "SNR",
+        "RSRP",
+        "RSSI",
+        "NOISE POWER",
+        "TIME(S)",
+        "TIME(FrS)",
+        "RX_GAIN",
+        "SubFrame_NUMBER",
+        "SubFrame_LENGHT",
+        "Rx_power",
+        "Source",
+        "Destination",
+        "MCS"
+      ],
+      "data_quality": {
+        "time_epoch": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1883555,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624449517.398456",
+            "1624449517.430513",
+            "1624449517.438473",
+            "1624449517.470536",
+            "1624449517.490338"
+          ]
+        },
+        "SNR": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 265442,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "14.3639",
+            "9.23015",
+            "11.9222",
+            "14.6142",
+            "10.1597"
+          ]
+        },
+        "RSRP": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 263867,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-75.3091",
+            "-78.9945",
+            "-78.1121",
+            "-72.927",
+            "-78.4534"
+          ]
+        },
+        "RSSI": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 263788,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "-47.6527",
+            "-51.2107",
+            "-50.445",
+            "-45.0978",
+            "-50.3192"
+          ]
+        },
+        "NOISE POWER": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 507009,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.000543738",
+            "0.000718409",
+            "0.000494794",
+            "0.00089852",
+            "0.000668303"
+          ]
+        },
+        "TIME(S)": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 11968,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "1624449517.0",
+            "1624449517.0",
+            "1624449517.0",
+            "1624449517.0",
+            "1624449517.0"
+          ]
+        },
+        "TIME(FrS)": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 1379,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.397",
+            "0.429",
+            "0.437",
+            "0.469",
+            "0.489"
+          ]
+        },
+        "RX_GAIN": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 48,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0",
+            "41.0"
+          ]
+        },
+        "SubFrame_NUMBER": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 1024,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "699.0",
+            "702.0",
+            "703.0",
+            "706.0",
+            "708.0"
+          ]
+        },
+        "SubFrame_LENGHT": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 10,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "7.0",
+            "9.0",
+            "7.0",
+            "9.0",
+            "9.0"
+          ]
+        },
+        "Rx_power": {
+          "dtype": "float64",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 644604,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "0.0173705",
+            "0.00743483",
+            "0.00910993",
+            "0.0300624",
+            "0.00842146"
+          ]
+        },
+        "Source": {
+          "dtype": "object",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 5,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "53:4c:32",
+            "53:4c:32",
+            "53:4c:32",
+            "53:4c:32",
+            "53:4c:32"
+          ]
+        },
+        "Destination": {
+          "dtype": "object",
+          "total_values": 1883595,
+          "null_count": "1063237",
+          "null_percentage": 56.447219280153114,
+          "unique_values": 2,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "empty_percentage": 0.0,
+          "sample_values": [
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff",
+            "de:ad:ff"
+          ]
+        },
+        "MCS": {
+          "dtype": "int64",
+          "total_values": 1883595,
+          "null_count": "0",
+          "null_percentage": 0.0,
+          "unique_values": 1,
+          "empty_strings": 0,
+          "whitespace_only": 0,
+          "sample_values": [
+            "12",
+            "12",
+            "12",
+            "12",
+            "12"
+          ]
+        }
+      },
+      "file_size_mb": 30.00240421295166
+    }
+  },
+  "column_variations": {
+    "time_epoch": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "SNR": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "RSRP": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "RSSI": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "NOISE POWER": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "TIME(S)": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "TIME(FrS)": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "RX_GAIN": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "SubFrame_NUMBER": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "SubFrame_LENGHT": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "Rx_power": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "Source": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "Destination": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ],
+    "MCS": [
+      "ue1_s1_0623.parquet",
+      "ue1_s2_0622.parquet",
+      "ue1_s2_0623.parquet",
+      "ue2_s1_0623.parquet",
+      "ue2_s2_0622 (1).parquet",
+      "ue2_s2_0622.parquet",
+      "ue2_s2_0623.parquet",
+      "ue3_s1_0622.parquet",
+      "ue3_s1_0623.parquet",
+      "ue3_s2_0622.parquet",
+      "ue3_s2_0623.parquet",
+      "ue4_s1_0622.parquet",
+      "ue4_s1_0623.parquet",
+      "ue4_s2_0622.parquet",
+      "ue4_s2_0623.parquet"
+    ]
+  }
+}

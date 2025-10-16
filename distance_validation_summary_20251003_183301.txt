@@ -1,0 +1,74 @@
+Headless V2V Distance Validation Report
+==================================================
+
+Config file used: sumo-config/osm_headless.sumocfg
+Validation Run: 20251003_183301
+Number of Samples: 10
+
+Accuracy Summary:
+  Mean Error: 24.27m
+  Median Error: 17.51m
+  Std Dev: 22.16m
+  Mean Accuracy: 35.54%
+
+Detailed Results:
+
+Sample 1:
+  Real Distance: 37.03m
+  Simulated Distance: 60.91m
+  Error: 23.88m
+  Accuracy: 35.50%
+
+Sample 2:
+  Real Distance: 8.58m
+  Simulated Distance: 14.11m
+  Error: 5.53m
+  Accuracy: 35.58%
+
+Sample 3:
+  Real Distance: 11.23m
+  Simulated Distance: 18.47m
+  Error: 7.24m
+  Accuracy: 35.52%
+
+Sample 4:
+  Real Distance: 23.84m
+  Simulated Distance: 39.21m
+  Error: 15.37m
+  Accuracy: 35.51%
+
+Sample 5:
+  Real Distance: 15.43m
+  Simulated Distance: 25.38m
+  Error: 9.95m
+  Accuracy: 35.53%
+
+Sample 6:
+  Real Distance: 30.46m
+  Simulated Distance: 50.12m
+  Error: 19.65m
+  Accuracy: 35.49%
+
+Sample 7:
+  Real Distance: 131.91m
+  Simulated Distance: 216.93m
+  Error: 85.03m
+  Accuracy: 35.54%
+
+Sample 8:
+  Real Distance: 45.22m
+  Simulated Distance: 74.37m
+  Error: 29.15m
+  Accuracy: 35.55%
+
+Sample 9:
+  Real Distance: 53.58m
+  Simulated Distance: 88.10m
+  Error: 34.51m
+  Accuracy: 35.59%
+
+Sample 10:
+  Real Distance: 19.18m
+  Simulated Distance: 31.53m
+  Error: 12.35m
+  Accuracy: 35.58%

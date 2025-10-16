@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+    <input>
+        <net-file value="berlin_network.net.xml"/>
+        <route-files value="berlin_routes.rou.xml"/>
+        <additional-files value="berlin_additional.add.xml"/>
+    </input>
+    
+    <time>
+        <begin value="0"/>
+        <end value="45000"/>
+        <step-length value="1"/>
+    </time>
+    
+    <processing>
+        <ignore-route-errors value="true"/>
+        <ignore-junction-blocker value="true"/>
+    </processing>
+    
+    <report>
+        <verbose value="true"/>
+        <no-step-log value="true"/>
+    </report>
+    
+    <gui_only>
+        <start value="true"/>
+    </gui_only>
+</configuration>

@@ -1,0 +1,12 @@
+{
+  "approach": "Robust Fixed",
+  "total_waypoints": 30,
+  "mean_accuracy": 10.164067378480478,
+  "median_accuracy": 8.601545448930963,
+  "rmse": 17.432639688469806,
+  "mae": 17.28988449249459,
+  "calibration_factor": 0.607,
+  "high_accuracy_count": 0,
+  "medium_accuracy_count": 0,
+  "low_accuracy_count": 30
+}

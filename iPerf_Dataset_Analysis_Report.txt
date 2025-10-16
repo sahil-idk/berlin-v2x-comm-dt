@@ -1,0 +1,220 @@
+================================================================================
+IPERF DATASET ANALYSIS REPORT
+================================================================================
+
+EXECUTIVE SUMMARY
+================================================================================
+
+This report provides a comprehensive analysis of the iPerf dataset containing network 
+performance measurements from the Berlin V2X experiment. The dataset consists of 5 
+parquet files with a total of 387,535 records measuring network throughput and jitter 
+between client devices and a central server.
+
+DATASET OVERVIEW
+================================================================================
+
+Total Files: 5 parquet files
+Total Records: 387,535 measurements
+Total Size: 3.08 MB
+Data Completeness: 100% (no missing values)
+Time Period: Not specified (no timestamp data available)
+
+File Breakdown:
+- pc1.parquet: 57,238 records (0.48 MB) - Client device 1
+- pc2.parquet: 39,235 records (0.34 MB) - Client device 2  
+- pc3.parquet: 54,192 records (0.46 MB) - Client device 3
+- pc4.parquet: 41,928 records (0.35 MB) - Client device 4
+- server.parquet: 194,942 records (1.45 MB) - Server measurements
+
+WHAT THE DATASET PROVIDES
+================================================================================
+
+1. NETWORK PERFORMANCE METRICS
+   - Datarate (throughput): 8,510 to 512,000,000 bits/second
+   - Jitter: 0.000 to 101,416,259.240 milliseconds
+   - Complete network performance measurements for all connections
+
+2. NETWORK TOPOLOGY INFORMATION
+   - Local IP addresses: Client device IPs (10.x.x.x, 100.x.x.x networks)
+   - Remote IP addresses: Server IP (193.174.67.58) and external IPs
+   - Port information: Local and remote port numbers for each connection
+   - Connection mapping: Clear client-server relationship identification
+
+3. MEASUREMENT CONTEXT
+   - Measurement ID: Sequential measurement numbering
+   - Device identification: Clear separation between client devices (pc1-pc4) and server
+   - Connection tracking: Multiple concurrent connections per device
+
+4. DATA QUALITY
+   - 100% data completeness across all files
+   - Consistent schema across all files
+   - No missing or corrupted values
+   - High precision measurements
+
+WHAT THE DATASET LACKS
+================================================================================
+
+1. TEMPORAL INFORMATION
+   - No timestamps or time-based data
+   - Cannot determine measurement timing or duration
+   - No chronological ordering of measurements
+   - Cannot correlate with other datasets temporally
+
+2. SPATIAL/GPS DATA
+   - No GPS coordinates or location information
+   - No vehicle position data
+   - No spatial context for network measurements
+   - Cannot map measurements to physical locations
+
+3. VEHICLE TELEMETRY
+   - No speed, direction, or movement data
+   - No vehicle identification beyond IP addresses
+   - No traffic or road condition information
+   - No weather or environmental data
+
+4. CONTEXTUAL INFORMATION
+   - No test scenario descriptions
+   - No network configuration details
+   - No measurement methodology information
+   - No quality of service parameters
+
+DETAILED ANALYSIS BY FILE
+================================================================================
+
+CLIENT DEVICES (pc1-pc4):
+-------------------------
+
+Common Characteristics:
+- All client files have identical schema (7 columns)
+- 100% data completeness
+- Similar measurement patterns
+- Different IP address ranges indicating different network segments
+
+Performance Comparison:
+- pc1: Highest average datarate (34.8 Mbps), moderate jitter (119.9 ms)
+- pc2: Lowest average datarate (14.0 Mbps), highest jitter (6,444 ms)
+- pc3: Medium average datarate (19.0 Mbps), medium jitter (2,295 ms)
+- pc4: Good average datarate (19.8 Mbps), lowest jitter (0.9 ms)
+
+Network Segments:
+- pc1: 10.175.117.136 (internal network)
+- pc2: 100.65.126.243 (carrier network)
+- pc3: 100.77.217.156 (carrier network)
+- pc4: 10.72.149.143 (internal network)
+
+SERVER MEASUREMENTS:
+-------------------
+
+Characteristics:
+- Largest dataset (194,942 records)
+- Highest average datarate (80.5 Mbps)
+- Server IP: 192.168.20.51
+- Multiple client connections (ports 5204, 5208, 5212, 5216)
+- External client IPs: 80.187.70.136, 80.187.68.143
+
+Performance Analysis:
+- Maximum datarate: 512 Mbps (near theoretical maximum)
+- Consistent high performance measurements
+- Multiple concurrent connection handling
+- Server-side perspective on all client connections
+
+TECHNICAL SIGNIFICANCE
+================================================================================
+
+1. NETWORK PERFORMANCE BASELINE
+   - Establishes baseline network performance for V2X scenarios
+   - Demonstrates real-world network conditions during testing
+   - Provides comparison data for different network segments
+   - Shows server capacity and client performance variations
+
+2. V2X COMMUNICATION ANALYSIS
+   - Client-server architecture typical of V2X infrastructure
+   - Multiple concurrent connections simulating real traffic
+   - Different network segments (internal vs carrier networks)
+   - Performance variations indicating network conditions
+
+3. RESEARCH CONTEXT
+   - Supports network performance analysis in V2X research
+   - Provides data for network optimization studies
+   - Enables comparison with theoretical models
+   - Validates network performance assumptions
+
+SUMO VISUALIZATION POTENTIAL
+================================================================================
+
+CURRENT LIMITATIONS:
+- No GPS coordinates for vehicle positioning
+- No timestamps for temporal simulation
+- No vehicle movement data
+- No spatial context for network measurements
+
+POTENTIAL APPROACHES:
+
+1. NETWORK TOPOLOGY VISUALIZATION
+   - Create virtual network topology based on IP addresses
+   - Map client-server relationships in SUMO
+   - Visualize network performance as connection quality
+   - Show data flow between network nodes
+
+2. PERFORMANCE-BASED SIMULATION
+   - Use datarate as vehicle "speed" in virtual network
+   - Map jitter to vehicle "stability" or "reliability"
+   - Create performance-based vehicle behavior
+   - Simulate network congestion as traffic congestion
+
+3. CONCEPTUAL V2X SIMULATION
+   - Map client devices to virtual vehicles
+   - Use server as central infrastructure node
+   - Simulate V2X communication patterns
+   - Visualize network performance as communication quality
+
+4. HYBRID APPROACH
+   - Combine with other datasets (cellular, sidelink) for context
+   - Use network performance to validate other measurements
+   - Create multi-layer V2X simulation
+   - Integrate network performance with vehicle telemetry
+
+RECOMMENDATIONS
+================================================================================
+
+1. DATA INTEGRATION
+   - Combine with cellular and sidelink datasets for complete picture
+   - Use network performance to validate other measurements
+   - Create temporal correlation with other datasets
+   - Establish measurement context and methodology
+
+2. SUMO IMPLEMENTATION
+   - Focus on network topology visualization
+   - Create performance-based vehicle simulation
+   - Implement conceptual V2X communication patterns
+   - Use as validation layer for other simulations
+
+3. RESEARCH APPLICATIONS
+   - Network performance analysis in V2X scenarios
+   - Infrastructure capacity planning
+   - Communication protocol optimization
+   - Quality of service validation
+
+4. FUTURE ENHANCEMENTS
+   - Add timestamp information for temporal analysis
+   - Include GPS coordinates for spatial context
+   - Add vehicle telemetry data
+   - Provide measurement methodology documentation
+
+CONCLUSION
+================================================================================
+
+The iPerf dataset provides valuable network performance measurements for V2X research
+but lacks spatial and temporal context for direct SUMO visualization. While it cannot
+be used alone for vehicle simulation, it offers excellent opportunities for network
+topology visualization and performance-based simulation approaches. The dataset's
+strength lies in its comprehensive network performance data and 100% data completeness,
+making it ideal for network analysis and validation of other V2X measurements.
+
+The dataset is most valuable when integrated with other Berlin V2X datasets (cellular,
+sidelink) to provide a complete picture of V2X communication performance across
+different technologies and scenarios.
+
+================================================================================
+END OF REPORT
+================================================================================

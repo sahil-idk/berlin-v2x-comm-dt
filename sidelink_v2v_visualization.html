@@ -1,0 +1,459 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Berlin V2X - Sidelink V2V Communication Visualization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html,body { height:100%; margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; }
+    #leftPanel {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 400px;
+      background: #fff; z-index: 1100; overflow:auto; border-right:1px solid #e6e6e6;
+      padding: 12px 12px 80px 12px; box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+    }
+    #map { position:absolute; left:400px; right:0; top:0; bottom:0; }
+    h2 { margin: 6px 0 10px 0; font-size: 16px; }
+    .controls { position: absolute; top: 8px; left: 420px; z-index: 1200; background: rgba(255,255,255,0.95); padding:8px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+    .kv { display:flex; justify-content:space-between; padding:6px 8px; border-bottom:1px solid #f3f3f3; align-items:center; }
+    .kv .k { color:#333; font-weight:600; }
+    .kv .v { color:#222; text-align:right; max-width:160px; word-break:break-word; }
+    .groupTitle { font-weight:700; margin-top:8px; margin-bottom:6px; color:#333; }
+    .small { font-size:12px; color:#666; }
+    .dropdown { width:100%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:8px; }
+    .v2v-link { stroke:#ff6b6b; stroke-width:3; stroke-opacity:0.7; stroke-dasharray:5,5; }
+    .source-marker { background-color:#4ecdc4; }
+    .dest-marker { background-color:#ff6b6b; }
+    .signal-strength { font-weight:bold; }
+    .signal-excellent { color:#28a745; }
+    .signal-good { color:#ffc107; }
+    .signal-poor { color:#dc3545; }
+    .distance-info { background:#e3f2fd; border:1px solid #2196f3; border-radius:4px; padding:8px; margin:8px 0; color:#1976d2; font-size:13px; }
+    .communication-status { background:#f3e5f5; border:1px solid #9c27b0; border-radius:4px; padding:8px; margin:8px 0; color:#7b1fa2; font-size:13px; }
+  </style>
+</head>
+<body>
+
+<div id="leftPanel">
+  <h2>V2V Communication Parameters</h2>
+  
+  <div class="small">Sidelink Dataframe: V2V Communication Visualization</div>
+  
+  <div style="margin-top:10px;">
+    <label>Source Vehicle:</label>
+    <select id="sourceSelector" class="dropdown">
+      <option value="1">Vehicle 1</option>
+      <option value="2" selected>Vehicle 2</option>
+      <option value="3">Vehicle 3</option>
+      <option value="4">Vehicle 4</option>
+    </select>
+  </div>
+  
+  <div style="margin-top:10px;">
+    <label>Destination Vehicle:</label>
+    <select id="destSelector" class="dropdown">
+      <option value="1">Vehicle 1</option>
+      <option value="2">Vehicle 2</option>
+      <option value="3">Vehicle 3</option>
+      <option value="4" selected>Vehicle 4</option>
+    </select>
+  </div>
+  
+  <div style="margin-top:10px;">
+    <label>Scenario:</label>
+    <select id="scenarioSelector" class="dropdown">
+      <option value="S1">Scenario S1</option>
+      <option value="S2">Scenario S2</option>
+      <option value="all">All Scenarios</option>
+    </select>
+  </div>
+
+  <div id="v2vStatus" style="margin-top:12px;"></div>
+  <div id="distanceInfo" style="margin-top:12px;"></div>
+
+  <div style="margin-top:12px;">
+    <div class="groupTitle">V2V Signal Quality</div>
+    <div id="signalGroup"></div>
+
+    <div class="groupTitle">Communication Parameters</div>
+    <div id="commGroup"></div>
+
+    <div class="groupTitle">Network Performance</div>
+    <div id="networkGroup"></div>
+  </div>
+
+  <div style="position: absolute; left:12px; right:12px; bottom:12px;">
+    <div class="small muted">V2V Communication: Direct vehicle-to-vehicle communication</div>
+    <div class="small muted">Red line: V2V communication link between vehicles</div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div class="controls" id="controls">
+  <button id="btnPlay">Play</button>
+  <button id="btnPause">Pause</button>
+  <label style="margin-left:8px">Speed: <input id="speed" type="range" min="1" max="1000" value="120"></label>
+  <button id="start" style="margin-left:8px">Start</button>
+  <button id="end">End</button>
+  <div id="info" style="margin-top:6px; font-size:13px;"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+/*
+  sidelink_v2v_visualization.html
+  - Visualizes V2V communication between source and destination vehicles
+  - Shows real-time signal quality parameters as vehicles move
+  - Displays communication link between vehicles
+  - Filters data by source, destination, and scenario
+*/
+
+// V2V communication parameters
+const v2vParams = ['SNR', 'RSRP', 'RSSI', 'MCS', 'NOISE POWER', 'RX_GAIN', 'Rx_power'];
+const networkParams = ['Received Packets', 'Packet_transmission_rate_hz', 'Packet_error_ratio'];
+const commParams = ['SubFrame_NUMBER', 'SubFrame_LENGHT'];
+
+const map = L.map('map').setView([52.52,13.405], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+
+// V2V communication link
+const v2vLink = L.polyline([], {color:'#ff6b6b', weight:3, opacity:0.7, dashArray:'5,5'}).addTo(map);
+
+// Vehicle markers
+const sourceMarker = L.circleMarker([0,0], {radius:8, fillColor:'#4ecdc4', color:'#fff', weight:2}).addTo(map);
+const destMarker = L.circleMarker([0,0], {radius:8, fillColor:'#ff6b6b', color:'#fff', weight:2}).addTo(map);
+
+// Add labels for vehicles
+const sourceLabel = L.marker([0,0], {icon: L.divIcon({html: '<div style="background:rgba(78,205,196,0.8);color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:bold;">S</div>', iconSize:[20,20], className:'custom-div-icon'})}).addTo(map);
+const destLabel = L.marker([0,0], {icon: L.divIcon({html: '<div style="background:rgba(255,107,107,0.8);color:white;padding:2px 6px;border-radius:3px;font-size:11px;font-weight:bold;">D</div>', iconSize:[20,20], className:'custom-div-icon'})}).addTo(map);
+
+let allData = [];
+let filteredData = [];
+let idx = 0;
+let timer = null;
+let running = false;
+
+const signalGroup = document.getElementById('signalGroup');
+const commGroup = document.getElementById('commGroup');
+const networkGroup = document.getElementById('networkGroup');
+const info = document.getElementById('info');
+const speedControl = document.getElementById('speed');
+const v2vStatus = document.getElementById('v2vStatus');
+const distanceInfo = document.getElementById('distanceInfo');
+
+function setInfoText(t){ info.innerText = t || ''; }
+
+// Calculate distance between two GPS points
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371e3; // Earth's radius in meters
+  const φ1 = lat1 * Math.PI/180;
+  const φ2 = lat2 * Math.PI/180;
+  const Δφ = (lat2-lat1) * Math.PI/180;
+  const Δλ = (lon2-lon1) * Math.PI/180;
+
+  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+          Math.cos(φ1) * Math.cos(φ2) *
+          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c; // Distance in meters
+}
+
+// Get signal quality class based on RSRP value
+function getSignalQuality(rsrp) {
+  if (rsrp >= -70) return {class: 'signal-excellent', text: 'Excellent'};
+  if (rsrp >= -85) return {class: 'signal-good', text: 'Good'};
+  return {class: 'signal-poor', text: 'Poor'};
+}
+
+// utility: build element for a kv pair
+function kvElem(k, v, className = ''){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'kv ' + className;
+  const left = document.createElement('div'); left.className = 'k'; left.innerText = k;
+  const right = document.createElement('div'); right.className = 'v'; right.innerText = (v===null || v===undefined ? '' : String(v));
+  wrapper.appendChild(left); wrapper.appendChild(right);
+  return wrapper;
+}
+
+function refreshParamsDisplay(point){
+  const row = point.raw;
+  
+  // Clear previous content
+  signalGroup.innerHTML = '';
+  commGroup.innerHTML = '';
+  networkGroup.innerHTML = '';
+  
+  // V2V Signal Quality
+  v2vParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      let value = row[param];
+      let className = '';
+      
+      if (param === 'RSRP') {
+        const quality = getSignalQuality(value);
+        value = `${value} dBm (${quality.text})`;
+        className = quality.class;
+      } else if (param === 'SNR') {
+        if (value >= 15) className = 'signal-excellent';
+        else if (value >= 10) className = 'signal-good';
+        else className = 'signal-poor';
+      }
+      
+      signalGroup.appendChild(kvElem(param, value, className));
+    }
+  });
+  
+  // Communication Parameters
+  commParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      commGroup.appendChild(kvElem(param, row[param]));
+    }
+  });
+  
+  // Network Performance
+  networkParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      networkGroup.appendChild(kvElem(param, row[param]));
+    }
+  });
+}
+
+function updateV2VVisualization(point) {
+  const row = point.raw;
+  
+  // Update vehicle positions
+  const sourceLat = parseFloat(row['Latitude_source']);
+  const sourceLon = parseFloat(row['Longitude_source']);
+  const destLat = parseFloat(row['Latitude_destination']);
+  const destLon = parseFloat(row['Longitude_destination']);
+  
+  if (!isNaN(sourceLat) && !isNaN(sourceLon) && !isNaN(destLat) && !isNaN(destLon)) {
+    // Update markers
+    sourceMarker.setLatLng([sourceLat, sourceLon]);
+    destMarker.setLatLng([destLat, destLon]);
+    sourceLabel.setLatLng([sourceLat, sourceLon]);
+    destLabel.setLatLng([destLat, destLon]);
+    
+    // Update V2V communication link
+    v2vLink.setLatLngs([[sourceLat, sourceLon], [destLat, destLon]]);
+    
+    // Calculate distance
+    const distance = calculateDistance(sourceLat, sourceLon, destLat, destLon);
+    
+    // Update distance info
+    distanceInfo.innerHTML = `
+      <div class="distance-info">
+        <strong>Inter-vehicle Distance:</strong> ${distance.toFixed(1)} meters
+        <br><strong>Source:</strong> Vehicle ${row['Source']} (${sourceLat.toFixed(6)}, ${sourceLon.toFixed(6)})
+        <br><strong>Destination:</strong> Vehicle ${row['Destination']} (${destLat.toFixed(6)}, ${destLon.toFixed(6)})
+      </div>
+    `;
+    
+    // Update V2V status
+    const rsrp = parseFloat(row['RSRP']);
+    const snr = parseFloat(row['SNR']);
+    const quality = getSignalQuality(rsrp);
+    
+    v2vStatus.innerHTML = `
+      <div class="communication-status">
+        <strong>V2V Communication Status:</strong>
+        <br>Signal Quality: <span class="signal-strength ${quality.class}">${quality.text}</span>
+        <br>RSRP: ${rsrp} dBm | SNR: ${snr} dB
+        <br>MCS: ${row['MCS']} | Packets: ${row['Received Packets']}
+      </div>
+    `;
+    
+    // Center map on both vehicles
+    const group = new L.featureGroup([sourceMarker, destMarker]);
+    map.fitBounds(group.getBounds().pad(0.1));
+  }
+}
+
+// Filter data based on selected vehicles and scenario
+function filterData() {
+  const source = document.getElementById('sourceSelector').value;
+  const dest = document.getElementById('destSelector').value;
+  const scenario = document.getElementById('scenarioSelector').value;
+  
+  filteredData = allData.filter(row => {
+    const sourceMatch = row['Source'] == source;
+    const destMatch = row['Destination'] == dest;
+    const scenarioMatch = scenario === 'all' || row['Scenario'] === scenario;
+    
+    return sourceMatch && destMatch && scenarioMatch;
+  });
+  
+  if (filteredData.length === 0) {
+    setInfoText(`No V2V communication found between Vehicle ${source} and Vehicle ${dest} in ${scenario}. Try different vehicle combinations.`);
+    
+    // Show available combinations in console for debugging
+    const availableCombinations = getAvailableCombinations();
+    console.log('Available combinations:', availableCombinations);
+    
+    return false;
+  }
+  
+  setInfoText(`Found ${filteredData.length} V2V communication records between Vehicle ${source} and Vehicle ${dest} in ${scenario}`);
+  return true;
+}
+
+// Update visualization for given index
+function updateForIndex(i){
+  if (!filteredData.length) return;
+  const row = filteredData[i];
+  
+  const point = {
+    raw: row,
+    lat: parseFloat(row['Latitude_source']),
+    lon: parseFloat(row['Longitude_source'])
+  };
+  
+  updateV2VVisualization(point);
+  refreshParamsDisplay(point);
+  
+  const timestamp = row['timestamp_iso'] || row['time_epoch'] || '';
+  setInfoText(`V2V Communication ${i+1} / ${filteredData.length} | ${timestamp}`);
+}
+
+// Animation control
+function startAnim(){
+  if (running || !filteredData.length) return;
+  running = true;
+  const speed = Number(speedControl.value);
+  const delay = Math.max(10, 1000 / speed);
+  timer = setInterval(()=> {
+    idx = Math.min(idx+1, filteredData.length-1);
+    updateForIndex(idx);
+    if (idx >= filteredData.length-1) stopAnim();
+  }, delay);
+}
+
+function stopAnim(){
+  running = false;
+  if (timer){ clearInterval(timer); timer = null; }
+}
+
+// Event listeners
+document.getElementById('btnPlay').addEventListener('click', startAnim);
+document.getElementById('btnPause').addEventListener('click', stopAnim);
+document.getElementById('start').addEventListener('click', ()=>{ idx = 0; updateForIndex(0); });
+document.getElementById('end').addEventListener('click', ()=>{ idx = Math.max(0, filteredData.length-1); updateForIndex(idx); });
+speedControl.addEventListener('input', ()=>{ if (running){ stopAnim(); startAnim(); }});
+
+// Dropdown change handlers
+document.getElementById('sourceSelector').addEventListener('change', ()=>{
+  if (filterData()) {
+    idx = 0;
+    updateForIndex(0);
+  }
+});
+
+document.getElementById('destSelector').addEventListener('change', ()=>{
+  if (filterData()) {
+    idx = 0;
+    updateForIndex(0);
+  }
+});
+
+document.getElementById('scenarioSelector').addEventListener('change', ()=>{
+  if (filterData()) {
+    idx = 0;
+    updateForIndex(0);
+  }
+});
+
+// Load CSV data
+function loadCsvData() {
+  setInfoText('Loading sidelink V2V data...');
+  
+  Papa.parse('sidelink_parsed.csv', {
+    download: true, header: true, skipEmptyLines: true,
+    complete: function(results){
+      const data = results.data;
+      if (!data || data.length === 0){ 
+        setInfoText('No data found in CSV'); 
+        return; 
+      }
+      
+      // Filter out rows without valid GPS coordinates
+      allData = data.filter(row => {
+        const sourceLat = parseFloat(row['Latitude_source']);
+        const sourceLon = parseFloat(row['Longitude_source']);
+        const destLat = parseFloat(row['Latitude_destination']);
+        const destLon = parseFloat(row['Longitude_destination']);
+        
+        return !isNaN(sourceLat) && !isNaN(sourceLon) && !isNaN(destLat) && !isNaN(destLon);
+      });
+      
+      setInfoText(`Loaded ${allData.length} V2V communication records`);
+      
+      // Show available vehicle combinations
+      const availableCombinations = getAvailableCombinations();
+      console.log('Available vehicle combinations:', availableCombinations);
+      
+      // Initial filter and display
+      if (filterData()) {
+        idx = 0;
+        updateForIndex(0);
+      } else {
+        // If default combination doesn't work, try to find a working one
+        const workingCombo = findWorkingCombination();
+        if (workingCombo) {
+          document.getElementById('sourceSelector').value = workingCombo.source;
+          document.getElementById('destSelector').value = workingCombo.dest;
+          if (filterData()) {
+            idx = 0;
+            updateForIndex(0);
+          }
+        }
+      }
+    },
+    error: function(err){ 
+      setInfoText('CSV load error: ' + err); 
+      console.error('CSV load error:', err);
+    }
+  });
+}
+
+// Get available vehicle combinations from the data
+function getAvailableCombinations() {
+  const combinations = new Set();
+  allData.forEach(row => {
+    const source = row['Source'];
+    const dest = row['Destination'];
+    const scenario = row['Scenario'];
+    combinations.add(`${source}-${dest}-${scenario}`);
+  });
+  return Array.from(combinations);
+}
+
+// Find a working combination if default doesn't work
+function findWorkingCombination() {
+  const vehicles = ['1', '2', '3', '4'];
+  const scenarios = ['S1', 'S2'];
+  
+  for (const source of vehicles) {
+    for (const dest of vehicles) {
+      if (source !== dest) {
+        for (const scenario of scenarios) {
+          const testData = allData.filter(row => {
+            return row['Source'] == source && row['Destination'] == dest && row['Scenario'] === scenario;
+          });
+          if (testData.length > 0) {
+            return { source, dest, scenario };
+          }
+        }
+      }
+    }
+  }
+  return null;
+}
+
+// Initial load
+loadCsvData();
+</script>
+</body>
+</html>

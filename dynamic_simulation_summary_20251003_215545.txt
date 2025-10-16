@@ -1,0 +1,8 @@
+DYNAMIC V2V SIMULATION SUMMARY
+===================================
+
+Simulation completed: 2025-10-03 21:55:45
+Calibration factor: 0.607
+Total simulation steps: 12
+Distance range: 4.7m - 42.1m
+Communication success rate: 100.0%

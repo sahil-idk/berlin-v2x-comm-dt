@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="s2_src_type" accel="2.6" decel="4.5" sigma="0.5" length="4.5" width="1.8" height="1.5" minGap="2.5" maxSpeed="50" guiShape="passenger" color="0,0,255"/>
+    <vType id="s2_dst_type" accel="2.6" decel="4.5" sigma="0.5" length="4.5" width="1.8" height="1.5" minGap="2.5" maxSpeed="50" guiShape="passenger" color="255,0,0"/>
+    <route id="src_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+    <route id="dst_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+    <vehicle id="s2_src" type="s2_src_type" route="src_route" depart="0" departLane="best" departSpeed="0"/>
+    <vehicle id="s2_dst" type="s2_dst_type" route="dst_route" depart="0" departLane="best" departSpeed="0"/>
+</routes>

@@ -1,0 +1,12 @@
+FIXED CALIBRATED DYNAMIC V2V SIMULATION SUMMARY
+=================================================
+
+Corrected approach: GPS calibration for distances only
+Calibration factor: 0.607
+Simulation steps: 120
+Vehicles tracked: 3
+Distance validations: 9
+Distance accuracy: 45.8%
+Distance range: 4.7m - 33.3m
+Communication success: 100.0%
+Average SNR: 16.4dB

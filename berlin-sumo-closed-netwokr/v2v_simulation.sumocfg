@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<configuration><input><net-file value="osm.net.xml.gz" /><route-files value="v2v_routes.rou.xml,osm.passenger.trips.xml" /><additional-files value="osm.poly.xml.gz,osm_stops.add.xml,output.add.xml" /></input><time><begin value="0" /><end value="300" /></time><processing><ignore-route-errors value="true" /></processing><output><tripinfo-output value="v2v_tripinfos.xml" /><fcd-output value="v2v_fcd.xml" /></output><gui_only><gui-settings-file value="osm.view.xml" /></gui_only></configuration>

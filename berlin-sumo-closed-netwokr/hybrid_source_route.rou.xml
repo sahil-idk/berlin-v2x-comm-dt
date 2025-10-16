@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+  <route id="hybrid_source_route" edges="-279549312#1 -279549312#0 -66514461#2 153376938"/>
+  <vType id="hybrid_source_vType" accel="2.0" decel="4.5" sigma="0.5" length="4.5" maxSpeed="50" guiShape="passenger" color="blue"/>
+</routes>

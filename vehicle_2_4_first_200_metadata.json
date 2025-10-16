@@ -1,0 +1,31 @@
+{
+  "dataset_name": "Vehicle 2-4 First 200 Points",
+  "source_file": "vehicle_2_4_closer_points.csv",
+  "extraction_date": "2025-10-06T11:07:33.486409",
+  "total_records": 200,
+  "date_range": {
+    "start": 1624457911.4891016,
+    "end": 1624458011.3420863
+  },
+  "coordinate_bounds": {
+    "source_lat_min": 52.50674333333333,
+    "source_lat_max": 52.50994666666666,
+    "source_lon_min": 13.346181666666666,
+    "source_lon_max": 13.358036666666669,
+    "dest_lat_min": 52.506705,
+    "dest_lat_max": 52.50994666666666,
+    "dest_lon_min": 13.346086666666666,
+    "dest_lon_max": 13.358036666666669
+  },
+  "distance_statistics": {
+    "min_distance": 11.35201743129852,
+    "max_distance": 23.06607609797377,
+    "mean_distance": 16.430265917600842,
+    "median_distance": 16.71816442232803,
+    "std_distance": 2.3044358915279797
+  },
+  "scenarios": [
+    "S2"
+  ],
+  "description": "First 200 points from Vehicle 2-4 closer dataset for focused simulation"
+}

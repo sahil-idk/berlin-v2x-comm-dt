@@ -1,0 +1,11 @@
+{
+  "approach": "2. Improved Routing",
+  "mean_accuracy": 60.92730150596581,
+  "median_accuracy": 60.92697814956203,
+  "rmse": 7.4810245326310705,
+  "mae": 7.4435654975464285,
+  "high_accuracy_waypoints": 0,
+  "medium_accuracy_waypoints": 0,
+  "low_accuracy_waypoints": 10,
+  "total_waypoints": 10,
+  "best_waypoint": 

@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Berlin V2X - GPS Simulation + Params</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html,body { height:100%; margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; }
+    #leftPanel {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 360px;
+      background: #fff; z-index: 1100; overflow:auto; border-right:1px solid #e6e6e6;
+      padding: 12px 12px 80px 12px; box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+    }
+    #map { position:absolute; left:360px; right:0; top:0; bottom:0; }
+    h2 { margin: 6px 0 10px 0; font-size: 16px; }
+    .controls { position: absolute; top: 8px; left: 380px; z-index: 1200; background: rgba(255,255,255,0.95); padding:8px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+    .kv { display:flex; justify-content:space-between; padding:6px 8px; border-bottom:1px solid #f3f3f3; align-items:center; }
+    .kv .k { color:#333; font-weight:600; }
+    .kv .v { color:#222; text-align:right; max-width:160px; word-break:break-word; }
+    .groupTitle { font-weight:700; margin-top:8px; margin-bottom:6px; color:#333; }
+    .small { font-size:12px; color:#666; }
+    #download { display:inline-block; margin-left:8px; }
+    #searchBox { width:100%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:8px; }
+    .muted { color:#666; font-size:12px; margin-top:6px; }
+    .no-gps-warning { background:#fff3cd; border:1px solid #ffeaa7; border-radius:4px; padding:8px; margin:8px 0; color:#856404; font-size:13px; }
+    .gps-available { background:#d4edda; border:1px solid #c3e6cb; border-radius:4px; padding:8px; margin:8px 0; color:#155724; font-size:13px; }
+  </style>
+</head>
+<body>
+
+<div id="leftPanel">
+  <h2>Trace Parameters</h2>
+  <div class="small">File:
+    <select id="fileSelector" style="margin-left:6px">
+      <option value="pc1_parsed.csv">PC1 - Network Performance (No GPS)</option>
+      <option value="pc2_parsed.csv">PC2 - GPS + Weather + Traffic</option>
+      <option value="pc3_parsed.csv">PC3 - GPS + Weather + Traffic</option>
+      <option value="pc4_parsed.csv">PC4 - GPS + Weather + Traffic</option>
+    </select>
+  </div>
+
+  <div style="margin-top:10px;">
+    <input id="searchBox" placeholder="Filter parameter names (type to filter)" />
+    <div class="muted">Use the search box to filter parameter names shown below.</div>
+  </div>
+
+  <div id="gpsStatus" style="margin-top:12px;"></div>
+
+  <div style="margin-top:12px;">
+    <div class="groupTitle">Communication Parameters</div>
+    <div id="commGroup"></div>
+
+    <div class="groupTitle">Other Parameters</div>
+    <div id="otherGroup"></div>
+  </div>
+
+  <div style="position: absolute; left:12px; right:12px; bottom:12px;">
+    <div class="small muted">Play controls are on the top-right of the map.</div>
+    <div class="small muted">Download cleaned CSV: <a id="download" href="pc3_parsed.csv" download>pc3_parsed.csv</a></div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div class="controls" id="controls">
+  <button id="btnPlay">Play</button>
+  <button id="btnPause">Pause</button>
+  <label style="margin-left:8px">Speed: <input id="speed" type="range" min="1" max="1000" value="120"></label>
+  <button id="start" style="margin-left:8px">Start</button>
+  <button id="end">End</button>
+  <div id="info" style="margin-top:6px; font-size:13px;"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+/*
+  map_simulation_with_params.html
+  - Left panel shows communication params and other params.
+  - Choose CSV from the fileSelector or update the CSV name in the selector options.
+  - The code auto-detects 'lat'/'lon'/'timestamp' columns but you can adapt as needed.
+*/
+
+// default file - start with PC1 (network performance data)
+let csvFile = 'pc1_parsed.csv';
+
+// communication-related column name heuristics (case-insensitive substrings)
+const commKeys = ['rsrp','rsrq','sinr','mcs','datarate','throughput','iperf','ping','rtt','jitter','ip','port','operator','cellid','cid','enodeb','pci'];
+
+const map = L.map('map').setView([52.52,13.405], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+const polyline = L.polyline([], {color:'#1f77b4', weight:4, opacity:0.9}).addTo(map);
+const marker = L.circleMarker([0,0], {radius:7, fillColor:'#ff3b30', color:'#fff', weight:2}).addTo(map);
+
+let points = [];
+let idx = 0;
+let timer = null;
+let running = false;
+
+const commGroup = document.getElementById('commGroup');
+const otherGroup = document.getElementById('otherGroup');
+const info = document.getElementById('info');
+const speedControl = document.getElementById('speed');
+const downloadLink = document.getElementById('download');
+const searchBox = document.getElementById('searchBox');
+const fileSelector = document.getElementById('fileSelector');
+const gpsStatus = document.getElementById('gpsStatus');
+
+function setInfoText(t){ info.innerText = t || ''; }
+function updateDownloadLink(fname){ downloadLink.href = fname; downloadLink.innerText = fname; }
+
+// utility: build element for a kv pair
+function kvElem(k, v){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'kv';
+  const left = document.createElement('div'); left.className = 'k'; left.innerText = k;
+  const right = document.createElement('div'); right.className = 'v'; right.innerText = (v===null || v===undefined ? '' : String(v));
+  wrapper.appendChild(left); wrapper.appendChild(right);
+  return wrapper;
+}
+
+function refreshParamsDisplay(point){
+  // point.raw is the original row object
+  const row = point.raw;
+  commGroup.innerHTML = '';
+  otherGroup.innerHTML = '';
+
+  // prepare search filter
+  const q = (searchBox.value || '').trim().toLowerCase();
+
+  // two passes: comm and then other
+  const keys = Object.keys(row || {});
+  // classify keys into comm and other
+  const comms = [], others = [];
+  for (const k of keys){
+    const kl = k.toLowerCase();
+    const v = row[k];
+    if (q && k.toLowerCase().indexOf(q) === -1) continue; // filter by search query
+    let isComm = false;
+    for (const s of commKeys){
+      if (kl.indexOf(s) !== -1){ isComm = true; break; }
+    }
+    if (isComm) comms.push(k);
+    else others.push(k);
+  }
+  // display communication keys (sorted)
+  comms.sort();
+  if (comms.length === 0) {
+    commGroup.appendChild(kvElem('(no comm params detected)',''));
+  } else {
+    for (const k of comms){
+      commGroup.appendChild(kvElem(k, row[k]));
+    }
+  }
+  // display other keys
+  others.sort();
+  if (others.length === 0){
+    otherGroup.appendChild(kvElem('(no other params)',''));
+  } else {
+    for (const k of others){
+      otherGroup.appendChild(kvElem(k, row[k]));
+    }
+  }
+}
+
+// update map marker and params for given index
+function updateForIndex(i){
+  if (!points.length) return;
+  const p = points[i];
+  marker.setLatLng([p.lat, p.lon]);
+  if (p.timestamp_iso) marker.bindPopup(`#${i+1}<br>${p.timestamp_iso}`).openPopup();
+  else marker.bindPopup(`#${i+1}`).openPopup();
+  map.panTo([p.lat, p.lon], {animate:true});
+  setInfoText(`Point ${i+1} / ${points.length} ${p.timestamp_iso ? '| ' + p.timestamp_iso : ''}`);
+  refreshParamsDisplay(p);
+}
+
+// animation control
+function startAnim(){
+  if (running || !points.length) return;
+  running = true;
+  const speed = Number(speedControl.value);
+  const delay = Math.max(10, 1000 / speed);
+  timer = setInterval(()=> {
+    idx = Math.min(idx+1, points.length-1);
+    updateForIndex(idx);
+    if (idx >= points.length-1) stopAnim();
+  }, delay);
+}
+function stopAnim(){
+  running = false;
+  if (timer){ clearInterval(timer); timer = null; }
+}
+
+document.getElementById('btnPlay').addEventListener('click', startAnim);
+document.getElementById('btnPause').addEventListener('click', stopAnim);
+document.getElementById('start').addEventListener('click', ()=>{ idx = 0; updateForIndex(0); });
+document.getElementById('end').addEventListener('click', ()=>{ idx = Math.max(0, points.length-1); updateForIndex(idx); });
+speedControl.addEventListener('input', ()=>{ if (running){ stopAnim(); startAnim(); }});
+searchBox.addEventListener('input', ()=>{ if (points.length) updateForIndex(idx); });
+
+// file selector change
+fileSelector.addEventListener('change', ()=> {
+  csvFile = fileSelector.value;
+  downloadLink.href = csvFile;
+  loadCsv(csvFile);
+});
+
+// parse CSV rows into points with lat/lon; adapt column names if necessary
+function normalizeRows(dataRows){
+  // find candidate lat/lon/time column names
+  const header = Object.keys(dataRows[0] || {});
+  let latKey = header.find(h => /lat/i.test(h));
+  let lonKey = header.find(h => /lon|lng|longitude/i.test(h));
+  let timeKey = header.find(h => /time|timestamp|ts|date/i.test(h));
+  let speedKey = header.find(h => /speed|spd/i.test(h));
+  
+  // Check if we have valid lat/lon columns
+  const hasValidCoords = latKey && lonKey && 
+    dataRows.some(r => !isNaN(parseFloat(r[latKey])) && !isNaN(parseFloat(r[lonKey])));
+  
+  if (!hasValidCoords) {
+    // Return empty array with metadata for datasets without GPS
+    return {
+      points: [],
+      hasGPS: false,
+      message: `Dataset does not contain valid GPS coordinates. Found columns: ${header.join(', ')}`
+    };
+  }
+  
+  // fallback to first two columns if not found
+  if (!latKey || !lonKey){
+    // try common fallbacks
+    const lower = header.map(h => h.toLowerCase());
+    if (!latKey && lower.indexOf('y') !== -1) latKey = header[lower.indexOf('y')];
+    if (!lonKey && lower.indexOf('x') !== -1) lonKey = header[lower.indexOf('x')];
+  }
+  
+  // build normalized points
+  const pts = [];
+  for (const r of dataRows){
+    const lat = latKey ? parseFloat(r[latKey]) : NaN;
+    const lon = lonKey ? parseFloat(r[lonKey]) : NaN;
+    if (isNaN(lat) || isNaN(lon)) continue;
+    let timestamp = timeKey ? r[timeKey] : null;
+    let timestamp_iso = null;
+    if (timestamp !== null && timestamp !== '' && timestamp !== undefined){
+      const n = Number(timestamp);
+      if (!isNaN(n)){
+        if (n > 1e12) timestamp_iso = new Date(n).toISOString();
+        else if (n > 1e9) timestamp_iso = new Date(n*1000).toISOString();
+        else timestamp_iso = new Date(n*1000).toISOString();
+      } else {
+        const dt = new Date(timestamp);
+        if (!isNaN(dt.getTime())) timestamp_iso = dt.toISOString();
+      }
+    }
+    pts.push({
+      raw: r,
+      lat: lat,
+      lon: lon,
+      timestamp: timestamp,
+      timestamp_iso: timestamp_iso,
+      speed: speedKey ? (r[speedKey] ? Number(r[speedKey]) : null) : null
+    });
+  }
+  return {
+    points: pts,
+    hasGPS: true,
+    message: `Loaded ${pts.length} GPS points`
+  };
+}
+
+function loadCsv(path){
+  setInfoText('Loading ' + path + ' ...');
+  Papa.parse(path, {
+    download: true, header: true, skipEmptyLines: true,
+    complete: function(results){
+      const data = results.data;
+      if (!data || data.length === 0){ setInfoText('No data found in CSV'); return; }
+      
+      const result = normalizeRows(data);
+      points = result.points;
+      
+      if (!result.hasGPS) {
+        // Handle datasets without GPS coordinates
+        setInfoText(result.message);
+        gpsStatus.innerHTML = '<div class="no-gps-warning">⚠️ No GPS coordinates found in this dataset. Map shows default Berlin location.</div>';
+        polyline.setLatLngs([]);
+        marker.setLatLng([52.52, 13.405]); // Default Berlin location
+        map.setView([52.52, 13.405], 13);
+        
+        // Show first row data in parameters panel
+        if (data.length > 0) {
+          refreshParamsDisplay({raw: data[0]});
+        }
+        updateDownloadLink(path);
+        return;
+      }
+      
+      if (!points.length){ 
+        setInfoText('No valid lat/lon points detected; check column names'); 
+        return; 
+      }
+      
+      // draw polyline and center map
+      const latlngs = points.map(p => [p.lat, p.lon]);
+      polyline.setLatLngs(latlngs);
+      marker.setLatLng(latlngs[0]);
+      map.fitBounds(polyline.getBounds(), {padding:[20,20]});
+      idx = 0;
+      updateForIndex(0);
+      setInfoText(result.message);
+      gpsStatus.innerHTML = '<div class="gps-available">✅ GPS coordinates available. Map shows vehicle trajectory.</div>';
+      updateDownloadLink(path);
+    },
+    error: function(err){ setInfoText('CSV load error: ' + err); }
+  });
+}
+
+// initial load
+downloadLink.href = csvFile;
+loadCsv(csvFile);
+</script>
+</body>
+</html>

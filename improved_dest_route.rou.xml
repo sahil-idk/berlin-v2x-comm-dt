@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+  <vType id="v2v_dest" accel="2.0" decel="4.5" sigma="0.5" length="4.0" maxSpeed="50.0" color="red"/>
+  <route id="dest_route" edges="-279549312#1 -279549312#0 -66514461#2 153376938 309602349 1101157404#0 1412298394 153373877 1150439369#0 720356202 4531812 4531813 153370949#0 -153370949#1 153370345"/>
+  <vehicle id="v2v_dest" type="v2v_dest" route="dest_route" depart="0" color="red"/>
+</routes>

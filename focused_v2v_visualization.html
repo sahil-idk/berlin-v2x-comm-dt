@@ -1,0 +1,447 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Focused V2V Visualization - Vehicle 2 & 4 Interactions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html,body { height:100%; margin:0; padding:0; font-family: Arial, Helvetica, sans-serif; }
+    #leftPanel {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 400px;
+      background: #fff; z-index: 1100; overflow:auto; border-right:1px solid #e6e6e6;
+      padding: 12px 12px 80px 12px; box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+    }
+    #map { position:absolute; left:400px; right:0; top:0; bottom:0; }
+    h2 { margin: 6px 0 10px 0; font-size: 16px; }
+    .controls { position: absolute; top: 8px; left: 420px; z-index: 1200; background: rgba(255,255,255,0.95); padding:8px; border-radius:6px; box-shadow:0 1px 6px rgba(0,0,0,0.1); }
+    .kv { display:flex; justify-content:space-between; padding:6px 8px; border-bottom:1px solid #f3f3f3; align-items:center; }
+    .kv .k { color:#333; font-weight:600; }
+    .kv .v { color:#222; text-align:right; max-width:160px; word-break:break-word; }
+    .groupTitle { font-weight:700; margin-top:8px; margin-bottom:6px; color:#333; }
+    .small { font-size:12px; color:#666; }
+    .dropdown { width:100%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:8px; }
+    .v2v-link { stroke:#ff6b6b; stroke-width:3; stroke-opacity:0.7; stroke-dasharray:5,5; }
+    .source-marker { background-color:#4ecdc4; }
+    .dest-marker { background-color:#ff6b6b; }
+    .signal-strength { font-weight:bold; }
+    .signal-excellent { color:#28a745; }
+    .signal-good { color:#ffc107; }
+    .signal-poor { color:#dc3545; }
+    .distance-info { background:#e3f2fd; border:1px solid #2196f3; border-radius:4px; padding:8px; margin:8px 0; color:#1976d2; font-size:13px; }
+    .communication-status { background:#f3e5f5; border:1px solid #9c27b0; border-radius:4px; padding:8px; margin:8px 0; color:#7b1fa2; font-size:13px; }
+    .dataset-info { background:#e8f5e8; border:1px solid #4caf50; border-radius:4px; padding:8px; margin:8px 0; color:#2e7d32; font-size:13px; }
+    .trajectory-line { stroke:#2196f3; stroke-width:2; stroke-opacity:0.8; fill:none; }
+    .waypoint-marker { background-color:#ff9800; }
+  </style>
+</head>
+<body>
+
+<div id="leftPanel">
+  <h2>Focused V2V Visualization</h2>
+  
+  <div class="dataset-info">
+    <strong>Dataset:</strong> Vehicle 2 ↔ Vehicle 4 Interactions<br>
+    <strong>Records:</strong> <span id="totalRecords">Loading...</span><br>
+    <strong>Coverage:</strong> <span id="coverage">Loading...</span><br>
+    <strong>Distance Range:</strong> <span id="distanceRange">Loading...</span>
+  </div>
+  
+  <div style="margin-top:10px;">
+    <label>Scenario:</label>
+    <select id="scenarioSelector" class="dropdown">
+      <option value="all">All Scenarios</option>
+      <option value="S1">Scenario S1</option>
+      <option value="S2">Scenario S2</option>
+    </select>
+  </div>
+
+  <div id="v2vStatus" style="margin-top:12px;"></div>
+  <div id="distanceInfo" style="margin-top:12px;"></div>
+
+  <div style="margin-top:12px;">
+    <div class="groupTitle">V2V Signal Quality</div>
+    <div id="signalGroup"></div>
+
+    <div class="groupTitle">Communication Parameters</div>
+    <div id="commGroup"></div>
+
+    <div class="groupTitle">Network Performance</div>
+    <div id="networkGroup"></div>
+  </div>
+
+  <div style="position: absolute; left:12px; right:12px; bottom:12px;">
+    <div class="small muted">Focused visualization of Vehicle 2-4 V2V communication</div>
+    <div class="small muted">Blue line: Vehicle trajectory | Red line: V2V communication link</div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<div class="controls" id="controls">
+  <button id="btnPlay">Play</button>
+  <button id="btnPause">Pause</button>
+  <label style="margin-left:8px">Speed: <input id="speed" type="range" min="1" max="1000" value="200"></label>
+  <button id="start" style="margin-left:8px">Start</button>
+  <button id="end">End</button>
+  <div id="info" style="margin-top:6px; font-size:13px;"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+/*
+  Focused V2V Visualization for Vehicle 2-4 Interactions
+  - Optimized for small dataset visualization
+  - Shows vehicle trajectories and V2V communication links
+  - Displays communication quality metrics
+*/
+
+// Initialize map centered on Berlin area
+const map = L.map('map').setView([52.505589, 13.326604], 15);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+
+// Vehicle markers
+const sourceMarker = L.circleMarker([0,0], {radius:10, fillColor:'#4ecdc4', color:'#fff', weight:3}).addTo(map);
+const destMarker = L.circleMarker([0,0], {radius:10, fillColor:'#ff6b6b', color:'#fff', weight:3}).addTo(map);
+
+// Vehicle labels
+const sourceLabel = L.marker([0,0], {
+  icon: L.divIcon({
+    html: '<div style="background:rgba(78,205,196,0.9);color:white;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:bold;">Vehicle 2</div>', 
+    iconSize:[60,20], 
+    className:'custom-div-icon'
+  })
+}).addTo(map);
+
+const destLabel = L.marker([0,0], {
+  icon: L.divIcon({
+    html: '<div style="background:rgba(255,107,107,0.9);color:white;padding:3px 8px;border-radius:4px;font-size:12px;font-weight:bold;">Vehicle 4</div>', 
+    iconSize:[60,20], 
+    className:'custom-div-icon'
+  })
+}).addTo(map);
+
+// V2V communication link
+const v2vLink = L.polyline([], {color:'#ff6b6b', weight:4, opacity:0.8, dashArray:'8,4'}).addTo(map);
+
+// Trajectory lines for each vehicle
+const vehicle2Trajectory = L.polyline([], {color:'#2196f3', weight:3, opacity:0.6}).addTo(map);
+const vehicle4Trajectory = L.polyline([], {color:'#ff9800', weight:3, opacity:0.6}).addTo(map);
+
+// Waypoint markers
+const waypointMarkers = L.layerGroup().addTo(map);
+
+let allData = [];
+let filteredData = [];
+let idx = 0;
+let timer = null;
+let running = false;
+
+const signalGroup = document.getElementById('signalGroup');
+const commGroup = document.getElementById('commGroup');
+const networkGroup = document.getElementById('networkGroup');
+const info = document.getElementById('info');
+const speedControl = document.getElementById('speed');
+const v2vStatus = document.getElementById('v2vStatus');
+const distanceInfo = document.getElementById('distanceInfo');
+
+function setInfoText(t){ info.innerText = t || ''; }
+
+// Calculate distance between two GPS points
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371e3; // Earth's radius in meters
+  const φ1 = lat1 * Math.PI/180;
+  const φ2 = lat2 * Math.PI/180;
+  const Δφ = (lat2-lat1) * Math.PI/180;
+  const Δλ = (lon2-lon1) * Math.PI/180;
+
+  const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+          Math.cos(φ1) * Math.cos(φ2) *
+          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+  return R * c; // Distance in meters
+}
+
+// Get signal quality class based on RSRP value
+function getSignalQuality(rsrp) {
+  if (rsrp >= -70) return {class: 'signal-excellent', text: 'Excellent'};
+  if (rsrp >= -85) return {class: 'signal-good', text: 'Good'};
+  return {class: 'signal-poor', text: 'Poor'};
+}
+
+// utility: build element for a kv pair
+function kvElem(k, v, className = ''){
+  const wrapper = document.createElement('div');
+  wrapper.className = 'kv ' + className;
+  const left = document.createElement('div'); left.className = 'k'; left.innerText = k;
+  const right = document.createElement('div'); right.className = 'v'; right.innerText = (v===null || v===undefined ? '' : String(v));
+  wrapper.appendChild(left); wrapper.appendChild(right);
+  return wrapper;
+}
+
+function refreshParamsDisplay(point){
+  const row = point.raw;
+  
+  // Clear previous content
+  signalGroup.innerHTML = '';
+  commGroup.innerHTML = '';
+  networkGroup.innerHTML = '';
+  
+  // V2V Signal Quality
+  const v2vParams = ['SNR', 'RSRP', 'RSSI', 'NOISE POWER', 'RX_GAIN', 'Rx_power'];
+  v2vParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      let value = row[param];
+      let className = '';
+      
+      if (param === 'RSRP') {
+        const quality = getSignalQuality(value);
+        value = `${value} dBm (${quality.text})`;
+        className = quality.class;
+      } else if (param === 'SNR') {
+        if (value >= 15) className = 'signal-excellent';
+        else if (value >= 10) className = 'signal-good';
+        else className = 'signal-poor';
+      }
+      
+      signalGroup.appendChild(kvElem(param, value, className));
+    }
+  });
+  
+  // Communication Parameters
+  const commParams = ['SubFrame_NUMBER', 'SubFrame_LENGHT', 'MCS'];
+  commParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      commGroup.appendChild(kvElem(param, row[param]));
+    }
+  });
+  
+  // Network Performance
+  const networkParams = ['Received Packets', 'Packet_transmission_rate_hz', 'Packet_error_ratio'];
+  networkParams.forEach(param => {
+    if (row[param] !== undefined && row[param] !== null) {
+      networkGroup.appendChild(kvElem(param, row[param]));
+    }
+  });
+}
+
+function updateV2VVisualization(point) {
+  const row = point.raw;
+  
+  // Update vehicle positions
+  const sourceLat = parseFloat(row['Latitude_source']);
+  const sourceLon = parseFloat(row['Longitude_source']);
+  const destLat = parseFloat(row['Latitude_destination']);
+  const destLon = parseFloat(row['Longitude_destination']);
+  
+  if (!isNaN(sourceLat) && !isNaN(sourceLon) && !isNaN(destLat) && !isNaN(destLon)) {
+    // Update markers
+    sourceMarker.setLatLng([sourceLat, sourceLon]);
+    destMarker.setLatLng([destLat, destLon]);
+    sourceLabel.setLatLng([sourceLat, sourceLon]);
+    destLabel.setLatLng([destLat, destLon]);
+    
+    // Update V2V communication link
+    v2vLink.setLatLngs([[sourceLat, sourceLon], [destLat, destLon]]);
+    
+    // Calculate distance
+    const distance = calculateDistance(sourceLat, sourceLon, destLat, destLon);
+    
+    // Update distance info
+    distanceInfo.innerHTML = `
+      <div class="distance-info">
+        <strong>Inter-vehicle Distance:</strong> ${distance.toFixed(1)} meters
+        <br><strong>Source:</strong> Vehicle ${row['Source']} (${sourceLat.toFixed(6)}, ${sourceLon.toFixed(6)})
+        <br><strong>Destination:</strong> Vehicle ${row['Destination']} (${destLat.toFixed(6)}, ${destLon.toFixed(6)})
+        <br><strong>Dataset Distance:</strong> ${parseFloat(row['distance']).toFixed(1)}m
+      </div>
+    `;
+    
+    // Update V2V status
+    const rsrp = parseFloat(row['RSRP']);
+    const snr = parseFloat(row['SNR']);
+    const quality = getSignalQuality(rsrp);
+    
+    v2vStatus.innerHTML = `
+      <div class="communication-status">
+        <strong>V2V Communication Status:</strong>
+        <br>Signal Quality: <span class="signal-strength ${quality.class}">${quality.text}</span>
+        <br>RSRP: ${rsrp} dBm | SNR: ${snr} dB
+        <br>MCS: ${row['MCS']} | Packets: ${row['Received Packets']}
+        <br>Scenario: ${row['Scenario']}
+      </div>
+    `;
+    
+    // Center map on both vehicles
+    const group = new L.featureGroup([sourceMarker, destMarker]);
+    map.fitBounds(group.getBounds().pad(0.1));
+  }
+}
+
+// Filter data based on selected scenario
+function filterData() {
+  const scenario = document.getElementById('scenarioSelector').value;
+  
+  filteredData = allData.filter(row => {
+    return scenario === 'all' || row['Scenario'] === scenario;
+  });
+  
+  if (filteredData.length === 0) {
+    setInfoText(`No V2V communication found in ${scenario}.`);
+    return false;
+  }
+  
+  setInfoText(`Found ${filteredData.length} V2V communication records in ${scenario}`);
+  return true;
+}
+
+// Update visualization for given index
+function updateForIndex(i){
+  if (!filteredData.length) return;
+  const row = filteredData[i];
+  
+  const point = {
+    raw: row,
+    lat: parseFloat(row['Latitude_source']),
+    lon: parseFloat(row['Longitude_source'])
+  };
+  
+  updateV2VVisualization(point);
+  refreshParamsDisplay(point);
+  
+  const timestamp = new Date(row['timestamp'] * 1000).toLocaleString();
+  setInfoText(`V2V Communication ${i+1} / ${filteredData.length} | ${timestamp}`);
+}
+
+// Animation control
+function startAnim(){
+  if (running || !filteredData.length) return;
+  running = true;
+  const speed = Number(speedControl.value);
+  const delay = Math.max(10, 1000 / speed);
+  timer = setInterval(()=> {
+    idx = Math.min(idx+1, filteredData.length-1);
+    updateForIndex(idx);
+    if (idx >= filteredData.length-1) stopAnim();
+  }, delay);
+}
+
+function stopAnim(){
+  running = false;
+  if (timer){ clearInterval(timer); timer = null; }
+}
+
+// Event listeners
+document.getElementById('btnPlay').addEventListener('click', startAnim);
+document.getElementById('btnPause').addEventListener('click', stopAnim);
+document.getElementById('start').addEventListener('click', ()=>{ idx = 0; updateForIndex(0); });
+document.getElementById('end').addEventListener('click', ()=>{ idx = Math.max(0, filteredData.length-1); updateForIndex(idx); });
+speedControl.addEventListener('input', ()=>{ if (running){ stopAnim(); startAnim(); }});
+
+// Scenario change handler
+document.getElementById('scenarioSelector').addEventListener('change', ()=>{
+  if (filterData()) {
+    idx = 0;
+    updateForIndex(0);
+  }
+});
+
+// Load focused CSV data
+function loadCsvData() {
+  setInfoText('Loading focused Vehicle 2-4 dataset...');
+  
+  Papa.parse('vehicle_2_4_focused.csv', {
+    download: true, header: true, skipEmptyLines: true,
+    complete: function(results){
+      const data = results.data;
+      if (!data || data.length === 0){ 
+        setInfoText('No data found in CSV'); 
+        return; 
+      }
+      
+      // Filter out rows without valid GPS coordinates
+      allData = data.filter(row => {
+        const sourceLat = parseFloat(row['Latitude_source']);
+        const sourceLon = parseFloat(row['Longitude_source']);
+        const destLat = parseFloat(row['Latitude_destination']);
+        const destLon = parseFloat(row['Longitude_destination']);
+        
+        return !isNaN(sourceLat) && !isNaN(sourceLon) && !isNaN(destLat) && !isNaN(destLon);
+      });
+      
+      setInfoText(`Loaded ${allData.length} focused V2V communication records`);
+      
+      // Update dataset info
+      document.getElementById('totalRecords').textContent = `${allData.length} records`;
+      document.getElementById('coverage').textContent = '0.028° × 0.097°';
+      document.getElementById('distanceRange').textContent = '3.5m - 67.0m';
+      
+      // Build vehicle trajectories
+      buildVehicleTrajectories();
+      
+      // Initial filter and display
+      if (filterData()) {
+        idx = 0;
+        updateForIndex(0);
+      }
+    },
+    error: function(err){ 
+      setInfoText('CSV load error: ' + err); 
+      console.error('CSV load error:', err);
+    }
+  });
+}
+
+// Build vehicle trajectories from the data
+function buildVehicleTrajectories() {
+  const vehicle2Points = [];
+  const vehicle4Points = [];
+  
+  allData.forEach(row => {
+    const sourceLat = parseFloat(row['Latitude_source']);
+    const sourceLon = parseFloat(row['Longitude_source']);
+    const destLat = parseFloat(row['Latitude_destination']);
+    const destLon = parseFloat(row['Longitude_destination']);
+    
+    if (!isNaN(sourceLat) && !isNaN(sourceLon) && !isNaN(destLat) && !isNaN(destLon)) {
+      if (row['Source'] == 2) {
+        vehicle2Points.push([sourceLat, sourceLon]);
+        vehicle4Points.push([destLat, destLon]);
+      } else {
+        vehicle2Points.push([destLat, destLon]);
+        vehicle4Points.push([sourceLat, sourceLon]);
+      }
+    }
+  });
+  
+  // Update trajectory lines
+  vehicle2Trajectory.setLatLngs(vehicle2Points);
+  vehicle4Trajectory.setLatLngs(vehicle4Points);
+  
+  // Add waypoint markers
+  waypointMarkers.clearLayers();
+  allData.forEach((row, index) => {
+    const lat = parseFloat(row['Latitude_source']);
+    const lon = parseFloat(row['Longitude_source']);
+    
+    if (!isNaN(lat) && !isNaN(lon)) {
+      const marker = L.circleMarker([lat, lon], {
+        radius: 4,
+        fillColor: '#ff9800',
+        color: '#fff',
+        weight: 2,
+        opacity: 0.8
+      }).addTo(waypointMarkers);
+      
+      marker.bindTooltip(`Point ${index + 1}`, {permanent: false, direction: 'top'});
+    }
+  });
+}
+
+// Initial load
+loadCsvData();
+</script>
+</body>
+</html>

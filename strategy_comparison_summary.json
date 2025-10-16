@@ -1,0 +1,87 @@
+{
+  "timestamp": "2025-10-10T14:01:35.642315",
+  "baseline_accuracy": 66.52,
+  "strategies": [
+    {
+      "strategy_number": 1,
+      "strategy_name": "Multi-Zone Distance-Based Calibration",
+      "mean_accuracy_pct": 76.36515428403136,
+      "median_accuracy_pct": 76.9572515633013,
+      "min_accuracy_pct": 58.58678177819789,
+      "max_accuracy_pct": 90.62671477683158,
+      "std_accuracy_pct": 6.70863412579651,
+      "mae_m": 4.526986889876716,
+      "rmse_m": 4.843421482062414,
+      "waypoints_analyzed": 96,
+      "high_accuracy_90_plus": 1,
+      "medium_accuracy_70_89": 82,
+      "low_accuracy_below_70": 13
+    },
+    {
+      "strategy_number": 2,
+      "strategy_name": "Velocity-Based Adjustment",
+      "mean_accuracy_pct": 76.77000551383247,
+      "median_accuracy_pct": 78.31719204003247,
+      "min_accuracy_pct": 55.88488299941024,
+      "max_accuracy_pct": 93.97943360544905,
+      "std_accuracy_pct": 8.602174270289323,
+      "mae_m": 4.482528930326482,
+      "rmse_m": 4.949097720620972,
+      "waypoints_analyzed": 96,
+      "high_accuracy_90_plus": 3,
+      "medium_accuracy_70_89": 75,
+      "low_accuracy_below_70": 18
+    },
+    {
+      "strategy_number": 3,
+      "strategy_name": "Statistical Outlier Detection",
+      "mean_accuracy_pct": 71.6189304117719,
+      "median_accuracy_pct": 71.77181501008104,
+      "min_accuracy_pct": 55.885459776438125,
+      "max_accuracy_pct": 86.33606954318046,
+      "std_accuracy_pct": 6.638689938518997,
+      "mae_m": 5.421542046649837,
+      "rmse_m": 5.70278192299911,
+      "waypoints_analyzed": 96,
+      "high_accuracy_90_plus": 0,
+      "medium_accuracy_70_89": 55,
+      "low_accuracy_below_70": 41
+    },
+    {
+      "strategy_number": 4,
+      "strategy_name": "Adaptive Learning Calibration",
+      "mean_accuracy_pct": 69.18403064982571,
+      "median_accuracy_pct": 69.95150299893592,
+      "min_accuracy_pct": 46.033676276285206,
+      "max_accuracy_pct": 85.83563519943093,
+      "std_accuracy_pct": 8.036861207214029,
+      "mae_m": 5.8881344681682,
+      "rmse_m": 6.25388236142756,
+      "waypoints_analyzed": 96,
+      "high_accuracy_90_plus": 0,
+      "medium_accuracy_70_89": 47,
+      "low_accuracy_below_70": 49
+    },
+    {
+      "strategy_number": 5,
+      "strategy_name": "Combined Optimal (All Strategies)",
+      "mean_accuracy_pct": 72.78356478905225,
+      "median_accuracy_pct": 72.92856772680875,
+      "min_accuracy_pct": 58.32526979962693,
+      "max_accuracy_pct": 87.72755564370108,
+      "std_accuracy_pct": 6.710891573570117,
+      "mae_m": 5.204980263388209,
+      "rmse_m": 5.494276065072461,
+      "waypoints_analyzed": 96,
+      "high_accuracy_90_plus": 0,
+      "medium_accuracy_70_89": 67,
+      "low_accuracy_below_70": 29
+    }
+  ],
+  "best_strategy": {
+    "number": 2,
+    "name": "Velocity-Based Adjustment",
+    "accuracy": 76.77000551383247,
+    "improvement_over_baseline": 10.250005513832477
+  }
+}

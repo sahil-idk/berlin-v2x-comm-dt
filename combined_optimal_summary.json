@@ -1,0 +1,16 @@
+{
+  "strategy": "Combined Optimal",
+  "baseline_accuracy": 66.52,
+  "mean_accuracy_pct": 72.78356478905225,
+  "median_accuracy_pct": 72.92856772680875,
+  "min_accuracy_pct": 58.32526979962693,
+  "max_accuracy_pct": 87.72755564370108,
+  "std_accuracy_pct": 6.710891573570117,
+  "mae_m": 5.204980263388209,
+  "rmse_m": 5.494276065072461,
+  "waypoints_analyzed": 96,
+  "high_accuracy_90_plus": 0,
+  "medium_accuracy_70_89": 67,
+  "low_accuracy_below_70": 29,
+  "improvement_over_baseline": 6.2635647890522534
+}

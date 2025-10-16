@@ -1,0 +1,2102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-09-29 11:24:11.388519 by $Id: ptlines2flows.py v1_3_1+0313-ccb31df3eb jakob.erdmann@dlr.de 2019-09-02 13:26:32 +0200 $ v1_23_1+0000-676720d13f6
+<configuration>
+    <net-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\osm.net.xml.gz"/>
+    <ptlines-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\osm_ptlines.xml"/>
+    <ptstops-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\osm_stops.add.xml"/>
+    <output-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\osm_pt.rou.xml"/>
+    <stopinfos-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\stopinfos.xml"/>
+    <routes-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\vehroutes.xml"/>
+    <trips-file value="C:\Users\sahil\Sumo\2025-09-29-11-06-26\trips.trips.xml"/>
+    <min-stops value="0"/>
+    <extend-to-fringe value="True"/>
+    <random-begin value="True"/>
+    <seed value="42"/>
+    <ignore-errors value="True"/>
+    <vtype-prefix value="pt_"/>
+    <verbose value="True"/>
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="pt_bus" vClass="bus" speedFactor="0.95"/>
+    <vType id="pt_tram" vClass="tram" speedFactor="1.0"/>
+    <vType id="pt_train" vClass="rail"/>
+    <vType id="pt_subway" vClass="subway"/>
+    <vType id="pt_light_rail" vClass="rail_urban"/>
+    <vType id="pt_monorail" vClass="rail_urban"/>
+    <vType id="pt_trolleybus" vClass="bus" speedFactor="0.95"/>
+    <vType id="pt_minibus" vClass="bus" speedFactor="0.95"/>
+    <vType id="pt_share_taxi" vClass="taxi" speedFactor="0.95"/>
+    <vType id="pt_aerialway" vClass="cable_car" length="2.5" width="2" personCapacity="4"/>
+    <vType id="pt_ferry" vClass="ship"/>
+    <trip id="0_bus_009:0" type="pt_bus" depart="0.0" departLane="best" from="462487519#0" to="81629702">
+    </trip>
+    <trip id="1_bus_042:0" type="pt_bus" depart="3.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="2_bus_042:1" type="pt_bus" depart="4.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="3_bus_1320:0" type="pt_bus" depart="6.0" departLane="best" from="462487519#0" to="462401399">
+    </trip>
+    <trip id="4_bus_1320:1" type="pt_bus" depart="11.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="5_bus_1321:0" type="pt_bus" depart="15.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="6_bus_1321:1" type="pt_bus" depart="15.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="7_bus_N1321:0" type="pt_bus" depart="17.0" departLane="best" from="462487519#0" to="462401399">
+    </trip>
+    <trip id="8_bus_N1321:1" type="pt_bus" depart="19.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6513140724" duration="30"/>  <!-- Gate 29 -->
+    </trip>
+    <trip id="9_bus_1322:0" type="pt_bus" depart="27.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="10_bus_1322:1" type="pt_bus" depart="28.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="11_bus_N1360:0" type="pt_bus" depart="30.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="12_bus_N1360:1" type="pt_bus" depart="34.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="13_bus_N1365:0" type="pt_bus" depart="34.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="14_bus_N1365:1" type="pt_bus" depart="35.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="15_bus_1360:0" type="pt_bus" depart="38.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="16_bus_1360:1" type="pt_bus" depart="41.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="17_bus_150:0" type="pt_bus" depart="42.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="18_bus_150:1" type="pt_bus" depart="42.0" departLane="best" from="29277854" to="28658008">
+    </trip>
+    <trip id="19_bus_N150:0" type="pt_bus" depart="43.0" departLane="best" from="29277854" to="28658008">
+    </trip>
+    <trip id="20_bus_N150:1" type="pt_bus" depart="43.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="21_bus_353:0" type="pt_bus" depart="47.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="22_bus_353:1" type="pt_bus" depart="48.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="23_bus_244:0" type="pt_bus" depart="51.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="24_bus_244:1" type="pt_bus" depart="52.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="25_bus_044:0" type="pt_bus" depart="54.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="26_bus_144:0" type="pt_bus" depart="55.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="27_bus_144:1" type="pt_bus" depart="55.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="28_bus_225:0" type="pt_bus" depart="58.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="29_bus_225:1" type="pt_bus" depart="58.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="30_bus_052:0" type="pt_bus" depart="59.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="31_bus_052:1" type="pt_bus" depart="60.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="32_bus_148:0" type="pt_bus" depart="64.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="33_bus_253:0" type="pt_bus" depart="65.0" departLane="best" from="26020344" to="28658008">
+    </trip>
+    <trip id="34_bus_253:1" type="pt_bus" depart="66.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333047" duration="30"/>  <!-- Gate 25 -->
+    </trip>
+    <trip id="35_bus_031:0" type="pt_bus" depart="69.0" departLane="best" from="462487519#0" to="81629702">
+    </trip>
+    <trip id="36_bus_031:1" type="pt_bus" depart="71.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="37_bus_031:2" type="pt_bus" depart="72.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="38_bus_038:0" type="pt_bus" depart="77.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="39_bus_N1323:0" type="pt_bus" depart="79.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="40_bus_N1323:1" type="pt_bus" depart="80.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="41_bus_N1320:0" type="pt_bus" depart="91.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="42_bus_N1320:1" type="pt_bus" depart="92.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="43_bus_N1970:0" type="pt_bus" depart="93.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="44_bus_N1970:1" type="pt_bus" depart="94.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="45_bus_N3201:0" type="pt_bus" depart="94.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="46_bus_N3201:1" type="pt_bus" depart="98.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="47_bus_1381:0" type="pt_bus" depart="99.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="48_bus_1381:1" type="pt_bus" depart="102.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="49_bus_1385:0" type="pt_bus" depart="107.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+    </trip>
+    <trip id="50_bus_1385:1" type="pt_bus" depart="111.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+    </trip>
+    <trip id="51_bus_N1376:0" type="pt_bus" depart="114.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="52_bus_N1376:1" type="pt_bus" depart="114.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="53_bus_N232:0" type="pt_bus" depart="119.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="54_bus_N232:1" type="pt_bus" depart="120.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="55_bus_N132:0" type="pt_bus" depart="122.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+    </trip>
+    <trip id="56_bus_N132:1" type="pt_bus" depart="122.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+    </trip>
+    <trip id="57_bus_N32:0" type="pt_bus" depart="125.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="58_bus_N32:1" type="pt_bus" depart="126.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="59_bus_032:0" type="pt_bus" depart="127.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="60_bus_032:1" type="pt_bus" depart="127.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="61_bus_N1385:0" type="pt_bus" depart="128.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="6513140724" duration="30"/>  <!-- Gate 29 -->
+    </trip>
+    <trip id="62_bus_N1385:1" type="pt_bus" depart="128.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6513140724" duration="30"/>  <!-- Gate 29 -->
+    </trip>
+    <trip id="63_bus_164:0" type="pt_bus" depart="131.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="64_bus_164:1" type="pt_bus" depart="131.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="65_bus_164:2" type="pt_bus" depart="132.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="66_bus_125:0" type="pt_bus" depart="132.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+    </trip>
+    <trip id="67_bus_125:1" type="pt_bus" depart="133.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+    </trip>
+    <trip id="68_bus_N30:0" type="pt_bus" depart="134.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="69_bus_N30:1" type="pt_bus" depart="136.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="70_bus_134:0" type="pt_bus" depart="137.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="71_bus_134:1" type="pt_bus" depart="137.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="72_bus_N1322:0" type="pt_bus" depart="138.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="73_bus_N1322:1" type="pt_bus" depart="139.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="74_bus_1388:0" type="pt_bus" depart="141.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="75_bus_1388:1" type="pt_bus" depart="142.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="76_bus_N13:0" type="pt_bus" depart="143.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="77_bus_N13:1" type="pt_bus" depart="147.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="78_bus_N14:0" type="pt_bus" depart="147.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="79_bus_N14:1" type="pt_bus" depart="149.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="80_bus_N42:0" type="pt_bus" depart="149.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+    </trip>
+    <trip id="81_bus_N42:1" type="pt_bus" depart="157.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+    </trip>
+    <trip id="83_bus_109:0" type="pt_bus" depart="158.0" departLane="best" from="-1113425380" to="445536591">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386376" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757598" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757602" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757569" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757586" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757595" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3951898330" duration="30"/>  <!-- S Charlottenburg/Gervinusstraße -->
+        <stop busStop="3951898320" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951565131" duration="30"/>  <!-- Bismarckstraße/Kaiser-Friedrich-Straße -->
+        <stop busStop="3976479148" duration="30"/>  <!-- Haubachstraße -->
+        <stop busStop="3964527549" duration="30"/>  <!-- Luisenplatz/Schloss Charlottenburg -->
+        <stop busStop="26784428" duration="30"/>  <!-- Schlossbrücke -->
+        <stop busStop="4477486260" duration="30"/>  <!-- Osnabrücker Straße -->
+        <stop busStop="3961904098" duration="30"/>  <!-- Tegeler Weg/S Jungfernheide -->
+        <stop busStop="27007776" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="267399031" duration="30"/>  <!-- Weltlingerbrücke -->
+    </trip>
+    <trip id="84_bus_109:1" type="pt_bus" depart="158.0" departLane="best" from="4413385" to="4517104#0">
+        <stop busStop="3961904103" duration="30"/>  <!-- Weltlingerbrücke -->
+        <stop busStop="267385041" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="3961904097" duration="30"/>  <!-- Tegeler Weg/S Jungfernheide -->
+        <stop busStop="4477486261" duration="30"/>  <!-- Osnabrücker Straße -->
+        <stop busStop="-4477486262" duration="30"/>  <!-- Schlossbrücke -->
+        <stop busStop="3964527546" duration="30"/>  <!-- Luisenplatz/Schloss Charlottenburg -->
+        <stop busStop="3976479149" duration="30"/>  <!-- Haubachstraße -->
+        <stop busStop="3951565130" duration="30"/>  <!-- Bismarckstraße/Kaiser-Friedrich-Straße -->
+        <stop busStop="3951898321" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898331" duration="30"/>  <!-- S Charlottenburg/Gervinusstraße -->
+        <stop busStop="3957757594" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757585" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757568" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757601" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757600" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="85_bus_X37:0" type="pt_bus" depart="159.0" departLane="best" from="22587641" to="1133397575#0">
+        <stop busStop="3987512855" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="27586437" duration="30"/>  <!-- Teltower Straße -->
+    </trip>
+    <trip id="86_bus_X37:1" type="pt_bus" depart="159.0" departLane="best" from="37291474#0" to="22587641">
+        <stop busStop="402508072" duration="30"/>  <!-- Teltower Straße -->
+        <stop busStop="3964527996" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="4305818589" duration="30"/>  <!-- Machandelweg -->
+        <stop busStop="3987570936" duration="30"/>  <!-- U Ruhleben -->
+    </trip>
+    <trip id="87_bus_327:0" type="pt_bus" depart="159.0" departLane="best" from="375861849" to="375861849">
+        <stop busStop="4279705570" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="88_bus_M43:0" type="pt_bus" depart="160.0" departLane="best" from="1133296855" to="1144625908#0">
+        <stop busStop="3887567766" duration="30"/>  <!-- Columbiadamm/Platz der Luftbrücke -->
+        <stop busStop="933755668" duration="30"/>  <!-- U Platz der Luftbrücke -->
+        <stop busStop="-3959807201" duration="30"/>  <!-- Dudenstraße/Katzbachstraße -->
+        <stop busStop="-3959807220" duration="30"/>  <!-- Kolonnenbrücke -->
+        <stop busStop="-3959807218" duration="30"/>  <!-- Kesselsdorfstraße -->
+        <stop busStop="-3959807212" duration="30"/>  <!-- Hohenfriedbergstraße -->
+        <stop busStop="3959807228" duration="30"/>  <!-- S Julius-Leber-Brücke -->
+        <stop busStop="3957979295" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979280" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3956655766" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="3957979303" duration="30"/>  <!-- Rathaus Schöneberg -->
+        <stop busStop="-3959807223" duration="30"/>  <!-- Kufsteiner Straße -->
+        <stop busStop="3959807229" duration="30"/>  <!-- U Berliner Straße -->
+    </trip>
+    <trip id="89_bus_M43:1" type="pt_bus" depart="160.0" departLane="best" from="25205076#0" to="10996312#4">
+        <stop busStop="3959807230" duration="30"/>  <!-- U Berliner Straße -->
+        <stop busStop="3959807222" duration="30"/>  <!-- Kufsteiner Straße -->
+        <stop busStop="3957979301" duration="30"/>  <!-- Rathaus Schöneberg -->
+        <stop busStop="412404953" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="412404951" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3957979294" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3959807227" duration="30"/>  <!-- S Julius-Leber-Brücke -->
+        <stop busStop="3959807213" duration="30"/>  <!-- Hohenfriedbergstraße -->
+        <stop busStop="3959807219" duration="30"/>  <!-- Kesselsdorfstraße -->
+        <stop busStop="3959807221" duration="30"/>  <!-- Kolonnenbrücke -->
+        <stop busStop="3959807200" duration="30"/>  <!-- Dudenstraße/Katzbachstraße -->
+        <stop busStop="2029670966" duration="30"/>  <!-- U Platz der Luftbrücke -->
+    </trip>
+    <trip id="90_bus_143:0" type="pt_bus" depart="160.0" departLane="best" from="529086029#0" to="1275788112">
+        <stop busStop="9367099237" duration="30"/>  <!-- Heylstraße -->
+        <stop busStop="3957979303" duration="30"/>  <!-- Rathaus Schöneberg -->
+        <stop busStop="-3959807223" duration="30"/>  <!-- Kufsteiner Straße -->
+        <stop busStop="3959807229" duration="30"/>  <!-- U Berliner Straße -->
+        <stop busStop="3959807225" duration="30"/>  <!-- Landhausstraße -->
+        <stop busStop="3959807234" duration="30"/>  <!-- U Blissestraße/Uhlandstraße -->
+        <stop busStop="479154134" duration="30"/>  <!-- U Blissestraße -->
+        <stop busStop="3959807236" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="-3959807245" duration="30"/>  <!-- Westfälische Straße/Konstanzer Straße -->
+        <stop busStop="-26662472" duration="30"/>  <!-- Eisenzahnstraße -->
+        <stop busStop="-3959807208" duration="30"/>  <!-- Hochmeisterplatz -->
+        <stop busStop="-3959807216" duration="30"/>  <!-- Joachim-Friedrich-Straße/Westfälische Straße -->
+        <stop busStop="3957757588" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3956855827" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="26745944" duration="30"/>  <!-- Trabener Steg -->
+        <stop busStop="268111618" duration="30"/>  <!-- S Westkreuz -->
+        <stop busStop="3951679908" duration="30"/>  <!-- Messegelände/ICC -->
+        <stop busStop="26868080" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679903" duration="30"/>  <!-- Haus des Rundfunks -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3959807536" duration="30"/>  <!-- Reichsstraße/Kastanienallee -->
+        <stop busStop="3959807204" duration="30"/>  <!-- Hessenallee -->
+        <stop busStop="3959807241" duration="30"/>  <!-- U Neu-Westend -->
+        <stop busStop="3959807197" duration="30"/>  <!-- Altenburger Allee -->
+        <stop busStop="3959807199" duration="30"/>  <!-- Brixplatz -->
+        <stop busStop="4471093096" duration="30"/>  <!-- Brixplatz -->
+    </trip>
+    <trip id="91_bus_143:1" type="pt_bus" depart="163.0" departLane="best" from="1275788112" to="27719724#0">
+        <stop busStop="3959807198" duration="30"/>  <!-- Brixplatz -->
+        <stop busStop="3959807242" duration="30"/>  <!-- U Neu-Westend -->
+        <stop busStop="3959807205" duration="30"/>  <!-- Hessenallee -->
+        <stop busStop="3959807226" duration="30"/>  <!-- Reichsstraße/Kastanienallee -->
+        <stop busStop="3951566063" duration="30"/>  <!-- U Theodor-Heuss-Platz West -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951679904" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679907" duration="30"/>  <!-- Messegelände/ICC -->
+        <stop busStop="21487255" duration="30"/>  <!-- Trabener Steg -->
+        <stop busStop="3956855826" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="3957757590" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3959807215" duration="30"/>  <!-- Joachim-Friedrich-Straße/Westfälische Straße -->
+        <stop busStop="3959807206" duration="30"/>  <!-- Hochmeisterplatz -->
+        <stop busStop="3959807202" duration="30"/>  <!-- Eisenzahnstraße -->
+        <stop busStop="3959807246" duration="30"/>  <!-- Westfälische Straße/Konstanzer Straße -->
+        <stop busStop="3959807238" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="3959807233" duration="30"/>  <!-- U Blissestraße/Uhlandstraße -->
+        <stop busStop="3959807224" duration="30"/>  <!-- Landhausstraße -->
+        <stop busStop="3959807230" duration="30"/>  <!-- U Berliner Straße -->
+        <stop busStop="3959807222" duration="30"/>  <!-- Kufsteiner Straße -->
+        <stop busStop="3957979301" duration="30"/>  <!-- Rathaus Schöneberg -->
+        <stop busStop="9367099236" duration="30"/>  <!-- Heylstraße -->
+    </trip>
+    <trip id="92_bus_X10:0" type="pt_bus" depart="165.0" departLane="best" from="-331126666#1" to="4517104#0">
+        <stop busStop="602244743" duration="30"/>  <!-- Joseph-Joachim-Platz -->
+        <stop busStop="3956855804" duration="30"/>  <!-- Bismarckplatz -->
+        <stop busStop="3957757589" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3957757594" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757585" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757601" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757600" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="93_bus_X10:1" type="pt_bus" depart="166.0" departLane="best" from="-1113425380" to="331126666#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386376" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757598" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757602" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757586" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757593" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757591" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="-3956855803" duration="30"/>  <!-- Bismarckplatz -->
+        <stop busStop="3956855823" duration="30"/>  <!-- Joseph-Joachim-Platz -->
+    </trip>
+    <trip id="94_bus_X10:2" type="pt_bus" depart="166.0" departLane="best" from="-1113425380" to="331126666#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386376" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757598" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757602" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757586" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757593" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757591" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="-3956855803" duration="30"/>  <!-- Bismarckplatz -->
+        <stop busStop="3956855823" duration="30"/>  <!-- Joseph-Joachim-Platz -->
+    </trip>
+    <trip id="95_bus_X10:3" type="pt_bus" depart="167.0" departLane="best" from="-331126666#1" to="4517104#0">
+        <stop busStop="602244743" duration="30"/>  <!-- Joseph-Joachim-Platz -->
+        <stop busStop="3956855804" duration="30"/>  <!-- Bismarckplatz -->
+        <stop busStop="3957757589" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3957757594" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757585" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757601" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757600" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="96_bus_X21:0" type="pt_bus" depart="173.0" departLane="best" from="4396831" to="367831514#0">
+        <stop busStop="267385041" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="3961904091" duration="30"/>  <!-- S+U Jungfernheide -->
+        <stop busStop="3961904070" duration="30"/>  <!-- Goerdelersteg -->
+    </trip>
+    <trip id="97_bus_X21:1" type="pt_bus" depart="178.0" departLane="best" from="-451458153#1" to="28658008">
+        <stop busStop="-3961904069" duration="30"/>  <!-- Goerdelersteg -->
+        <stop busStop="-3961904092" duration="30"/>  <!-- S+U Jungfernheide -->
+        <stop busStop="27007776" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+    </trip>
+    <trip id="98_bus_X33:0" type="pt_bus" depart="179.0" departLane="best" from="5021447#0" to="330951949#3">
+        <stop busStop="33484097" duration="30"/>  <!-- Paulsternstraße/Gartenfelder Straße -->
+        <stop busStop="3964527531" duration="30"/>  <!-- Haselhorster Damm/Gartenfelder Straße -->
+        <stop busStop="3964527970" duration="30"/>  <!-- Siedlung Haselhorst -->
+        <stop busStop="203590026" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="3964527553" duration="30"/>  <!-- Motorradwerk -->
+        <stop busStop="3964528000" duration="30"/>  <!-- U Zitadelle -->
+        <stop busStop="3964528003" duration="30"/>  <!-- Zitadelle Spandau -->
+    </trip>
+    <trip id="99_bus_X33:1" type="pt_bus" depart="179.0" departLane="best" from="437656667#0" to="-5021447#2">
+        <stop busStop="933732136" duration="30"/>  <!-- Zitadelle Spandau -->
+        <stop busStop="3964527999" duration="30"/>  <!-- U Zitadelle -->
+        <stop busStop="3964527552" duration="30"/>  <!-- Motorradwerk -->
+        <stop busStop="3964527984" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="-3964527969" duration="30"/>  <!-- Siedlung Haselhorst -->
+        <stop busStop="-1368108983" duration="30"/>  <!-- Haselhorster Damm/Gartenfelder Straße -->
+        <stop busStop="6287386706" duration="30"/>  <!-- Paulsternstraße/Gartenfelder Straße -->
+    </trip>
+    <trip id="100_bus_X34:0" type="pt_bus" depart="179.0" departLane="best" from="-4474790" to="4517104#0">
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951898315" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898322" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898339" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898325" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3951898337" duration="30"/>  <!-- Schlüterstraße -->
+        <stop busStop="3951898335" duration="30"/>  <!-- Savignyplatz -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="101_bus_X34:1" type="pt_bus" depart="184.0" departLane="best" from="-1113425380" to="25892782">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386375" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="297218325" duration="30"/>  <!-- Theater des Westens -->
+        <stop busStop="3951898336" duration="30"/>  <!-- Savignyplatz -->
+        <stop busStop="3951898338" duration="30"/>  <!-- Schlüterstraße -->
+        <stop busStop="3951898326" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3951898340" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898323" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898316" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3951565141" duration="30"/>  <!-- S Heerstraße -->
+    </trip>
+    <trip id="102_bus_X49:0" type="pt_bus" depart="187.0" departLane="best" from="-4474790" to="1056613175">
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951898315" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898332" duration="30"/>  <!-- S Charlottenburg -->
+        <stop busStop="5891418103" duration="30"/>  <!-- U Wilmersdorfer Straße/S Charlottenburg -->
+    </trip>
+    <trip id="103_bus_100:0" type="pt_bus" depart="188.0" departLane="best" from="1077923225#0" to="1101117429#0">
+        <stop busStop="272408975" duration="30"/>  <!-- U Unter den Linden -->
+        <stop busStop="271373068" duration="30"/>  <!-- S+U Brandenburger Tor -->
+        <stop busStop="-3862767511" duration="30"/>  <!-- Reichstag/Bundestag -->
+        <stop busStop="-3862767509" duration="30"/>  <!-- Platz der Republik -->
+        <stop busStop="-3862767503" duration="30"/>  <!-- Haus der Kulturen der Welt -->
+        <stop busStop="272367044" duration="30"/>  <!-- Schloss Bellevue -->
+        <stop busStop="26703050" duration="30"/>  <!-- Großer Stern -->
+        <stop busStop="3933855802" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="272372640" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="3935677412" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="272378348" duration="30"/>  <!-- Bayreuther Straße -->
+        <stop busStop="26763074" duration="30"/>  <!-- Breitscheidplatz -->
+        <stop busStop="3935677406" duration="30"/>  <!-- S+U Zoologischer Garten/Jebensstraße -->
+    </trip>
+    <trip id="104_bus_100:1" type="pt_bus" depart="189.0" departLane="best" from="-1113425380" to="1126237668#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386377" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="26787974" duration="30"/>  <!-- Breitscheidplatz -->
+        <stop busStop="272379337" duration="30"/>  <!-- Bayreuther Straße -->
+        <stop busStop="272375714" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="272372358" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="3933855801" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="27011265" duration="30"/>  <!-- Großer Stern -->
+        <stop busStop="272367516" duration="30"/>  <!-- Schloss Bellevue -->
+        <stop busStop="3862767502" duration="30"/>  <!-- Haus der Kulturen der Welt -->
+        <stop busStop="3862767508" duration="30"/>  <!-- Platz der Republik -->
+        <stop busStop="3862767510" duration="30"/>  <!-- Reichstag/Bundestag -->
+        <stop busStop="271388393" duration="30"/>  <!-- S+U Brandenburger Tor -->
+        <stop busStop="3869306771" duration="30"/>  <!-- U Unter den Linden -->
+    </trip>
+    <trip id="105_bus_101:0" type="pt_bus" depart="189.0" departLane="best" from="671403222" to="1204745075">
+        <stop busStop="4545151441" duration="30"/>  <!-- Lübecker Straße -->
+        <stop busStop="3961281947" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="3961281930" duration="30"/>  <!-- Rathaus Tiergarten -->
+        <stop busStop="3961281938" duration="30"/>  <!-- Turmstraße/Waldstraße -->
+        <stop busStop="3961281896" duration="30"/>  <!-- Alt-Moabit/Gotzkowskystraße -->
+        <stop busStop="-3961281906" duration="30"/>  <!-- Franklinstraße -->
+        <stop busStop="-1608423653" duration="30"/>  <!-- Helmholtzstraße -->
+        <stop busStop="-3961281909" duration="30"/>  <!-- Guerickestraße -->
+        <stop busStop="-3961281925" duration="30"/>  <!-- Otto-Suhr-Allee/Leibnizstraße -->
+        <stop busStop="5784621454" duration="30"/>  <!-- Bismarckstraße/Leibnizstraße -->
+        <stop busStop="3957757576" duration="30"/>  <!-- Goethestraße -->
+        <stop busStop="3951898327" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3957757581" duration="30"/>  <!-- Mommsenstraße -->
+        <stop busStop="3957757584" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="-3961281905" duration="30"/>  <!-- Düsseldorfer Straße -->
+        <stop busStop="3959807239" duration="30"/>  <!-- U Konstanzer Straße -->
+        <stop busStop="3959807238" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="479154202" duration="30"/>  <!-- U Blissestraße -->
+        <stop busStop="3960919874" duration="30"/>  <!-- Am Volkspark -->
+        <stop busStop="479146404" duration="30"/>  <!-- Birger-Forell-Platz -->
+    </trip>
+    <trip id="106_bus_101:1" type="pt_bus" depart="194.0" departLane="best" from="-1204745076" to="30276434#0">
+        <stop busStop="-479146402" duration="30"/>  <!-- Birger-Forell-Platz -->
+        <stop busStop="4146812895" duration="30"/>  <!-- Am Volkspark -->
+        <stop busStop="28236820" duration="30"/>  <!-- U Blissestraße -->
+        <stop busStop="3959807236" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="3959807240" duration="30"/>  <!-- U Konstanzer Straße -->
+        <stop busStop="3961281904" duration="30"/>  <!-- Düsseldorfer Straße -->
+        <stop busStop="3957757587" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="-3957757582" duration="30"/>  <!-- Mommsenstraße -->
+        <stop busStop="3951898324" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="-3957757575" duration="30"/>  <!-- Goethestraße -->
+        <stop busStop="3961281898" duration="30"/>  <!-- Bismarckstraße/Leibnizstraße -->
+        <stop busStop="-3961281922" duration="30"/>  <!-- Otto-Suhr-Allee/Leibnizstraße -->
+        <stop busStop="3961281908" duration="30"/>  <!-- Guerickestraße -->
+        <stop busStop="3961281911" duration="30"/>  <!-- Helmholtzstraße -->
+        <stop busStop="3961281907" duration="30"/>  <!-- Franklinstraße -->
+        <stop busStop="-3961281897" duration="30"/>  <!-- Alt-Moabit/Gotzkowskystraße -->
+        <stop busStop="3961281939" duration="30"/>  <!-- Turmstraße/Waldstraße -->
+        <stop busStop="3961281929" duration="30"/>  <!-- Rathaus Tiergarten -->
+        <stop busStop="4523354281" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="3961281944" duration="30"/>  <!-- Lübecker Straße (Ausstieg) -->
+    </trip>
+    <trip id="107_bus_N43:0" type="pt_bus" depart="201.0" departLane="best" from="1011564761" to="1144626194">
+        <stop busStop="3951566064" duration="30"/>  <!-- U Theodor-Heuss-Platz West -->
+        <stop busStop="3951566063" duration="30"/>  <!-- U Theodor-Heuss-Platz West -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951679904" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679907" duration="30"/>  <!-- Messegelände/ICC -->
+        <stop busStop="21487255" duration="30"/>  <!-- Trabener Steg -->
+        <stop busStop="3956855826" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="3957757590" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3959807215" duration="30"/>  <!-- Joachim-Friedrich-Straße/Westfälische Straße -->
+        <stop busStop="3959807206" duration="30"/>  <!-- Hochmeisterplatz -->
+        <stop busStop="3959807202" duration="30"/>  <!-- Eisenzahnstraße -->
+        <stop busStop="3959807246" duration="30"/>  <!-- Westfälische Straße/Konstanzer Straße -->
+        <stop busStop="3959807238" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="3959807233" duration="30"/>  <!-- U Blissestraße/Uhlandstraße -->
+        <stop busStop="3959807224" duration="30"/>  <!-- Landhausstraße -->
+        <stop busStop="3959807230" duration="30"/>  <!-- U Berliner Straße -->
+    </trip>
+    <trip id="108_bus_N43:1" type="pt_bus" depart="202.0" departLane="best" from="1144625908#0" to="1011564761">
+        <stop busStop="3959807229" duration="30"/>  <!-- U Berliner Straße -->
+        <stop busStop="3959807225" duration="30"/>  <!-- Landhausstraße -->
+        <stop busStop="3959807234" duration="30"/>  <!-- U Blissestraße/Uhlandstraße -->
+        <stop busStop="479154134" duration="30"/>  <!-- U Blissestraße -->
+        <stop busStop="3959807236" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="-3959807245" duration="30"/>  <!-- Westfälische Straße/Konstanzer Straße -->
+        <stop busStop="-26662472" duration="30"/>  <!-- Eisenzahnstraße -->
+        <stop busStop="-3959807208" duration="30"/>  <!-- Hochmeisterplatz -->
+        <stop busStop="-3959807216" duration="30"/>  <!-- Joachim-Friedrich-Straße/Westfälische Straße -->
+        <stop busStop="3957757588" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3956855827" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="26745944" duration="30"/>  <!-- Trabener Steg -->
+        <stop busStop="268111618" duration="30"/>  <!-- S Westkreuz -->
+        <stop busStop="3951679908" duration="30"/>  <!-- Messegelände/ICC -->
+        <stop busStop="26868080" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679903" duration="30"/>  <!-- Haus des Rundfunks -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3951566064" duration="30"/>  <!-- U Theodor-Heuss-Platz West -->
+    </trip>
+    <trip id="109_bus_106:0" type="pt_bus" depart="203.0" departLane="best" from="1357072244#0" to="1394166102">
+        <stop busStop="4032629815" duration="30"/>  <!-- Leuthener Straße -->
+        <stop busStop="4032629806" duration="30"/>  <!-- Gustav-Müller-Platz -->
+        <stop busStop="3959807228" duration="30"/>  <!-- S Julius-Leber-Brücke -->
+        <stop busStop="3957979296" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979307" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3948376436" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3948376444" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="583447610" duration="30"/>  <!-- U Nollendorfplatz -->
+        <stop busStop="3957757565" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3935677410" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="272372358" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="3933855801" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="3933855796" duration="30"/>  <!-- Großer Stern -->
+        <stop busStop="3935677419" duration="30"/>  <!-- U Hansaplatz -->
+        <stop busStop="3961281932" duration="30"/>  <!-- Solinger Straße -->
+        <stop busStop="3961281950" duration="30"/>  <!-- Zinzendorfstraße -->
+        <stop busStop="-3961281897" duration="30"/>  <!-- Alt-Moabit/Gotzkowskystraße -->
+        <stop busStop="-3961281937" duration="30"/>  <!-- Turmstraße/Beusselstraße -->
+        <stop busStop="-3961904110" duration="30"/>  <!-- Wittstocker Straße -->
+        <stop busStop="778981664" duration="30"/>  <!-- S Beusselstraße -->
+        <stop busStop="3961904058" duration="30"/>  <!-- Berliner Großmarkt -->
+        <stop busStop="3784870572" duration="30"/>  <!-- Seestraße/Beusselstraße -->
+        <stop busStop="3961904096" duration="30"/>  <!-- Sylter Straße -->
+        <stop busStop="3924971835" duration="30"/>  <!-- Virchow-Klinikum -->
+        <stop busStop="3924971830" duration="30"/>  <!-- Seestraße/Amrumer Straße -->
+    </trip>
+    <trip id="110_bus_106:1" type="pt_bus" depart="204.0" departLane="best" from="1394166095" to="28497530#0">
+        <stop busStop="3924971829" duration="30"/>  <!-- Seestraße/Amrumer Straße -->
+        <stop busStop="3924971834" duration="30"/>  <!-- Virchow-Klinikum -->
+        <stop busStop="30840917" duration="30"/>  <!-- Seestraße/Beusselstraße -->
+        <stop busStop="3961904057" duration="30"/>  <!-- Berliner Großmarkt -->
+        <stop busStop="778981668" duration="30"/>  <!-- S Beusselstraße -->
+        <stop busStop="3961904109" duration="30"/>  <!-- Wittstocker Straße -->
+        <stop busStop="3961281935" duration="30"/>  <!-- Turmstraße/Beusselstraße -->
+        <stop busStop="3961281896" duration="30"/>  <!-- Alt-Moabit/Gotzkowskystraße -->
+        <stop busStop="3961281951" duration="30"/>  <!-- Zinzendorfstraße -->
+        <stop busStop="3961281933" duration="30"/>  <!-- Solinger Straße -->
+        <stop busStop="3935677418" duration="30"/>  <!-- U Hansaplatz -->
+        <stop busStop="3933855795" duration="30"/>  <!-- Großer Stern -->
+        <stop busStop="3933855802" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="272372640" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="6154203348" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="3957757562" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3957828284" duration="30"/>  <!-- U Nollendorfplatz -->
+        <stop busStop="3948376441" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="3948376438" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3957979306" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3957979297" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3959807227" duration="30"/>  <!-- S Julius-Leber-Brücke -->
+        <stop busStop="4032629807" duration="30"/>  <!-- Gustav-Müller-Platz -->
+        <stop busStop="4032629816" duration="30"/>  <!-- Leuthener Straße -->
+        <stop busStop="3963780389" duration="30"/>  <!-- Torgauer Straße -->
+    </trip>
+    <trip id="111_bus_215:0" type="pt_bus" depart="218.0" departLane="best" from="85129383" to="4370509#0">
+        <stop busStop="12804016726" duration="30"/>  <!-- S+U Heidelberger Platz -->
+        <stop busStop="3956250169" duration="30"/>  <!-- S+U Heidelberger Platz -->
+        <stop busStop="-12804016727" duration="30"/>  <!-- Cunostraße -->
+        <stop busStop="3956855811" duration="30"/>  <!-- Forckenbeckstraße -->
+    </trip>
+    <trip id="112_bus_215:1" type="pt_bus" depart="221.0" departLane="best" from="318552367#0" to="85129383">
+        <stop busStop="3249542234" duration="30"/>  <!-- Elsterplatz -->
+        <stop busStop="3956855810" duration="30"/>  <!-- Forckenbeckstraße -->
+        <stop busStop="12804016728" duration="30"/>  <!-- Cunostraße -->
+        <stop busStop="3956250168" duration="30"/>  <!-- S+U Heidelberger Platz -->
+        <stop busStop="12804016726" duration="30"/>  <!-- S+U Heidelberger Platz -->
+    </trip>
+    <trip id="113_bus_200:0" type="pt_bus" depart="222.0" departLane="best" from="375311157" to="1101117429#0">
+        <stop busStop="-3352479255" duration="30"/>  <!-- U Stadtmitte -->
+        <stop busStop="-5938860559" duration="30"/>  <!-- Leipziger Straße/Wilhelmstraße -->
+        <stop busStop="-1877848279" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1877576997" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="6716379206" duration="30"/>  <!-- Philharmonie -->
+        <stop busStop="-3935677416" duration="30"/>  <!-- Tiergartenstraße -->
+        <stop busStop="3815482007" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="1660804808" duration="30"/>  <!-- Corneliusbrücke -->
+        <stop busStop="3935677402" duration="30"/>  <!-- Budapester Straße -->
+        <stop busStop="26763074" duration="30"/>  <!-- Breitscheidplatz -->
+        <stop busStop="3935677406" duration="30"/>  <!-- S+U Zoologischer Garten/Jebensstraße -->
+    </trip>
+    <trip id="114_bus_200:1" type="pt_bus" depart="227.0" departLane="best" from="-1113425380" to="375311155#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386377" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="26787974" duration="30"/>  <!-- Breitscheidplatz -->
+        <stop busStop="3855567143" duration="30"/>  <!-- Budapester Straße -->
+        <stop busStop="1660804804" duration="30"/>  <!-- Corneliusbrücke -->
+        <stop busStop="272421409" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="3935677415" duration="30"/>  <!-- Tiergartenstraße -->
+        <stop busStop="6824910767" duration="30"/>  <!-- Philharmonie -->
+        <stop busStop="1877576992" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1877848283" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="3862767504" duration="30"/>  <!-- Leipziger Straße/Wilhelmstraße -->
+        <stop busStop="3352479254" duration="30"/>  <!-- U Stadtmitte -->
+    </trip>
+    <trip id="115_bus_M41:0" type="pt_bus" depart="227.0" departLane="best" from="382412800#0" to="26472938#0">
+        <stop busStop="817763144" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="298516304" duration="30"/>  <!-- S Potsdamer Platz/Voßstraße -->
+        <stop busStop="1877848269" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1877848255" duration="30"/>  <!-- Abgeordnetenhaus -->
+        <stop busStop="1613324875" duration="30"/>  <!-- S Anhalter Bahnhof -->
+        <stop busStop="3854591001" duration="30"/>  <!-- Willy-Brandt-Haus -->
+    </trip>
+    <trip id="116_bus_M41:1" type="pt_bus" depart="227.0" departLane="best" from="34059286#0" to="382412800#0">
+        <stop busStop="681321290" duration="30"/>  <!-- U Hallesches Tor -->
+        <stop busStop="3854591002" duration="30"/>  <!-- Willy-Brandt-Haus -->
+        <stop busStop="1613324893" duration="30"/>  <!-- S Anhalter Bahnhof -->
+        <stop busStop="1877848258" duration="30"/>  <!-- Abgeordnetenhaus -->
+        <stop busStop="1877848274" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1874617251" duration="30"/>  <!-- S Potsdamer Platz/Voßstraße -->
+        <stop busStop="4284939148" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="817763144" duration="30"/>  <!-- S+U Hauptbahnhof -->
+    </trip>
+    <trip id="117_bus_140:0" type="pt_bus" depart="228.0" departLane="best" from="169753565" to="1133296876#0">
+        <stop busStop="2029039101" duration="30"/>  <!-- Badener Ring -->
+        <stop busStop="2029039195" duration="30"/>  <!-- Dudenstraße/Katzbachstraße -->
+        <stop busStop="-4032629820" duration="30"/>  <!-- Monumentenstraße -->
+        <stop busStop="4032629812" duration="30"/>  <!-- Viktoriapark -->
+        <stop busStop="4032629814" duration="30"/>  <!-- Kreuzberg/Wasserfall -->
+        <stop busStop="3957828286" duration="30"/>  <!-- Hornstraße -->
+        <stop busStop="3949521959" duration="30"/>  <!-- U Mehringdamm -->
+    </trip>
+    <trip id="118_bus_140:1" type="pt_bus" depart="237.0" departLane="best" from="68462528#0" to="1272710273">
+        <stop busStop="3949521960" duration="30"/>  <!-- U Mehringdamm -->
+        <stop busStop="-3957828285" duration="30"/>  <!-- Hornstraße -->
+        <stop busStop="-4032629813" duration="30"/>  <!-- Kreuzberg/Wasserfall -->
+        <stop busStop="4032629811" duration="30"/>  <!-- Viktoriapark -->
+        <stop busStop="4032629819" duration="30"/>  <!-- Monumentenstraße -->
+        <stop busStop="2029039199" duration="30"/>  <!-- Dudenstraße/Katzbachstraße -->
+        <stop busStop="2029039146" duration="30"/>  <!-- Badener Ring -->
+    </trip>
+    <trip id="119_bus_120:0" type="pt_bus" depart="237.0" departLane="best" from="4543585#0" to="67713448#0">
+        <stop busStop="3977627658" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="2959767823" duration="30"/>  <!-- Gerichtstraße -->
+        <stop busStop="2924245390" duration="30"/>  <!-- S+U Wedding -->
+        <stop busStop="2959767825" duration="30"/>  <!-- U Reinickendorfer Straße -->
+        <stop busStop="2959803964" duration="30"/>  <!-- U Reinickendorfer Str./Sellerstr. -->
+        <stop busStop="7058638271" duration="30"/>  <!-- Boyenstraße -->
+        <stop busStop="3982589390" duration="30"/>  <!-- Bundeswehrkrankenhaus -->
+        <stop busStop="2959803963" duration="30"/>  <!-- Habersaathstraße -->
+        <stop busStop="892675617" duration="30"/>  <!-- S+U Hauptbahnhof -->
+    </trip>
+    <trip id="120_bus_120:1" type="pt_bus" depart="239.0" departLane="best" from="291695261#3" to="42732291">
+        <stop busStop="817754406" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="-2905450577" duration="30"/>  <!-- Invalidenpark -->
+        <stop busStop="-2913018058" duration="30"/>  <!-- Habersaathstraße -->
+        <stop busStop="-3982589391" duration="30"/>  <!-- Bundeswehrkrankenhaus -->
+        <stop busStop="-7058638272" duration="30"/>  <!-- Boyenstraße -->
+        <stop busStop="3976480157" duration="30"/>  <!-- U Reinickendorfer Str./Sellerstr. -->
+        <stop busStop="2904735773" duration="30"/>  <!-- S+U Wedding -->
+        <stop busStop="3977627657" duration="30"/>  <!-- Gerichtstraße -->
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="121_bus_218:0" type="pt_bus" depart="240.0" departLane="best" from="57683665#0" to="-4425425#5">
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="26868080" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679903" duration="30"/>  <!-- Haus des Rundfunks -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="-351903452" duration="30"/>  <!-- Württembergallee -->
+        <stop busStop="3951565141" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="3951565137" duration="30"/>  <!-- Mohrunger Allee -->
+        <stop busStop="3951565132" duration="30"/>  <!-- Flatowallee/Olympiastadion -->
+        <stop busStop="3951565139" duration="30"/>  <!-- Ragniter Allee -->
+        <stop busStop="-3951426022" duration="30"/>  <!-- Scholzplatz -->
+    </trip>
+    <trip id="122_bus_218:1" type="pt_bus" depart="241.0" departLane="best" from="4425425#0" to="838573074#0">
+        <stop busStop="-3951426023" duration="30"/>  <!-- Scholzplatz -->
+        <stop busStop="-3951565140" duration="30"/>  <!-- Ragniter Allee -->
+        <stop busStop="-3951565133" duration="30"/>  <!-- Flatowallee/Olympiastadion -->
+        <stop busStop="-3951565138" duration="30"/>  <!-- Mohrunger Allee -->
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="3951566066" duration="30"/>  <!-- Württembergallee -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951679904" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+    </trip>
+    <trip id="123_bus_M36:0" type="pt_bus" depart="251.0" departLane="best" from="19605961#0" to="32197160">
+        <stop busStop="4280572179" duration="30"/>  <!-- Stadion Haselhorst -->
+        <stop busStop="4280572171" duration="30"/>  <!-- Grützmacherpark -->
+        <stop busStop="4558734677" duration="30"/>  <!-- U Haselhorst -->
+    </trip>
+    <trip id="124_bus_M36:1" type="pt_bus" depart="253.0" departLane="best" from="32197160" to="19605963#0">
+        <stop busStop="3964527982" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="3964527984" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="4280572172" duration="30"/>  <!-- Grützmacherpark -->
+        <stop busStop="4280572180" duration="30"/>  <!-- Stadion Haselhorst -->
+    </trip>
+    <trip id="125_bus_123:0" type="pt_bus" depart="253.0" departLane="best" from="382412800#0" to="-1413007781#1">
+        <stop busStop="817763144" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="-3856100104" duration="30"/>  <!-- Lehrter Straße/Invalidenstraße -->
+        <stop busStop="-418084018" duration="30"/>  <!-- Seydlitzstraße -->
+        <stop busStop="-26992409" duration="30"/>  <!-- Poststadion -->
+        <stop busStop="-4279705547" duration="30"/>  <!-- Kruppstraße -->
+        <stop busStop="-3799567326" duration="30"/>  <!-- Perleberger Brücke -->
+        <stop busStop="1302029403" duration="30"/>  <!-- Quitzowstraße -->
+        <stop busStop="4279705565" duration="30"/>  <!-- Stendaler Straße -->
+        <stop busStop="4279705530" duration="30"/>  <!-- Birkenstraße/Rathenower Straße -->
+        <stop busStop="4279705569" duration="30"/>  <!-- Kriminalgericht Moabit -->
+        <stop busStop="4279705581" duration="30"/>  <!-- Wilsnacker Straße -->
+        <stop busStop="4279705567" duration="30"/>  <!-- Lübecker Straße -->
+        <stop busStop="3961281947" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="3961281930" duration="30"/>  <!-- Rathaus Tiergarten -->
+        <stop busStop="-3961281937" duration="30"/>  <!-- Turmstraße/Beusselstraße -->
+        <stop busStop="-3961904110" duration="30"/>  <!-- Wittstocker Straße -->
+        <stop busStop="778981664" duration="30"/>  <!-- S Beusselstraße -->
+        <stop busStop="3961904058" duration="30"/>  <!-- Berliner Großmarkt -->
+        <stop busStop="3961904094" duration="30"/>  <!-- Seestraße/Beusselstraße -->
+        <stop busStop="-3961904065" duration="30"/>  <!-- Gedenkstätte Plötzensee -->
+        <stop busStop="1187036930" duration="30"/>  <!-- Buchholzweg -->
+        <stop busStop="3961904062" duration="30"/>  <!-- Friedrich-Olbricht-Damm/Saatwinkler Damm -->
+        <stop busStop="27008283" duration="30"/>  <!-- Stieffring -->
+        <stop busStop="-3961904060" duration="30"/>  <!-- Friedrich-Olbricht-Damm/Heckerdamm -->
+        <stop busStop="-3961904099" duration="30"/>  <!-- Thaters Privatweg -->
+        <stop busStop="-3961904078" duration="30"/>  <!-- Kolonie Zukunft -->
+        <stop busStop="-3961904066" duration="30"/>  <!-- Gloedenpfad -->
+        <stop busStop="-3961904108" duration="30"/>  <!-- Wirmerzeile -->
+        <stop busStop="-3961904085" duration="30"/>  <!-- Reichweindamm -->
+        <stop busStop="-26790049" duration="30"/>  <!-- Goerdelerdamm -->
+        <stop busStop="27007776" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="-3961904104" duration="30"/>  <!-- Weltlingerbrücke -->
+        <stop busStop="-3964527528" duration="30"/>  <!-- Habermannzeile -->
+        <stop busStop="-3964527535" duration="30"/>  <!-- Hofackerzeile -->
+        <stop busStop="-3964527521" duration="30"/>  <!-- Dahrendorfzeile -->
+        <stop busStop="-3964527980" duration="30"/>  <!-- U Halemweg -->
+        <stop busStop="-3964527975" duration="30"/>  <!-- Toeplerstraße/Halemweg -->
+        <stop busStop="4280572178" duration="30"/>  <!-- Schweiggerweg -->
+        <stop busStop="3964527526" duration="30"/>  <!-- Goebelplatz -->
+        <stop busStop="-3964527959" duration="30"/>  <!-- Popitzweg -->
+        <stop busStop="-3964527998" duration="30"/>  <!-- U Siemensdamm -->
+        <stop busStop="3964527961" duration="30"/>  <!-- Quellweg -->
+        <stop busStop="-3964527994" duration="30"/>  <!-- U Rohrdamm -->
+        <stop busStop="-4280572182" duration="30"/>  <!-- Straße am Schaltwerk -->
+        <stop busStop="-4280572168" duration="30"/>  <!-- Köttgenstraße -->
+        <stop busStop="-1409151326" duration="30"/>  <!-- Harriesstraße -->
+    </trip>
+    <trip id="126_bus_123:1" type="pt_bus" depart="253.0" departLane="best" from="1413007782#0" to="-1396063583#2">
+        <stop busStop="1412229447" duration="30"/>  <!-- Saatwinkler Damm/Rohrdamm -->
+        <stop busStop="4280572161" duration="30"/>  <!-- Harriesstraße -->
+        <stop busStop="1409151199" duration="30"/>  <!-- Köttgenstraße -->
+        <stop busStop="4280572181" duration="30"/>  <!-- Straße am Schaltwerk -->
+        <stop busStop="3964527995" duration="30"/>  <!-- U Rohrdamm -->
+        <stop busStop="3964527960" duration="30"/>  <!-- Quellweg -->
+        <stop busStop="3964527997" duration="30"/>  <!-- U Siemensdamm -->
+        <stop busStop="3964527958" duration="30"/>  <!-- Popitzweg -->
+        <stop busStop="-3964527525" duration="30"/>  <!-- Goebelplatz -->
+        <stop busStop="-4280572177" duration="30"/>  <!-- Schweiggerweg -->
+        <stop busStop="-4280572183" duration="30"/>  <!-- Toeplerstraße/Halemweg -->
+        <stop busStop="3964527979" duration="30"/>  <!-- U Halemweg -->
+        <stop busStop="3964527522" duration="30"/>  <!-- Dahrendorfzeile -->
+        <stop busStop="3964527534" duration="30"/>  <!-- Hofackerzeile -->
+        <stop busStop="4280572160" duration="30"/>  <!-- Habermannzeile -->
+        <stop busStop="3961904103" duration="30"/>  <!-- Weltlingerbrücke -->
+        <stop busStop="267385041" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="3961904068" duration="30"/>  <!-- Goerdelerdamm -->
+        <stop busStop="3961904084" duration="30"/>  <!-- Reichweindamm -->
+        <stop busStop="3961904107" duration="30"/>  <!-- Wirmerzeile -->
+        <stop busStop="3961904067" duration="30"/>  <!-- Gloedenpfad -->
+        <stop busStop="3961904079" duration="30"/>  <!-- Kolonie Zukunft -->
+        <stop busStop="3961904100" duration="30"/>  <!-- Thaters Privatweg -->
+        <stop busStop="-3961904061" duration="30"/>  <!-- Friedrich-Olbricht-Damm/Heckerdamm -->
+        <stop busStop="-8176668996" duration="30"/>  <!-- Stieffring -->
+    </trip>
+    <trip id="127_bus_M85:0" type="pt_bus" depart="253.0" departLane="best" from="382412800#0" to="1126373244#1">
+        <stop busStop="817763144" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="298516304" duration="30"/>  <!-- S Potsdamer Platz/Voßstraße -->
+        <stop busStop="1877576997" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1885312768" duration="30"/>  <!-- Kulturforum -->
+        <stop busStop="2020514436" duration="30"/>  <!-- Potsdamer Brücke -->
+        <stop busStop="3948376439" duration="30"/>  <!-- Lützowstraße/Potsdamer Straße -->
+        <stop busStop="3948376446" duration="30"/>  <!-- U Kurfürstenstraße -->
+        <stop busStop="3948376441" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="3948376438" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3957979306" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3957979295" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979280" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3956655766" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="3956655771" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+    </trip>
+    <trip id="128_bus_M85:1" type="pt_bus" depart="253.0" departLane="best" from="1216817033#0" to="4389557#0">
+        <stop busStop="3956655772" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+        <stop busStop="412404953" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="412404951" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3957979296" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979307" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3948376436" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="-3948376442" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="-3948376445" duration="30"/>  <!-- U Kurfürstenstraße -->
+        <stop busStop="-3948376440" duration="30"/>  <!-- Lützowstraße/Potsdamer Straße -->
+        <stop busStop="3933855803" duration="30"/>  <!-- Potsdamer Brücke -->
+        <stop busStop="1885312769" duration="30"/>  <!-- Kulturforum -->
+        <stop busStop="1877576992" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1874617251" duration="30"/>  <!-- S Potsdamer Platz/Voßstraße -->
+        <stop busStop="4284939148" duration="30"/>  <!-- S+U Hauptbahnhof -->
+    </trip>
+    <trip id="129_tram_12:0" type="pt_tram" depart="254.0" departLane="best" from="167569489" to="144014237#2">
+        <stop busStop="3740062451" duration="30"/>  <!-- S Nordbahnhof -->
+        <stop busStop="5053340655" duration="30"/>  <!-- U Naturkundemuseum -->
+        <stop busStop="244487457" duration="30"/>  <!-- Hannoversche Straße -->
+        <stop busStop="990017251" duration="30"/>  <!-- U Oranienburger Tor -->
+        <stop busStop="247600965" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="3922258748" duration="30"/>  <!-- Universitätsstraße -->
+    </trip>
+    <trip id="130_tram_12:1" type="pt_tram" depart="254.0" departLane="best" from="167272512#0" to="282760691#0">
+        <stop busStop="1823298700" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="30731700" duration="30"/>  <!-- U Oranienburger Tor -->
+        <stop busStop="5053329725" duration="30"/>  <!-- U Naturkundemuseum -->
+        <stop busStop="3740062452" duration="30"/>  <!-- S Nordbahnhof -->
+    </trip>
+    <trip id="131_tram_M1:0" type="pt_tram" depart="258.0" departLane="best" from="167272512#0" to="143891040#1">
+        <stop busStop="1823298700" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="30731700" duration="30"/>  <!-- U Oranienburger Tor -->
+    </trip>
+    <trip id="132_tram_M1:1" type="pt_tram" depart="260.0" departLane="best" from="167272512#0" to="143891040#1">
+        <stop busStop="1823298700" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="30731700" duration="30"/>  <!-- U Oranienburger Tor -->
+    </trip>
+    <trip id="133_tram_M1:2" type="pt_tram" depart="262.0" departLane="best" from="1340133919#0" to="144014237#2">
+        <stop busStop="1668685086" duration="30"/>  <!-- U Oranienburger Tor -->
+        <stop busStop="990017251" duration="30"/>  <!-- U Oranienburger Tor -->
+        <stop busStop="247600965" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="3922258748" duration="30"/>  <!-- Universitätsstraße -->
+    </trip>
+    <trip id="134_tram_M1:3" type="pt_tram" depart="265.0" departLane="best" from="1340133919#0" to="144014237#2">
+        <stop busStop="1668685086" duration="30"/>  <!-- U Oranienburger Tor -->
+        <stop busStop="990017251" duration="30"/>  <!-- U Oranienburger Tor -->
+        <stop busStop="247600965" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="3922258748" duration="30"/>  <!-- Universitätsstraße -->
+    </trip>
+    <trip id="135_tram_M10:0" type="pt_tram" depart="269.0" departLane="best" from="180566559" to="1221036041#8">
+        <stop busStop="1837885456" duration="30"/>  <!-- Gedenkstätte Berliner Mauer -->
+        <stop busStop="1837885458" duration="30"/>  <!-- S Nordbahnhof -->
+        <stop busStop="3236522163" duration="30"/>  <!-- U Naturkundemuseum -->
+        <stop busStop="2951367727" duration="30"/>  <!-- Invalidenpark -->
+        <stop busStop="2085211643" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="2831020554" duration="30"/>  <!-- Lesser-Ury-Weg -->
+        <stop busStop="11118312095" duration="30"/>  <!-- Alt-Moabit/Rathenower Straße -->
+        <stop busStop="11071468448" duration="30"/>  <!-- Kriminalgericht Moabit -->
+        <stop busStop="11118312088" duration="30"/>  <!-- Lübecker Straße -->
+        <stop busStop="8461403082" duration="30"/>  <!-- U Turmstraße -->
+    </trip>
+    <trip id="136_bus_M49:0" type="pt_bus" depart="272.0" departLane="best" from="-4474790" to="4517104#0">
+        <stop busStop="3951565143" duration="30"/>  <!-- Stößenseebrücke -->
+        <stop busStop="213227866" duration="30"/>  <!-- Scholzplatz -->
+        <stop busStop="-3951565140" duration="30"/>  <!-- Ragniter Allee -->
+        <stop busStop="-3951565133" duration="30"/>  <!-- Flatowallee/Olympiastadion -->
+        <stop busStop="-3951565138" duration="30"/>  <!-- Mohrunger Allee -->
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="3951566066" duration="30"/>  <!-- Württembergallee -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951679904" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951898328" duration="30"/>  <!-- Kuno-Fischer-Straße -->
+        <stop busStop="3951898315" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898322" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898339" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898325" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3951898337" duration="30"/>  <!-- Schlüterstraße -->
+        <stop busStop="3951898335" duration="30"/>  <!-- Savignyplatz -->
+        <stop busStop="3951898341" duration="30"/>  <!-- Uhlandstraße/Kantstraße -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="137_bus_M49:1" type="pt_bus" depart="273.0" departLane="best" from="-1113425380" to="25892782">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386375" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="297218325" duration="30"/>  <!-- Theater des Westens -->
+        <stop busStop="4016811111" duration="30"/>  <!-- Uhlandstraße/Kantstraße -->
+        <stop busStop="3951898336" duration="30"/>  <!-- Savignyplatz -->
+        <stop busStop="3951898338" duration="30"/>  <!-- Schlüterstraße -->
+        <stop busStop="3951898326" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3951898340" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898323" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898316" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898329" duration="30"/>  <!-- Kuno-Fischer-Straße -->
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="26868080" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679903" duration="30"/>  <!-- Haus des Rundfunks -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="-351903452" duration="30"/>  <!-- Württembergallee -->
+        <stop busStop="3951565141" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="3951565137" duration="30"/>  <!-- Mohrunger Allee -->
+        <stop busStop="3951565132" duration="30"/>  <!-- Flatowallee/Olympiastadion -->
+        <stop busStop="3951565139" duration="30"/>  <!-- Ragniter Allee -->
+        <stop busStop="213227885" duration="30"/>  <!-- Scholzplatz -->
+        <stop busStop="3951565144" duration="30"/>  <!-- Stößenseebrücke -->
+    </trip>
+    <trip id="138_bus_M48:0" type="pt_bus" depart="274.0" departLane="best" from="1216817033#0" to="710761406#0">
+        <stop busStop="3956655772" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+        <stop busStop="412404953" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="412404951" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3957979296" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979307" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3948376436" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="-3948376442" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="-3948376445" duration="30"/>  <!-- U Kurfürstenstraße -->
+        <stop busStop="-3948376440" duration="30"/>  <!-- Lützowstraße/Potsdamer Straße -->
+        <stop busStop="3933855803" duration="30"/>  <!-- Potsdamer Brücke -->
+        <stop busStop="1885312769" duration="30"/>  <!-- Kulturforum -->
+        <stop busStop="1877576992" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1874617251" duration="30"/>  <!-- S Potsdamer Platz/Voßstraße -->
+        <stop busStop="6287386729" duration="30"/>  <!-- U Anton-Wilhelm-Amo-Straße -->
+    </trip>
+    <trip id="139_bus_M48:1" type="pt_bus" depart="275.0" departLane="best" from="710761406#0" to="1126373244#1">
+        <stop busStop="6287386729" duration="30"/>  <!-- U Anton-Wilhelm-Amo-Straße -->
+        <stop busStop="-5938860559" duration="30"/>  <!-- Leipziger Straße/Wilhelmstraße -->
+        <stop busStop="-1877848279" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1877576997" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1885312768" duration="30"/>  <!-- Kulturforum -->
+        <stop busStop="2020514436" duration="30"/>  <!-- Potsdamer Brücke -->
+        <stop busStop="3948376439" duration="30"/>  <!-- Lützowstraße/Potsdamer Straße -->
+        <stop busStop="3948376446" duration="30"/>  <!-- U Kurfürstenstraße -->
+        <stop busStop="3948376441" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="3948376438" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3957979306" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3957979295" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979280" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3956655766" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="3956655771" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+    </trip>
+    <trip id="140_bus_M29:0" type="pt_bus" depart="280.0" departLane="best" from="-331126666#1" to="1147413282">
+        <stop busStop="602244743" duration="30"/>  <!-- Joseph-Joachim-Platz -->
+        <stop busStop="-3956855807" duration="30"/>  <!-- Delbrückstraße -->
+        <stop busStop="3956855819" duration="30"/>  <!-- Herthastraße -->
+        <stop busStop="-3956855824" duration="30"/>  <!-- Lynarstraße -->
+        <stop busStop="3956855804" duration="30"/>  <!-- Bismarckplatz -->
+        <stop busStop="3956855826" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="3957757589" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3957757578" duration="30"/>  <!-- Agathe-Lasch-Platz -->
+        <stop busStop="3957757579" duration="30"/>  <!-- Lehniner Platz/Schaubühne -->
+        <stop busStop="3957757594" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757585" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757568" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757601" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757599" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757573" duration="30"/>  <!-- Europa-Center -->
+        <stop busStop="3957757605" duration="30"/>  <!-- U Wittenbergplatz -->
+        <stop busStop="3957757565" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3935677410" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="272372358" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="2122601231" duration="30"/>  <!-- Hiroshimasteg -->
+        <stop busStop="3933855793" duration="30"/>  <!-- Gedenkstätte Deutscher Widerstand -->
+        <stop busStop="3149777523" duration="30"/>  <!-- Potsdamer Brücke -->
+        <stop busStop="1870081902" duration="30"/>  <!-- U Mendelssohn-Bartholdy-Park -->
+        <stop busStop="3933855815" duration="30"/>  <!-- Schöneberger Brücke -->
+        <stop busStop="3854590994" duration="30"/>  <!-- S Anhalter Bahnhof -->
+        <stop busStop="-769360167" duration="30"/>  <!-- Wilhelmstraße/Kochstraße -->
+        <stop busStop="-3870475229" duration="30"/>  <!-- U Kochstraße/Checkpoint Charlie -->
+    </trip>
+    <trip id="141_bus_M29:1" type="pt_bus" depart="283.0" departLane="best" from="-1147413288#1" to="331126666#0">
+        <stop busStop="3870475230" duration="30"/>  <!-- U Kochstraße/Checkpoint Charlie -->
+        <stop busStop="3870475234" duration="30"/>  <!-- Wilhelmstraße/Kochstraße -->
+        <stop busStop="-1874549826" duration="30"/>  <!-- S Anhalter Bahnhof -->
+        <stop busStop="-3933855814" duration="30"/>  <!-- Schöneberger Brücke -->
+        <stop busStop="1868199824" duration="30"/>  <!-- U Mendelssohn-Bartholdy-Park -->
+        <stop busStop="3933855804" duration="30"/>  <!-- Potsdamer Brücke -->
+        <stop busStop="3933855794" duration="30"/>  <!-- Gedenkstätte Deutscher Widerstand -->
+        <stop busStop="3933855797" duration="30"/>  <!-- Hiroshimasteg -->
+        <stop busStop="3933855800" duration="30"/>  <!-- Köbisstraße -->
+        <stop busStop="272372640" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="6154203348" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="3957757567" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="1643364367" duration="30"/>  <!-- U Wittenbergplatz -->
+        <stop busStop="3957757574" duration="30"/>  <!-- Europa-Center -->
+        <stop busStop="3957757598" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757602" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757569" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757586" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757593" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757580" duration="30"/>  <!-- Lehniner Platz/Schaubühne -->
+        <stop busStop="3957757577" duration="30"/>  <!-- Agathe-Lasch-Platz -->
+        <stop busStop="3957757591" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3956855827" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="-3956855803" duration="30"/>  <!-- Bismarckplatz -->
+        <stop busStop="-3956855825" duration="30"/>  <!-- Lynarstraße -->
+        <stop busStop="3956855820" duration="30"/>  <!-- Herthastraße -->
+        <stop busStop="3956855806" duration="30"/>  <!-- Delbrückstraße -->
+        <stop busStop="3956855823" duration="30"/>  <!-- Joseph-Joachim-Platz -->
+    </trip>
+    <trip id="142_bus_M19:0" type="pt_bus" depart="285.0" departLane="best" from="392733091" to="52158843#0">
+        <stop busStop="3956855830" duration="30"/>  <!-- S Grunewald -->
+        <stop busStop="-3956855837" duration="30"/>  <!-- Taubertstraße -->
+        <stop busStop="-3956855816" duration="30"/>  <!-- Hasensprung -->
+        <stop busStop="-3956855809" duration="30"/>  <!-- Erdener Straße -->
+        <stop busStop="-3956855818" duration="30"/>  <!-- Herbertstraße -->
+        <stop busStop="3956855826" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="3957757589" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3957757578" duration="30"/>  <!-- Agathe-Lasch-Platz -->
+        <stop busStop="3957757579" duration="30"/>  <!-- Lehniner Platz/Schaubühne -->
+        <stop busStop="3957757594" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757585" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757568" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757601" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757599" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757573" duration="30"/>  <!-- Europa-Center -->
+        <stop busStop="3957757605" duration="30"/>  <!-- U Wittenbergplatz -->
+        <stop busStop="3957757562" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3957828284" duration="30"/>  <!-- U Nollendorfplatz -->
+        <stop busStop="3948376443" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="3957828279" duration="30"/>  <!-- Dennewitzplatz -->
+        <stop busStop="3957828282" duration="30"/>  <!-- Mansteinstraße -->
+        <stop busStop="-1958094223" duration="30"/>  <!-- S+U Yorckstraße (Großgörschenstraße) -->
+        <stop busStop="-3957828283" duration="30"/>  <!-- S+U Yorckstraße -->
+        <stop busStop="3957828280" duration="30"/>  <!-- Katzbachstraße -->
+        <stop busStop="3957828287" duration="30"/>  <!-- Hornstraße -->
+        <stop busStop="3949521959" duration="30"/>  <!-- U Mehringdamm -->
+        <stop busStop="4032629827" duration="30"/>  <!-- U Mehringdamm -->
+    </trip>
+    <trip id="143_bus_M19:1" type="pt_bus" depart="291.0" departLane="best" from="52158843#0" to="392733091">
+        <stop busStop="3949521958" duration="30"/>  <!-- U Mehringdamm -->
+        <stop busStop="3949521960" duration="30"/>  <!-- U Mehringdamm -->
+        <stop busStop="3957828288" duration="30"/>  <!-- Hornstraße -->
+        <stop busStop="3957828281" duration="30"/>  <!-- Katzbachstraße -->
+        <stop busStop="1958094220" duration="30"/>  <!-- S+U Yorckstraße -->
+        <stop busStop="1958094224" duration="30"/>  <!-- S+U Yorckstraße (Großgörschenstraße) -->
+        <stop busStop="3957828278" duration="30"/>  <!-- Dennewitzplatz -->
+        <stop busStop="3948376444" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="583447610" duration="30"/>  <!-- U Nollendorfplatz -->
+        <stop busStop="3957757563" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="1643364367" duration="30"/>  <!-- U Wittenbergplatz -->
+        <stop busStop="3957757574" duration="30"/>  <!-- Europa-Center -->
+        <stop busStop="3957757598" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757602" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757569" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757586" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757593" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757580" duration="30"/>  <!-- Lehniner Platz/Schaubühne -->
+        <stop busStop="3957757577" duration="30"/>  <!-- Agathe-Lasch-Platz -->
+        <stop busStop="3957757591" duration="30"/>  <!-- S Halensee -->
+        <stop busStop="3956855827" duration="30"/>  <!-- Rathenauplatz -->
+        <stop busStop="3956855817" duration="30"/>  <!-- Herbertstraße -->
+        <stop busStop="3956855808" duration="30"/>  <!-- Erdener Straße -->
+        <stop busStop="26838137" duration="30"/>  <!-- Hasensprung -->
+        <stop busStop="3956855838" duration="30"/>  <!-- Taubertstraße -->
+        <stop busStop="665906791" duration="30"/>  <!-- Hagenplatz -->
+        <stop busStop="3956855830" duration="30"/>  <!-- S Grunewald -->
+    </trip>
+    <trip id="144_bus_M21:0" type="pt_bus" depart="291.0" departLane="best" from="4396831" to="367831514#0">
+        <stop busStop="3961904073" duration="30"/>  <!-- Hinckeldeybrücke -->
+        <stop busStop="3961904103" duration="30"/>  <!-- Weltlingerbrücke -->
+        <stop busStop="267385041" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="3961904091" duration="30"/>  <!-- S+U Jungfernheide -->
+        <stop busStop="3961904070" duration="30"/>  <!-- Goerdelersteg -->
+    </trip>
+    <trip id="145_bus_M21:1" type="pt_bus" depart="293.0" departLane="best" from="-451458153#1" to="28658008">
+        <stop busStop="-3961904069" duration="30"/>  <!-- Goerdelersteg -->
+        <stop busStop="-3961904092" duration="30"/>  <!-- S+U Jungfernheide -->
+        <stop busStop="27007776" duration="30"/>  <!-- U Jakob-Kaiser-Platz -->
+        <stop busStop="267399031" duration="30"/>  <!-- Weltlingerbrücke -->
+        <stop busStop="3961904074" duration="30"/>  <!-- Hinckeldeybrücke -->
+    </trip>
+    <trip id="146_bus_M27:0" type="pt_bus" depart="300.0" departLane="best" from="1415362927" to="24700558#1">
+        <stop busStop="3961904091" duration="30"/>  <!-- S+U Jungfernheide -->
+        <stop busStop="3961904102" duration="30"/>  <!-- U Mierendorffplatz -->
+        <stop busStop="3961904075" duration="30"/>  <!-- Ilsenburger Straße -->
+        <stop busStop="3961904072" duration="30"/>  <!-- Goslarer Platz -->
+        <stop busStop="-3961904082" duration="30"/>  <!-- Neues Ufer -->
+        <stop busStop="-3961904105" duration="30"/>  <!-- Wiebestraße/Huttenstraße -->
+        <stop busStop="-3961904086" duration="30"/>  <!-- Reuchlinstraße -->
+        <stop busStop="3961281935" duration="30"/>  <!-- Turmstraße/Beusselstraße -->
+        <stop busStop="3961281929" duration="30"/>  <!-- Rathaus Tiergarten -->
+        <stop busStop="4523354281" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="3933855790" duration="30"/>  <!-- Am Nordhafen -->
+        <stop busStop="676750090" duration="30"/>  <!-- U Reinickendorfer Straße -->
+        <stop busStop="4279705555" duration="30"/>  <!-- Nettelbeckplatz/S Wedding -->
+        <stop busStop="4279705578" duration="30"/>  <!-- Wiesenstraße -->
+    </trip>
+    <trip id="147_bus_M27:1" type="pt_bus" depart="301.0" departLane="best" from="1133400411#0" to="1415362927">
+        <stop busStop="4279705553" duration="30"/>  <!-- Nettelbeckplatz/S Wedding -->
+        <stop busStop="2295120903" duration="30"/>  <!-- U Reinickendorfer Straße -->
+        <stop busStop="-3933855789" duration="30"/>  <!-- Am Nordhafen -->
+        <stop busStop="1302029403" duration="30"/>  <!-- Quitzowstraße -->
+        <stop busStop="3976479155" duration="30"/>  <!-- Stendaler Straße -->
+        <stop busStop="3976479150" duration="30"/>  <!-- Havelberger Straße -->
+        <stop busStop="1904800928" duration="30"/>  <!-- Stromstraße -->
+        <stop busStop="3961281947" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="3961281930" duration="30"/>  <!-- Rathaus Tiergarten -->
+        <stop busStop="3961281936" duration="30"/>  <!-- Turmstraße/Beusselstraße -->
+        <stop busStop="3961904087" duration="30"/>  <!-- Reuchlinstraße -->
+        <stop busStop="3961904106" duration="30"/>  <!-- Wiebestraße/Huttenstraße -->
+        <stop busStop="3961904083" duration="30"/>  <!-- Neues Ufer -->
+        <stop busStop="-3961904071" duration="30"/>  <!-- Goslarer Platz -->
+        <stop busStop="-3961904076" duration="30"/>  <!-- Ilsenburger Straße -->
+        <stop busStop="3961904101" duration="30"/>  <!-- U Mierendorffplatz -->
+        <stop busStop="3961904077" duration="30"/>  <!-- Keplerstraße -->
+        <stop busStop="3961904090" duration="30"/>  <!-- S+U Jungfernheide -->
+        <stop busStop="3961904098" duration="30"/>  <!-- Tegeler Weg/S Jungfernheide -->
+        <stop busStop="3961904091" duration="30"/>  <!-- S+U Jungfernheide -->
+    </trip>
+    <trip id="148_bus_M46:0" type="pt_bus" depart="303.0" departLane="best" from="-1113425380" to="152264785">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386378" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757599" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757573" duration="30"/>  <!-- Europa-Center -->
+        <stop busStop="3957757605" duration="30"/>  <!-- U Wittenbergplatz -->
+        <stop busStop="3957757564" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3826452912" duration="30"/>  <!-- Motzstraße -->
+        <stop busStop="3957979290" duration="30"/>  <!-- Hohenstaufenstraße -->
+        <stop busStop="598659965" duration="30"/>  <!-- Barbarossastraße -->
+        <stop busStop="3957979289" duration="30"/>  <!-- Grunewaldstraße -->
+        <stop busStop="3957979301" duration="30"/>  <!-- Rathaus Schöneberg -->
+        <stop busStop="3956655764" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="27186974" duration="30"/>  <!-- S Schöneberg -->
+    </trip>
+    <trip id="149_bus_M46:1" type="pt_bus" depart="305.0" departLane="best" from="35201031#0" to="4517104#0">
+        <stop busStop="3956655773" duration="30"/>  <!-- S Schöneberg -->
+        <stop busStop="3956655765" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="3957979303" duration="30"/>  <!-- Rathaus Schöneberg -->
+        <stop busStop="3957979286" duration="30"/>  <!-- Grunewaldstraße -->
+        <stop busStop="598659978" duration="30"/>  <!-- Barbarossastraße -->
+        <stop busStop="3957979291" duration="30"/>  <!-- Hohenstaufenstraße -->
+        <stop busStop="3957979298" duration="30"/>  <!-- Motzstraße -->
+        <stop busStop="3957757566" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="1643364367" duration="30"/>  <!-- U Wittenbergplatz -->
+        <stop busStop="3957757574" duration="30"/>  <!-- Europa-Center -->
+        <stop busStop="3957757600" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="150_bus_M45:0" type="pt_bus" depart="310.0" departLane="best" from="-1113425380" to="1133397575#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386374" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677407" duration="30"/>  <!-- S+U Zoologischer Garten/Jebensstraße -->
+        <stop busStop="3935677413" duration="30"/>  <!-- Steinplatz -->
+        <stop busStop="1023689289" duration="30"/>  <!-- U Ernst-Reuter-Platz -->
+        <stop busStop="26938228" duration="30"/>  <!-- Marchstraße -->
+        <stop busStop="3961281923" duration="30"/>  <!-- Otto-Suhr-Allee/Leibnizstraße -->
+        <stop busStop="3964528002" duration="30"/>  <!-- Warburgzeile -->
+        <stop busStop="3964527991" duration="30"/>  <!-- U Richard-Wagner-Platz -->
+        <stop busStop="3964527524" duration="30"/>  <!-- Eosanderstraße -->
+        <stop busStop="3964527548" duration="30"/>  <!-- Luisenplatz/Schloss Charlottenburg -->
+        <stop busStop="3964527541" duration="30"/>  <!-- Klausenerplatz -->
+        <stop busStop="-4279774164" duration="30"/>  <!-- Sophie-Charlotten-Straße -->
+        <stop busStop="3964527544" duration="30"/>  <!-- Königin-Elisabeth-Straße/Spandauer Damm -->
+        <stop busStop="3964527520" duration="30"/>  <!-- DRK-Kliniken Westend -->
+        <stop busStop="3964527537" duration="30"/>  <!-- Kastanienallee -->
+        <stop busStop="3964527539" duration="30"/>  <!-- Kirschenallee -->
+        <stop busStop="3964527550" duration="30"/>  <!-- Meiningenallee -->
+        <stop busStop="3964527554" duration="30"/>  <!-- Park Ruhwald -->
+        <stop busStop="3964527972" duration="30"/>  <!-- Spandauer Damm/Reichsstraße -->
+        <stop busStop="4305818589" duration="30"/>  <!-- Machandelweg -->
+        <stop busStop="3987512855" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="27586338" duration="30"/>  <!-- Krematorium Ruhleben -->
+        <stop busStop="3964527957" duration="30"/>  <!-- Polizeidirektion 2 -->
+        <stop busStop="27586412" duration="30"/>  <!-- Güterbahnhof Ruhleben -->
+        <stop busStop="27586437" duration="30"/>  <!-- Teltower Straße -->
+    </trip>
+    <trip id="151_bus_M45:1" type="pt_bus" depart="313.0" departLane="best" from="37291474#0" to="4517104#0">
+        <stop busStop="402508072" duration="30"/>  <!-- Teltower Straße -->
+        <stop busStop="3964527527" duration="30"/>  <!-- Güterbahnhof Ruhleben -->
+        <stop busStop="3964527556" duration="30"/>  <!-- Polizeidirektion 2 -->
+        <stop busStop="1800704622" duration="30"/>  <!-- Krematorium Ruhleben -->
+        <stop busStop="3964527996" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="1098689223" duration="30"/>  <!-- Machandelweg -->
+        <stop busStop="3964527971" duration="30"/>  <!-- Spandauer Damm/Reichsstraße -->
+        <stop busStop="3964527555" duration="30"/>  <!-- Park Ruhwald -->
+        <stop busStop="3964527551" duration="30"/>  <!-- Meiningenallee -->
+        <stop busStop="3964527538" duration="30"/>  <!-- Kirschenallee -->
+        <stop busStop="3964527536" duration="30"/>  <!-- Kastanienallee -->
+        <stop busStop="3964527519" duration="30"/>  <!-- DRK-Kliniken Westend -->
+        <stop busStop="3964527543" duration="30"/>  <!-- Königin-Elisabeth-Straße/Spandauer Damm -->
+        <stop busStop="609217675" duration="30"/>  <!-- S Westend -->
+        <stop busStop="4279774165" duration="30"/>  <!-- Sophie-Charlotten-Straße -->
+        <stop busStop="3964527540" duration="30"/>  <!-- Klausenerplatz -->
+        <stop busStop="3964527968" duration="30"/>  <!-- Schloss Charlottenburg -->
+        <stop busStop="3964527547" duration="30"/>  <!-- Luisenplatz/Schloss Charlottenburg -->
+        <stop busStop="3964527523" duration="30"/>  <!-- Eosanderstraße -->
+        <stop busStop="3964527990" duration="30"/>  <!-- U Richard-Wagner-Platz -->
+        <stop busStop="3964528001" duration="30"/>  <!-- Warburgzeile -->
+        <stop busStop="3961281924" duration="30"/>  <!-- Otto-Suhr-Allee/Leibnizstraße -->
+        <stop busStop="3951565136" duration="30"/>  <!-- Marchstraße -->
+        <stop busStop="3935677417" duration="30"/>  <!-- U Ernst-Reuter-Platz -->
+        <stop busStop="3935677414" duration="30"/>  <!-- Steinplatz -->
+        <stop busStop="401852749" duration="30"/>  <!-- Jebensstraße -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="156_bus_249:0" type="pt_bus" depart="323.0" departLane="best" from="318552320#0" to="4517104#0">
+        <stop busStop="3956250168" duration="30"/>  <!-- S+U Heidelberger Platz -->
+        <stop busStop="3960919876" duration="30"/>  <!-- Brabanter Platz -->
+        <stop busStop="479154176" duration="30"/>  <!-- Am Volkspark -->
+        <stop busStop="3959807232" duration="30"/>  <!-- U Blissestraße/Uhlandstraße -->
+        <stop busStop="-4279774134" duration="30"/>  <!-- Fechnerstraße -->
+        <stop busStop="4279774138" duration="30"/>  <!-- Güntzelstraße/Uhlandstraße -->
+        <stop busStop="254335459" duration="30"/>  <!-- U Hohenzollernplatz -->
+        <stop busStop="-4279774156" duration="30"/>  <!-- Pariser Straße -->
+        <stop busStop="4279774146" duration="30"/>  <!-- Lietzenburger Straße/Uhlandstraße -->
+        <stop busStop="3957979285" duration="30"/>  <!-- Friedrich-Hollaender-Platz -->
+        <stop busStop="3957757597" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="157_bus_249:1" type="pt_bus" depart="323.0" departLane="best" from="-1113425380" to="1183033064#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386379" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757596" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957979284" duration="30"/>  <!-- Friedrich-Hollaender-Platz -->
+        <stop busStop="4279774147" duration="30"/>  <!-- Lietzenburger Straße/Uhlandstraße -->
+        <stop busStop="4279774155" duration="30"/>  <!-- Pariser Straße -->
+        <stop busStop="4279774167" duration="30"/>  <!-- U Hohenzollernplatz -->
+        <stop busStop="4279774137" duration="30"/>  <!-- Güntzelstraße/Uhlandstraße -->
+        <stop busStop="4279774133" duration="30"/>  <!-- Fechnerstraße -->
+        <stop busStop="3959807231" duration="30"/>  <!-- U Blissestraße/Uhlandstraße -->
+        <stop busStop="265757799" duration="30"/>  <!-- Am Volkspark -->
+        <stop busStop="3960919875" duration="30"/>  <!-- Brabanter Platz -->
+        <stop busStop="3956250169" duration="30"/>  <!-- S+U Heidelberger Platz -->
+    </trip>
+    <trip id="158_bus_133:0" type="pt_bus" depart="325.0" departLane="best" from="5021447#0" to="31719426#0">
+        <stop busStop="33484097" duration="30"/>  <!-- Paulsternstraße/Gartenfelder Straße -->
+        <stop busStop="3964527531" duration="30"/>  <!-- Haselhorster Damm/Gartenfelder Straße -->
+        <stop busStop="3964527970" duration="30"/>  <!-- Siedlung Haselhorst -->
+        <stop busStop="3964527983" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="8995054100" duration="30"/>  <!-- U Haselhorst -->
+    </trip>
+    <trip id="159_bus_133:1" type="pt_bus" depart="326.0" departLane="best" from="31719426#0" to="-5021447#2">
+        <stop busStop="11250911979" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="3964527984" duration="30"/>  <!-- U Haselhorst -->
+        <stop busStop="-3964527969" duration="30"/>  <!-- Siedlung Haselhorst -->
+        <stop busStop="-1368108983" duration="30"/>  <!-- Haselhorster Damm/Gartenfelder Straße -->
+        <stop busStop="6287386706" duration="30"/>  <!-- Paulsternstraße/Gartenfelder Straße -->
+    </trip>
+    <trip id="160_bus_221:0" type="pt_bus" depart="329.0" departLane="best" from="-1080229993" to="375861849">
+        <stop busStop="3924971827" duration="30"/>  <!-- Seestraße/Amrumer Straße -->
+        <stop busStop="3977742480" duration="30"/>  <!-- U Amrumer Straße -->
+        <stop busStop="3977742461" duration="30"/>  <!-- Luxemburger Straße -->
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="4279705570" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="161_bus_221:1" type="pt_bus" depart="330.0" departLane="best" from="37740223" to="1080229993">
+        <stop busStop="4217061014" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="3977742462" duration="30"/>  <!-- Luxemburger Straße -->
+        <stop busStop="3977742479" duration="30"/>  <!-- U Amrumer Straße -->
+        <stop busStop="3782085306" duration="30"/>  <!-- Seestraße/Amrumer Straße -->
+    </trip>
+    <trip id="162_bus_221:2" type="pt_bus" depart="331.0" departLane="best" from="37740223" to="1080229993">
+        <stop busStop="4217061014" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="3977742462" duration="30"/>  <!-- Luxemburger Straße -->
+        <stop busStop="3977742479" duration="30"/>  <!-- U Amrumer Straße -->
+        <stop busStop="3782085306" duration="30"/>  <!-- Seestraße/Amrumer Straße -->
+    </trip>
+    <trip id="163_bus_221:3" type="pt_bus" depart="331.0" departLane="best" from="-1080229993" to="375861849">
+        <stop busStop="3924971827" duration="30"/>  <!-- Seestraße/Amrumer Straße -->
+        <stop busStop="3977742480" duration="30"/>  <!-- U Amrumer Straße -->
+        <stop busStop="3977742461" duration="30"/>  <!-- Luxemburger Straße -->
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="4279705570" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="164_bus_139:0" type="pt_bus" depart="333.0" departLane="best" from="126289881#0" to="838573074#0">
+        <stop busStop="4280572169" duration="30"/>  <!-- Lüdenscheider Weg -->
+        <stop busStop="4280572157" duration="30"/>  <!-- Burscheider Weg -->
+        <stop busStop="-1368108983" duration="30"/>  <!-- Haselhorster Damm/Gartenfelder Straße -->
+        <stop busStop="3977892031" duration="30"/>  <!-- Paulsternstraße/Gartenfelder Straße -->
+        <stop busStop="3964527985" duration="30"/>  <!-- U Paulsternstraße -->
+        <stop busStop="3964527965" duration="30"/>  <!-- Schaltwerk -->
+        <stop busStop="3964527992" duration="30"/>  <!-- U Rohrdamm -->
+        <stop busStop="3964527960" duration="30"/>  <!-- Quellweg -->
+        <stop busStop="4569373406" duration="30"/>  <!-- U Siemensdamm -->
+        <stop busStop="4825819634" duration="30"/>  <!-- Wohlrabedamm/Siemensdamm -->
+        <stop busStop="4123814225" duration="30"/>  <!-- Wohlrabedamm Mitte -->
+        <stop busStop="4569373399" duration="30"/>  <!-- Wohlrabedamm/Rohrdamm -->
+        <stop busStop="3977932027" duration="30"/>  <!-- Rohrdamm/Wasserwerk -->
+        <stop busStop="1561072879" duration="30"/>  <!-- Rohrdammbrücke -->
+        <stop busStop="3977932024" duration="30"/>  <!-- Friedhöfe Fürstenbrunner Weg -->
+        <stop busStop="3977932026" duration="30"/>  <!-- Fürstenbrunner Weg -->
+        <stop busStop="3964527545" duration="30"/>  <!-- Königin-Elisabeth-Straße/Spandauer Damm -->
+        <stop busStop="3951565134" duration="30"/>  <!-- Knobelsdorffstraße -->
+        <stop busStop="3951566058" duration="30"/>  <!-- U Kaiserdamm -->
+        <stop busStop="3951679906" duration="30"/>  <!-- Messedamm/ZOB -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+    </trip>
+    <trip id="168_bus_142:0" type="pt_bus" depart="346.0" departLane="best" from="-1102154067" to="375861849">
+        <stop busStop="3918673878" duration="30"/>  <!-- Hannoversche Straße -->
+        <stop busStop="-4294381017" duration="30"/>  <!-- Robert-Koch-Platz -->
+        <stop busStop="2913048879" duration="30"/>  <!-- Invalidenpark -->
+        <stop busStop="892675617" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="-3856100104" duration="30"/>  <!-- Lehrter Straße/Invalidenstraße -->
+        <stop busStop="-418084018" duration="30"/>  <!-- Seydlitzstraße -->
+        <stop busStop="-26992409" duration="30"/>  <!-- Poststadion -->
+        <stop busStop="-4279705547" duration="30"/>  <!-- Kruppstraße -->
+        <stop busStop="-3799567326" duration="30"/>  <!-- Perleberger Brücke -->
+        <stop busStop="-4279705537" duration="30"/>  <!-- Fennbrücke -->
+        <stop busStop="-4279705545" duration="30"/>  <!-- Kiautschoustraße -->
+        <stop busStop="-4279705559" duration="30"/>  <!-- Samoastraße -->
+        <stop busStop="3775040313" duration="30"/>  <!-- U Amrumer Straße -->
+        <stop busStop="3977742461" duration="30"/>  <!-- Luxemburger Straße -->
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="4279705570" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="169_bus_142:1" type="pt_bus" depart="347.0" departLane="best" from="37740223" to="1102154066#0">
+        <stop busStop="4217061014" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="3977742462" duration="30"/>  <!-- Luxemburger Straße -->
+        <stop busStop="3977742478" duration="30"/>  <!-- U Amrumer Straße -->
+        <stop busStop="4279705560" duration="30"/>  <!-- Samoastraße -->
+        <stop busStop="4279705546" duration="30"/>  <!-- Kiautschoustraße -->
+        <stop busStop="4279705536" duration="30"/>  <!-- Fennbrücke -->
+        <stop busStop="8237317750" duration="30"/>  <!-- Perleberger Brücke -->
+        <stop busStop="4279705548" duration="30"/>  <!-- Kruppstraße -->
+        <stop busStop="3977751147" duration="30"/>  <!-- Poststadion -->
+        <stop busStop="418084014" duration="30"/>  <!-- Seydlitzstraße -->
+        <stop busStop="3856100104" duration="30"/>  <!-- Lehrter Straße/Invalidenstraße -->
+        <stop busStop="817754406" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="2653160210" duration="30"/>  <!-- Invalidenpark -->
+        <stop busStop="6287386722" duration="30"/>  <!-- Robert-Koch-Platz -->
+        <stop busStop="-1808823755" duration="30"/>  <!-- Philippstraße -->
+        <stop busStop="-3918673879" duration="30"/>  <!-- Hannoversche Straße -->
+    </trip>
+    <trip id="170_bus_245:0" type="pt_bus" depart="350.0" departLane="best" from="34848160#1" to="4517104#0">
+        <stop busStop="11178436224" duration="30"/>  <!-- Dorotheenstraße/Friedrichstraße -->
+        <stop busStop="3869306764" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="3869306762" duration="30"/>  <!-- Friedrichstraße/Reinhardtstraße -->
+        <stop busStop="3869306759" duration="30"/>  <!-- Deutsches Theater -->
+        <stop busStop="11178390666" duration="30"/>  <!-- Karlplatz -->
+        <stop busStop="-285865473" duration="30"/>  <!-- Futurium -->
+        <stop busStop="-11178390665" duration="30"/>  <!-- S+U Hauptbahnhof/​Washingtonplatz -->
+        <stop busStop="4856195722" duration="30"/>  <!-- Katharina-Paulus-Straße -->
+        <stop busStop="11178390664" duration="30"/>  <!-- Lüneburger Straße -->
+        <stop busStop="11108144758" duration="30"/>  <!-- Alt-Moabit/Rathenower Straße -->
+        <stop busStop="390351380" duration="30"/>  <!-- Spenerstraße -->
+        <stop busStop="401619948" duration="30"/>  <!-- Kirchstraße/Alt-Moabit -->
+        <stop busStop="3961281914" duration="30"/>  <!-- Kleiner Tiergarten -->
+        <stop busStop="3961281928" duration="30"/>  <!-- Alt-Moabit/Rathaus Tiergarten -->
+        <stop busStop="3961281927" duration="30"/>  <!-- Ottostraße -->
+        <stop busStop="1105666180" duration="30"/>  <!-- Gotzkowskystraße -->
+        <stop busStop="-3961281906" duration="30"/>  <!-- Franklinstraße -->
+        <stop busStop="-1608423653" duration="30"/>  <!-- Helmholtzstraße -->
+        <stop busStop="3961281903" duration="30"/>  <!-- Dovebrücke -->
+        <stop busStop="3961281919" duration="30"/>  <!-- Marchbrücke -->
+        <stop busStop="1723927593" duration="30"/>  <!-- Marchstraße -->
+        <stop busStop="3935677417" duration="30"/>  <!-- U Ernst-Reuter-Platz -->
+        <stop busStop="3935677414" duration="30"/>  <!-- Steinplatz -->
+        <stop busStop="401852749" duration="30"/>  <!-- Jebensstraße -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="171_bus_245:1" type="pt_bus" depart="350.0" departLane="best" from="-1113425380" to="34848160#1">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386374" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677407" duration="30"/>  <!-- S+U Zoologischer Garten/Jebensstraße -->
+        <stop busStop="3935677413" duration="30"/>  <!-- Steinplatz -->
+        <stop busStop="1023689289" duration="30"/>  <!-- U Ernst-Reuter-Platz -->
+        <stop busStop="3804638209" duration="30"/>  <!-- Marchstraße -->
+        <stop busStop="-3961281918" duration="30"/>  <!-- Marchbrücke -->
+        <stop busStop="-7312391567" duration="30"/>  <!-- Dovebrücke -->
+        <stop busStop="3961281911" duration="30"/>  <!-- Helmholtzstraße -->
+        <stop busStop="3961281907" duration="30"/>  <!-- Franklinstraße -->
+        <stop busStop="3961281895" duration="30"/>  <!-- Gotzkowskystraße -->
+        <stop busStop="-3961281926" duration="30"/>  <!-- Ottostraße -->
+        <stop busStop="4279705557" duration="30"/>  <!-- Alt-Moabit/Rathaus Tiergarten -->
+        <stop busStop="-3961281940" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="-3961281913" duration="30"/>  <!-- Kleiner Tiergarten -->
+        <stop busStop="3961281912" duration="30"/>  <!-- Kirchstraße/Alt-Moabit -->
+        <stop busStop="539317978" duration="30"/>  <!-- Spenerstraße -->
+        <stop busStop="2081222226" duration="30"/>  <!-- Alt-Moabit/Rathenower Straße -->
+        <stop busStop="11178390663" duration="30"/>  <!-- Lüneburger Straße -->
+        <stop busStop="11178390665" duration="30"/>  <!-- S+U Hauptbahnhof/​Washingtonplatz -->
+        <stop busStop="285865473" duration="30"/>  <!-- Futurium -->
+        <stop busStop="-11178390666" duration="30"/>  <!-- Karlplatz -->
+        <stop busStop="-3869306760" duration="30"/>  <!-- Deutsches Theater -->
+        <stop busStop="-3869306761" duration="30"/>  <!-- Friedrichstraße/Reinhardtstraße -->
+        <stop busStop="11178436225" duration="30"/>  <!-- S+U Friedrichstraße -->
+    </trip>
+    <trip id="177_bus_187:0" type="pt_bus" depart="362.0" departLane="best" from="1216817033#0" to="4594140#0">
+        <stop busStop="3956655772" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+        <stop busStop="412404953" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="412404951" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3957979296" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979307" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3948376436" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3948376444" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="583447610" duration="30"/>  <!-- U Nollendorfplatz -->
+        <stop busStop="3957757565" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3935677410" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="272372358" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="3933855801" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="27011265" duration="30"/>  <!-- Großer Stern -->
+        <stop busStop="272367516" duration="30"/>  <!-- Schloss Bellevue -->
+        <stop busStop="-3862767506" duration="30"/>  <!-- Paulstraße -->
+        <stop busStop="11108144758" duration="30"/>  <!-- Alt-Moabit/Rathenower Straße -->
+        <stop busStop="390351380" duration="30"/>  <!-- Spenerstraße -->
+        <stop busStop="401619948" duration="30"/>  <!-- Kirchstraße/Alt-Moabit -->
+        <stop busStop="3961281914" duration="30"/>  <!-- Kleiner Tiergarten -->
+        <stop busStop="900980706" duration="30"/>  <!-- U Turmstraße -->
+    </trip>
+    <trip id="178_bus_187:1" type="pt_bus" depart="362.0" departLane="best" from="-1412238090" to="1126373244#1">
+        <stop busStop="-3961281940" duration="30"/>  <!-- U Turmstraße -->
+        <stop busStop="-3961281913" duration="30"/>  <!-- Kleiner Tiergarten -->
+        <stop busStop="3961281912" duration="30"/>  <!-- Kirchstraße/Alt-Moabit -->
+        <stop busStop="539317978" duration="30"/>  <!-- Spenerstraße -->
+        <stop busStop="11121539097" duration="30"/>  <!-- Alt-Moabit/Rathenower Straße -->
+        <stop busStop="3862767507" duration="30"/>  <!-- Paulstraße -->
+        <stop busStop="272367044" duration="30"/>  <!-- Schloss Bellevue -->
+        <stop busStop="26703050" duration="30"/>  <!-- Großer Stern -->
+        <stop busStop="3933855802" duration="30"/>  <!-- Nordische Botschaften/Adenauer-Stiftung -->
+        <stop busStop="272372640" duration="30"/>  <!-- Lützowplatz -->
+        <stop busStop="6154203348" duration="30"/>  <!-- Schillstraße -->
+        <stop busStop="3957757562" duration="30"/>  <!-- An der Urania -->
+        <stop busStop="3957828284" duration="30"/>  <!-- U Nollendorfplatz -->
+        <stop busStop="3948376441" duration="30"/>  <!-- U Bülowstraße -->
+        <stop busStop="3948376438" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3957979306" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3957979295" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979280" duration="30"/>  <!-- Albertstraße -->
+        <stop busStop="3956655766" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="3956655771" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+    </trip>
+    <trip id="179_bus_115:0" type="pt_bus" depart="365.0" departLane="best" from="318552320#0" to="472043215#0">
+        <stop busStop="3249542234" duration="30"/>  <!-- Elsterplatz -->
+        <stop busStop="3956855810" duration="30"/>  <!-- Forckenbeckstraße -->
+        <stop busStop="3956855835" duration="30"/>  <!-- Salzbrunner Straße -->
+        <stop busStop="3956855805" duration="30"/>  <!-- Warmbrunner Str. -->
+        <stop busStop="255561542" duration="30"/>  <!-- S Hohenzollerndamm -->
+        <stop busStop="3959807210" duration="30"/>  <!-- Hoffmann-von-Fallersleben-Platz -->
+        <stop busStop="3959807235" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="4279774150" duration="30"/>  <!-- Mansfelder Straße/Barstraße -->
+    </trip>
+    <trip id="180_bus_115:1" type="pt_bus" depart="365.0" departLane="best" from="472043215#0" to="25418573#0">
+        <stop busStop="4279774150" duration="30"/>  <!-- Mansfelder Straße/Barstraße -->
+        <stop busStop="3959807237" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="3959807211" duration="30"/>  <!-- Hoffmann-von-Fallersleben-Platz -->
+        <stop busStop="3956855832" duration="30"/>  <!-- S Hohenzollerndamm -->
+        <stop busStop="3956855812" duration="30"/>  <!-- S Hohenzollerndamm/A100 -->
+        <stop busStop="443641262" duration="30"/>  <!-- Warmbrunner Str. -->
+        <stop busStop="3956855836" duration="30"/>  <!-- Salzbrunner Straße -->
+        <stop busStop="3956855811" duration="30"/>  <!-- Forckenbeckstraße -->
+        <stop busStop="3957757572" duration="30"/>  <!-- Elsterplatz -->
+    </trip>
+    <trip id="181_bus_115:2" type="pt_bus" depart="367.0" departLane="best" from="318552320#0" to="472043215#0">
+        <stop busStop="3249542234" duration="30"/>  <!-- Elsterplatz -->
+        <stop busStop="3956855810" duration="30"/>  <!-- Forckenbeckstraße -->
+        <stop busStop="3956855835" duration="30"/>  <!-- Salzbrunner Straße -->
+        <stop busStop="3956855805" duration="30"/>  <!-- Warmbrunner Str. -->
+        <stop busStop="255561542" duration="30"/>  <!-- S Hohenzollerndamm -->
+        <stop busStop="3959807210" duration="30"/>  <!-- Hoffmann-von-Fallersleben-Platz -->
+        <stop busStop="3959807235" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="4279774150" duration="30"/>  <!-- Mansfelder Straße/Barstraße -->
+    </trip>
+    <trip id="182_bus_115:3" type="pt_bus" depart="371.0" departLane="best" from="472043215#0" to="25418573#0">
+        <stop busStop="4279774150" duration="30"/>  <!-- Mansfelder Straße/Barstraße -->
+        <stop busStop="3959807237" duration="30"/>  <!-- U Fehrbelliner Platz -->
+        <stop busStop="3959807211" duration="30"/>  <!-- Hoffmann-von-Fallersleben-Platz -->
+        <stop busStop="3956855832" duration="30"/>  <!-- S Hohenzollerndamm -->
+        <stop busStop="3956855812" duration="30"/>  <!-- S Hohenzollerndamm/A100 -->
+        <stop busStop="443641262" duration="30"/>  <!-- Warmbrunner Str. -->
+        <stop busStop="3956855836" duration="30"/>  <!-- Salzbrunner Straße -->
+        <stop busStop="3956855811" duration="30"/>  <!-- Forckenbeckstraße -->
+        <stop busStop="3957757572" duration="30"/>  <!-- Elsterplatz -->
+    </trip>
+    <trip id="183_bus_248:0" type="pt_bus" depart="371.0" departLane="best" from="26253154" to="1070347557">
+        <stop busStop="1593111306" duration="30"/>  <!-- U Hallesches Tor -->
+    </trip>
+    <trip id="184_bus_248:1" type="pt_bus" depart="376.0" departLane="best" from="1216817033#0" to="152264785">
+        <stop busStop="3956655772" duration="30"/>  <!-- Hauptstraße/Martin-Luther-Straße -->
+        <stop busStop="3956655764" duration="30"/>  <!-- Dominicusstraße/Hauptstraße -->
+        <stop busStop="27186974" duration="30"/>  <!-- S Schöneberg -->
+    </trip>
+    <trip id="185_bus_186:0" type="pt_bus" depart="378.0" departLane="best" from="-1428970802" to="392733091">
+        <stop busStop="-3956855828" duration="30"/>  <!-- Richard-Strauss-Straße -->
+        <stop busStop="-3956855814" duration="30"/>  <!-- Hagenplatz -->
+        <stop busStop="3956855830" duration="30"/>  <!-- S Grunewald -->
+    </trip>
+    <trip id="186_bus_186:1" type="pt_bus" depart="380.0" departLane="best" from="392733091" to="1181136979#2">
+        <stop busStop="3956855830" duration="30"/>  <!-- S Grunewald -->
+        <stop busStop="3956855813" duration="30"/>  <!-- Hagenplatz -->
+        <stop busStop="2394062097" duration="30"/>  <!-- Richard-Strauss-Straße -->
+    </trip>
+    <trip id="187_bus_110:0" type="pt_bus" depart="381.0" departLane="best" from="-1113425380" to="4370509#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386376" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757598" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957757602" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757569" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757586" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="4477486263" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="4279774140" duration="30"/>  <!-- Hochmeisterplatz -->
+        <stop busStop="-4279774162" duration="30"/>  <!-- Seesener Straße -->
+        <stop busStop="-4279774135" duration="30"/>  <!-- Martin-Luther-Krankenhaus -->
+        <stop busStop="-4279774172" duration="30"/>  <!-- Wangenheimstraße -->
+        <stop busStop="3956855820" duration="30"/>  <!-- Herthastraße -->
+        <stop busStop="602233490" duration="30"/>  <!-- Elgersburger Straße -->
+    </trip>
+    <trip id="188_bus_110:1" type="pt_bus" depart="383.0" departLane="best" from="-4370509#1" to="4517104#0">
+        <stop busStop="-602233484" duration="30"/>  <!-- Elgersburger Straße -->
+        <stop busStop="3956855819" duration="30"/>  <!-- Herthastraße -->
+        <stop busStop="4279774173" duration="30"/>  <!-- Wangenheimstraße -->
+        <stop busStop="4279774136" duration="30"/>  <!-- Martin-Luther-Krankenhaus -->
+        <stop busStop="4279774160" duration="30"/>  <!-- Seesener Straße -->
+        <stop busStop="4279774139" duration="30"/>  <!-- Hochmeisterplatz -->
+        <stop busStop="3957757594" duration="30"/>  <!-- U Adenauerplatz -->
+        <stop busStop="3957757585" duration="30"/>  <!-- Olivaer Platz -->
+        <stop busStop="3957757568" duration="30"/>  <!-- Bleibtreustraße -->
+        <stop busStop="3957757601" duration="30"/>  <!-- U Uhlandstraße -->
+        <stop busStop="3957757600" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="189_bus_247:0" type="pt_bus" depart="383.0" departLane="best" from="-464372607" to="-1395773261#1">
+        <stop busStop="-3933855809" duration="30"/>  <!-- S Nordbahnhof/Gartenstraße -->
+        <stop busStop="-1803835420" duration="30"/>  <!-- S Nordbahnhof -->
+        <stop busStop="-3933855810" duration="30"/>  <!-- S Nordbahnhof/Gartenstraße -->
+        <stop busStop="-3933855817" duration="30"/>  <!-- Theodor-Heuss-Weg -->
+        <stop busStop="-3933855792" duration="30"/>  <!-- Gartenstraße/Feldstraße -->
+        <stop busStop="-4279705538" duration="30"/>  <!-- Gartenplatz -->
+        <stop busStop="-4279705576" duration="30"/>  <!-- Hussitenstraße -->
+        <stop busStop="-4279705574" duration="30"/>  <!-- Usedomer Straße -->
+    </trip>
+    <trip id="190_bus_247:1" type="pt_bus" depart="383.0" departLane="best" from="4543586" to="1392090607">
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="196_bus_204:0" type="pt_bus" depart="393.0" departLane="best" from="1357072244#0" to="4517104#0">
+        <stop busStop="4032629815" duration="30"/>  <!-- Leuthener Straße -->
+        <stop busStop="4032629806" duration="30"/>  <!-- Gustav-Müller-Platz -->
+        <stop busStop="3959807228" duration="30"/>  <!-- S Julius-Leber-Brücke -->
+        <stop busStop="3957979296" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3957979307" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3948376437" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="-3957979311" duration="30"/>  <!-- Winterfeldtplatz -->
+        <stop busStop="-7620202715" duration="30"/>  <!-- Eisenacher Straße/Hohenstaufenstraße -->
+        <stop busStop="3957979293" duration="30"/>  <!-- Hohenstaufenstraße -->
+        <stop busStop="3957979300" duration="30"/>  <!-- Münchener Straße -->
+        <stop busStop="3957979282" duration="30"/>  <!-- Bamberger Straße -->
+        <stop busStop="3957979309" duration="30"/>  <!-- U Spichernstraße -->
+        <stop busStop="3957979285" duration="30"/>  <!-- Friedrich-Hollaender-Platz -->
+        <stop busStop="3957757597" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="197_bus_204:1" type="pt_bus" depart="398.0" departLane="best" from="-1113425380" to="28497530#0">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386378" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3957757596" duration="30"/>  <!-- U Kurfürstendamm -->
+        <stop busStop="3957979283" duration="30"/>  <!-- Friedrich-Hollaender-Platz -->
+        <stop busStop="3957979308" duration="30"/>  <!-- U Spichernstraße -->
+        <stop busStop="13009074047" duration="30"/>  <!-- Bamberger Straße -->
+        <stop busStop="3957979299" duration="30"/>  <!-- Münchener Straße -->
+        <stop busStop="3957979292" duration="30"/>  <!-- Hohenstaufenstraße -->
+        <stop busStop="7620202716" duration="30"/>  <!-- Eisenacher Straße/Hohenstaufenstraße -->
+        <stop busStop="3957979310" duration="30"/>  <!-- Winterfeldtplatz -->
+        <stop busStop="3948376435" duration="30"/>  <!-- Goebenstraße -->
+        <stop busStop="3957979306" duration="30"/>  <!-- U Kleistpark -->
+        <stop busStop="3957979297" duration="30"/>  <!-- Richard-von-Weizsäcker-Platz -->
+        <stop busStop="3959807227" duration="30"/>  <!-- S Julius-Leber-Brücke -->
+        <stop busStop="4032629807" duration="30"/>  <!-- Gustav-Müller-Platz -->
+        <stop busStop="4032629816" duration="30"/>  <!-- Leuthener Straße -->
+        <stop busStop="3963780389" duration="30"/>  <!-- Torgauer Straße -->
+    </trip>
+    <trip id="199_bus_164:3" type="pt_bus" depart="403.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="200_bus_030:0" type="pt_bus" depart="404.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="201_bus_009:1" type="pt_bus" depart="405.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710735" duration="30"/>  <!-- Gate 18 -->
+    </trip>
+    <trip id="202_bus_038:1" type="pt_bus" depart="406.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="203_bus_031:3" type="pt_bus" depart="409.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+    </trip>
+    <trip id="204_bus_044:1" type="pt_bus" depart="410.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="205_bus_047:0" type="pt_bus" depart="418.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="207_bus_039:0" type="pt_bus" depart="422.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="208_bus_039:1" type="pt_bus" depart="429.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="209_bus_064:0" type="pt_bus" depart="430.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="7875856236" duration="30"/>  <!-- Gate 14 -->
+    </trip>
+    <trip id="210_bus_327:1" type="pt_bus" depart="431.0" departLane="best" from="4543586" to="1392090607">
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="212_bus_049:0" type="pt_bus" depart="437.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="213_bus_049:1" type="pt_bus" depart="437.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="217_bus_130:0" type="pt_bus" depart="448.0" departLane="best" from="22587641" to="1321599231#0">
+        <stop busStop="3987512855" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="-4278224799" duration="30"/>  <!-- Wiesendamm -->
+        <stop busStop="482745078" duration="30"/>  <!-- Werkring -->
+        <stop busStop="4278224793" duration="30"/>  <!-- Klärwerkstraße -->
+        <stop busStop="4278224790" duration="30"/>  <!-- Freiheit 16-43 -->
+    </trip>
+    <trip id="218_bus_130:1" type="pt_bus" depart="451.0" departLane="best" from="-35576802" to="22587641">
+        <stop busStop="-4278224794" duration="30"/>  <!-- Pichelswerderstraße -->
+        <stop busStop="-4278224791" duration="30"/>  <!-- Freiheit 16-43 -->
+        <stop busStop="-4278224792" duration="30"/>  <!-- Klärwerkstraße -->
+        <stop busStop="-27587988" duration="30"/>  <!-- Werkring -->
+        <stop busStop="4278224798" duration="30"/>  <!-- Wiesendamm -->
+        <stop busStop="4305818589" duration="30"/>  <!-- Machandelweg -->
+        <stop busStop="3996816136" duration="30"/>  <!-- U Ruhleben -->
+    </trip>
+    <trip id="219_bus_131:0" type="pt_bus" depart="456.0" departLane="best" from="22587641" to="1133397575#0">
+        <stop busStop="3987512855" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="27586338" duration="30"/>  <!-- Krematorium Ruhleben -->
+        <stop busStop="3964527957" duration="30"/>  <!-- Polizeidirektion 2 -->
+        <stop busStop="27586412" duration="30"/>  <!-- Güterbahnhof Ruhleben -->
+        <stop busStop="27586437" duration="30"/>  <!-- Teltower Straße -->
+    </trip>
+    <trip id="220_bus_131:1" type="pt_bus" depart="457.0" departLane="best" from="37291474#0" to="22587641">
+        <stop busStop="402508072" duration="30"/>  <!-- Teltower Straße -->
+        <stop busStop="3964527527" duration="30"/>  <!-- Güterbahnhof Ruhleben -->
+        <stop busStop="3964527556" duration="30"/>  <!-- Polizeidirektion 2 -->
+        <stop busStop="1800704622" duration="30"/>  <!-- Krematorium Ruhleben -->
+        <stop busStop="3964527996" duration="30"/>  <!-- U Ruhleben -->
+        <stop busStop="4305818589" duration="30"/>  <!-- Machandelweg -->
+        <stop busStop="3987570936" duration="30"/>  <!-- U Ruhleben -->
+    </trip>
+    <trip id="221_bus_N95:0" type="pt_bus" depart="459.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="222_bus_139:1" type="pt_bus" depart="465.0" departLane="best" from="57683665#0" to="1315555147#6">
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951679905" duration="30"/>  <!-- Messedamm/ZOB -->
+        <stop busStop="3951566057" duration="30"/>  <!-- U Kaiserdamm -->
+        <stop busStop="3951565135" duration="30"/>  <!-- Knobelsdorffstraße -->
+        <stop busStop="3964527542" duration="30"/>  <!-- Königin-Elisabeth-Straße/Spandauer Damm -->
+        <stop busStop="-3977932025" duration="30"/>  <!-- Fürstenbrunner Weg -->
+        <stop busStop="-3977932023" duration="30"/>  <!-- Friedhöfe Fürstenbrunner Weg -->
+        <stop busStop="-1561072880" duration="30"/>  <!-- Rohrdammbrücke -->
+        <stop busStop="-3977932028" duration="30"/>  <!-- Rohrdamm/Wasserwerk -->
+        <stop busStop="-4093444399" duration="30"/>  <!-- Wohlrabedamm/Rohrdamm -->
+        <stop busStop="-9922242998" duration="30"/>  <!-- Wohlrabedamm Mitte -->
+        <stop busStop="-4825819633" duration="30"/>  <!-- Wohlrabedamm/Siemensdamm -->
+        <stop busStop="419216786" duration="30"/>  <!-- U Siemensdamm -->
+        <stop busStop="3964527961" duration="30"/>  <!-- Quellweg -->
+        <stop busStop="3964527993" duration="30"/>  <!-- U Rohrdamm -->
+        <stop busStop="3964527966" duration="30"/>  <!-- Schaltwerk -->
+        <stop busStop="3964527987" duration="30"/>  <!-- U Paulsternstraße -->
+        <stop busStop="33484097" duration="30"/>  <!-- Paulsternstraße/Gartenfelder Straße -->
+        <stop busStop="3964527531" duration="30"/>  <!-- Haselhorster Damm/Gartenfelder Straße -->
+        <stop busStop="4280572156" duration="30"/>  <!-- Burscheider Weg -->
+        <stop busStop="4280572170" duration="30"/>  <!-- Lüdenscheider Weg -->
+    </trip>
+    <trip id="225_bus_309:0" type="pt_bus" depart="470.0" departLane="best" from="807043983#0" to="1056613175">
+        <stop busStop="4215237792" duration="30"/>  <!-- Schlosspark-Klinik -->
+        <stop busStop="4279774157" duration="30"/>  <!-- Pulsstraße -->
+        <stop busStop="4279774154" duration="30"/>  <!-- Mollwitzstraße -->
+        <stop busStop="4279774165" duration="30"/>  <!-- Sophie-Charlotten-Straße -->
+        <stop busStop="3964527540" duration="30"/>  <!-- Klausenerplatz -->
+        <stop busStop="3964527968" duration="30"/>  <!-- Schloss Charlottenburg -->
+        <stop busStop="3976479153" duration="30"/>  <!-- Seelingstraße -->
+        <stop busStop="3976480159" duration="30"/>  <!-- Zillestraße -->
+        <stop busStop="3951566062" duration="30"/>  <!-- U Sophie-Charlotte-Platz -->
+        <stop busStop="3951898315" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898332" duration="30"/>  <!-- S Charlottenburg -->
+        <stop busStop="4215237791" duration="30"/>  <!-- U Wilmersdorfer Straße/S Charlottenburg -->
+    </trip>
+    <trip id="226_bus_309:1" type="pt_bus" depart="475.0" departLane="best" from="1056613175" to="807043983#0">
+        <stop busStop="5891418102" duration="30"/>  <!-- U Wilmersdorfer Straße/S Charlottenburg -->
+        <stop busStop="3951898340" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898323" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="-3951898317" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="-3951566059" duration="30"/>  <!-- U Sophie-Charlotte-Platz -->
+        <stop busStop="-26784992" duration="30"/>  <!-- Zillestraße -->
+        <stop busStop="3976479154" duration="30"/>  <!-- Seelingstraße -->
+        <stop busStop="3964527967" duration="30"/>  <!-- Schloss Charlottenburg -->
+        <stop busStop="3964527541" duration="30"/>  <!-- Klausenerplatz -->
+        <stop busStop="-4279774166" duration="30"/>  <!-- Sophie-Charlotten-Straße -->
+        <stop busStop="251046156" duration="30"/>  <!-- Mollwitzstraße -->
+        <stop busStop="4215237792" duration="30"/>  <!-- Schlosspark-Klinik -->
+    </trip>
+    <trip id="227_bus_350:0" type="pt_bus" depart="483.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="228_bus_350:1" type="pt_bus" depart="484.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+    </trip>
+    <trip id="229_bus_147:0" type="pt_bus" depart="484.0" departLane="best" from="375861849" to="1426897598#2">
+        <stop busStop="4279705570" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="3977627658" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="2959767823" duration="30"/>  <!-- Gerichtstraße -->
+        <stop busStop="2924245390" duration="30"/>  <!-- S+U Wedding -->
+        <stop busStop="677229059" duration="30"/>  <!-- U Reinickendorfer Straße -->
+        <stop busStop="-3933855789" duration="30"/>  <!-- Am Nordhafen -->
+        <stop busStop="4310001147" duration="30"/>  <!-- Friedrich-Krause-Ufer -->
+        <stop busStop="9240269949" duration="30"/>  <!-- Otto-Weidt-Platz -->
+        <stop busStop="4310001145" duration="30"/>  <!-- Lydia-Rabinowisch-Str. -->
+        <stop busStop="817754406" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="2653160210" duration="30"/>  <!-- Invalidenpark -->
+        <stop busStop="3858919768" duration="30"/>  <!-- Charité - Campus Mitte -->
+        <stop busStop="3858919772" duration="30"/>  <!-- Schumannstraße -->
+        <stop busStop="-3869306760" duration="30"/>  <!-- Deutsches Theater -->
+        <stop busStop="-3869306761" duration="30"/>  <!-- Friedrichstraße/Reinhardtstraße -->
+        <stop busStop="-3869306765" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="-9023382187" duration="30"/>  <!-- U Unter den Linden -->
+        <stop busStop="3869306767" duration="30"/>  <!-- Französische Straße -->
+    </trip>
+    <trip id="230_bus_147:1" type="pt_bus" depart="485.0" departLane="best" from="-1426897598#3" to="375861849">
+        <stop busStop="-5824647400" duration="30"/>  <!-- Französische Straße -->
+        <stop busStop="10884008292" duration="30"/>  <!-- U Unter den Linden -->
+        <stop busStop="3869306764" duration="30"/>  <!-- S+U Friedrichstraße -->
+        <stop busStop="3869306762" duration="30"/>  <!-- Friedrichstraße/Reinhardtstraße -->
+        <stop busStop="3869306759" duration="30"/>  <!-- Deutsches Theater -->
+        <stop busStop="-3858919773" duration="30"/>  <!-- Schumannstraße -->
+        <stop busStop="-3858919769" duration="30"/>  <!-- Charité - Campus Mitte -->
+        <stop busStop="2913048879" duration="30"/>  <!-- Invalidenpark -->
+        <stop busStop="892675617" duration="30"/>  <!-- S+U Hauptbahnhof -->
+        <stop busStop="4310001146" duration="30"/>  <!-- Lydia-Rabinowisch-Str. -->
+        <stop busStop="4310001151" duration="30"/>  <!-- Otto-Weidt-Platz -->
+        <stop busStop="-4310001148" duration="30"/>  <!-- Friedrich-Krause-Ufer -->
+        <stop busStop="3933855790" duration="30"/>  <!-- Am Nordhafen -->
+        <stop busStop="8494287085" duration="30"/>  <!-- U Reinickendorfer Straße -->
+        <stop busStop="2904735773" duration="30"/>  <!-- S+U Wedding -->
+        <stop busStop="3977627657" duration="30"/>  <!-- Gerichtstraße -->
+        <stop busStop="2995472420" duration="30"/>  <!-- U Leopoldplatz -->
+        <stop busStop="4279705570" duration="30"/>  <!-- U Leopoldplatz -->
+    </trip>
+    <trip id="231_bus_349:0" type="pt_bus" depart="490.0" departLane="best" from="14370305#1" to="-25935854">
+        <stop busStop="139983460" duration="30"/>  <!-- S Grunewald -->
+        <stop busStop="139983479" duration="30"/>  <!-- S Grunewald -->
+        <stop busStop="-4279774130" duration="30"/>  <!-- Alte Allee -->
+        <stop busStop="-4279774143" duration="30"/>  <!-- Kiefernweg -->
+        <stop busStop="-4279774148" duration="30"/>  <!-- Maikäferpfad -->
+        <stop busStop="-4279774158" duration="30"/>  <!-- S Messe Süd -->
+        <stop busStop="-4279774142" duration="30"/>  <!-- Jafféstraße -->
+        <stop busStop="-4279774153" duration="30"/>  <!-- Messegelände/Verwaltung -->
+        <stop busStop="3951679908" duration="30"/>  <!-- Messegelände/ICC -->
+        <stop busStop="26868080" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679903" duration="30"/>  <!-- Haus des Rundfunks -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3959807536" duration="30"/>  <!-- Reichsstraße/Kastanienallee -->
+        <stop busStop="3959807204" duration="30"/>  <!-- Hessenallee -->
+        <stop busStop="3959807241" duration="30"/>  <!-- U Neu-Westend -->
+        <stop busStop="5743479971" duration="30"/>  <!-- Marathonallee -->
+        <stop busStop="5743479972" duration="30"/>  <!-- Badenallee -->
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="3951566066" duration="30"/>  <!-- Württembergallee -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951679904" duration="30"/>  <!-- Messegelände/ZOB -->
+        <stop busStop="3951679907" duration="30"/>  <!-- Messegelände/ICC -->
+        <stop busStop="-4279774152" duration="30"/>  <!-- Messegelände/Verwaltung -->
+        <stop busStop="-4279774141" duration="30"/>  <!-- Jafféstraße -->
+        <stop busStop="-4279774159" duration="30"/>  <!-- S Messe Süd -->
+        <stop busStop="-4279774149" duration="30"/>  <!-- Maikäferpfad -->
+        <stop busStop="-4279774144" duration="30"/>  <!-- Kiefernweg -->
+        <stop busStop="-4279774131" duration="30"/>  <!-- Alte Allee -->
+        <stop busStop="5540558042" duration="30"/>  <!-- S Grunewald -->
+        <stop busStop="139983460" duration="30"/>  <!-- S Grunewald -->
+    </trip>
+    <trip id="238_bus_N75:0" type="pt_bus" depart="508.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="239_bus_N75:1" type="pt_bus" depart="509.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="240_bus_N44:0" type="pt_bus" depart="511.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="6450818472" duration="30"/>  <!-- Bahnhof Zoologischer Garten/Fernbus -->
+        <stop busStop="6416333047" duration="30"/>  <!-- Gate 25 -->
+    </trip>
+    <trip id="241_bus_N44:1" type="pt_bus" depart="515.0" departLane="best" from="4396831" to="25187132#0">
+        <stop busStop="6416333047" duration="30"/>  <!-- Gate 25 -->
+        <stop busStop="6450818472" duration="30"/>  <!-- Bahnhof Zoologischer Garten/Fernbus -->
+    </trip>
+    <trip id="242_bus_X31:0" type="pt_bus" depart="516.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="243_bus_X31:1" type="pt_bus" depart="516.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="244_bus_059:0" type="pt_bus" depart="517.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710733" duration="30"/>  <!-- Gate 32 -->
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="245_bus_X34:2" type="pt_bus" depart="517.0" departLane="best" from="-4474790" to="4517104#0">
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951898315" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898322" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898339" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898325" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3951898337" duration="30"/>  <!-- Schlüterstraße -->
+        <stop busStop="3951898335" duration="30"/>  <!-- Savignyplatz -->
+        <stop busStop="900997396" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="3935677403" duration="30"/>  <!-- Hertzallee -->
+    </trip>
+    <trip id="246_bus_X49:1" type="pt_bus" depart="522.0" departLane="best" from="-4474790" to="1056613175">
+        <stop busStop="-3951565142" duration="30"/>  <!-- S Heerstraße -->
+        <stop busStop="26905405" duration="30"/>  <!-- U Theodor-Heuss-Platz Süd -->
+        <stop busStop="3951898333" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="5891418103" duration="30"/>  <!-- U Wilmersdorfer Straße/S Charlottenburg -->
+    </trip>
+    <trip id="247_bus_X49:2" type="pt_bus" depart="523.0" departLane="best" from="30137421#0" to="25892782">
+        <stop busStop="332095915" duration="30"/>  <!-- U Wilmersdorfer Straße/S Charlottenburg -->
+        <stop busStop="3951898340" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898323" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898316" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3951565141" duration="30"/>  <!-- S Heerstraße -->
+    </trip>
+    <trip id="248_bus_X34:3" type="pt_bus" depart="525.0" departLane="best" from="-1113425380" to="25892782">
+        <stop busStop="-3935677404" duration="30"/>  <!-- Hertzallee -->
+        <stop busStop="272386375" duration="30"/>  <!-- S+U Zoologischer Garten -->
+        <stop busStop="297218325" duration="30"/>  <!-- Theater des Westens -->
+        <stop busStop="3951898336" duration="30"/>  <!-- Savignyplatz -->
+        <stop busStop="3951898338" duration="30"/>  <!-- Schlüterstraße -->
+        <stop busStop="3951898326" duration="30"/>  <!-- Kantstraße/Leibnizstraße -->
+        <stop busStop="3951898340" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898323" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898316" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3951565141" duration="30"/>  <!-- S Heerstraße -->
+    </trip>
+    <trip id="249_bus_X49:3" type="pt_bus" depart="525.0" departLane="best" from="30137421#0" to="25892782">
+        <stop busStop="332095915" duration="30"/>  <!-- U Wilmersdorfer Straße/S Charlottenburg -->
+        <stop busStop="3951898340" duration="30"/>  <!-- U Wilmersdorfer Straße -->
+        <stop busStop="3951898323" duration="30"/>  <!-- Kaiser-Friedrich-Straße/Kantstraße -->
+        <stop busStop="3951898316" duration="30"/>  <!-- Amtsgerichtsplatz -->
+        <stop busStop="3951898334" duration="30"/>  <!-- S Messe Nord -->
+        <stop busStop="3951679903" duration="30"/>  <!-- Haus des Rundfunks -->
+        <stop busStop="3951566065" duration="30"/>  <!-- U Theodor-Heuss-Platz -->
+        <stop busStop="3951565141" duration="30"/>  <!-- S Heerstraße -->
+    </trip>
+    <trip id="250_bus_041:0" type="pt_bus" depart="526.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="251_bus_041:1" type="pt_bus" depart="527.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="252_bus_189:0" type="pt_bus" depart="527.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710736" duration="30"/>  <!-- Gate 19 -->
+    </trip>
+    <trip id="253_bus_189:1" type="pt_bus" depart="528.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710736" duration="30"/>  <!-- Gate 19 -->
+    </trip>
+    <trip id="254_bus_N95:1" type="pt_bus" depart="534.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="255_bus_141:0" type="pt_bus" depart="535.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="256_bus_141:1" type="pt_bus" depart="538.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="257_bus_N86:0" type="pt_bus" depart="543.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="258_bus_N86:1" type="pt_bus" depart="543.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="259_bus_034:0" type="pt_bus" depart="547.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="260_bus_034:1" type="pt_bus" depart="548.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="261_bus_M41:2" type="pt_bus" depart="553.0" departLane="best" from="309644163#0" to="26472938#0">
+        <stop busStop="1885277103" duration="30"/>  <!-- Philharmonie Süd -->
+        <stop busStop="1877576992" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1877848269" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1877848255" duration="30"/>  <!-- Abgeordnetenhaus -->
+        <stop busStop="1613324875" duration="30"/>  <!-- S Anhalter Bahnhof -->
+        <stop busStop="3854591001" duration="30"/>  <!-- Willy-Brandt-Haus -->
+    </trip>
+    <trip id="262_bus_M41:3" type="pt_bus" depart="555.0" departLane="best" from="34059286#0" to="309644163#0">
+        <stop busStop="681321290" duration="30"/>  <!-- U Hallesches Tor -->
+        <stop busStop="3854591002" duration="30"/>  <!-- Willy-Brandt-Haus -->
+        <stop busStop="1613324893" duration="30"/>  <!-- S Anhalter Bahnhof -->
+        <stop busStop="1877848258" duration="30"/>  <!-- Abgeordnetenhaus -->
+        <stop busStop="1877848274" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1877576997" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="5760341504" duration="30"/>  <!-- Philharmonie Süd -->
+    </trip>
+    <trip id="263_bus_N34:0" type="pt_bus" depart="557.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="264_bus_N34:1" type="pt_bus" depart="559.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="265_bus_260:0" type="pt_bus" depart="560.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="266_bus_260:1" type="pt_bus" depart="561.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+        <stop busStop="5274710734" duration="30"/>  <!-- Gate 33 -->
+    </trip>
+    <trip id="267_bus_N260:0" type="pt_bus" depart="561.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="268_bus_N260:1" type="pt_bus" depart="563.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="269_bus_N70:0" type="pt_bus" depart="565.0" departLane="best" from="4396831" to="25187132#0">
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+        <stop busStop="6450818472" duration="30"/>  <!-- Bahnhof Zoologischer Garten/Fernbus -->
+    </trip>
+    <trip id="270_bus_N70:1" type="pt_bus" depart="568.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="6450818472" duration="30"/>  <!-- Bahnhof Zoologischer Garten/Fernbus -->
+        <stop busStop="5274710730" duration="30"/>  <!-- Gate 28 -->
+    </trip>
+    <trip id="271_bus_X50:0" type="pt_bus" depart="572.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+        <stop busStop="6416333050" duration="30"/>  <!-- Gate 26 -->
+    </trip>
+    <trip id="272_bus_059:1" type="pt_bus" depart="574.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="273_bus_047:1" type="pt_bus" depart="574.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="274_bus_160:0" type="pt_bus" depart="576.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333053" duration="30"/>  <!-- Gate 16 -->
+    </trip>
+    <trip id="275_bus_160:1" type="pt_bus" depart="581.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="5274710736" duration="30"/>  <!-- Gate 19 -->
+    </trip>
+    <trip id="276_bus_050:0" type="pt_bus" depart="581.0" departLane="best" from="4396831" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="277_bus_050:1" type="pt_bus" depart="582.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333054" duration="30"/>  <!-- Gate 15 -->
+    </trip>
+    <trip id="278_bus_057:0" type="pt_bus" depart="583.0" departLane="best" from="1077923225#0" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="279_bus_057:1" type="pt_bus" depart="590.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="280_bus_EU0328:0" type="pt_bus" depart="591.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="281_bus_EU0328:1" type="pt_bus" depart="592.0" departLane="best" from="313175264" to="213138836#0">
+        <stop busStop="5274710737" duration="30"/>  <!-- Gate 20 -->
+    </trip>
+    <trip id="282_bus_N958:0" type="pt_bus" depart="593.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="283_bus_N958:1" type="pt_bus" depart="597.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6416333052" duration="30"/>  <!-- Gate 17 -->
+    </trip>
+    <trip id="284_bus_060:0" type="pt_bus" depart="597.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="5274710731" duration="30"/>  <!-- Gate 30 -->
+    </trip>
+    <trip id="285_bus_060:1" type="pt_bus" depart="597.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6513140724" duration="30"/>  <!-- Gate 29 -->
+        <stop busStop="5274710732" duration="30"/>  <!-- Gate 31 -->
+        <stop busStop="5274710736" duration="30"/>  <!-- Gate 19 -->
+    </trip>
+    <trip id="286_bus_N60:0" type="pt_bus" depart="597.0" departLane="best" from="213138836#0" to="213138836#0">
+        <stop busStop="6416333047" duration="30"/>  <!-- Gate 25 -->
+    </trip>
+    <trip id="287_bus_N60:1" type="pt_bus" depart="598.0" departLane="best" from="26020344" to="213138836#0">
+        <stop busStop="6513140723" duration="30"/>  <!-- Gate 27 -->
+    </trip>
+    <trip id="288_bus_300:0" type="pt_bus" depart="599.0" departLane="best" from="1077923225#0" to="309644163#0">
+        <stop busStop="272408975" duration="30"/>  <!-- U Unter den Linden -->
+        <stop busStop="3862767501" duration="30"/>  <!-- Behrenstraße/Wilhelmstraße -->
+        <stop busStop="272441720" duration="30"/>  <!-- U Anton-Wilhelm-Amo-Straße -->
+        <stop busStop="-5938860559" duration="30"/>  <!-- Leipziger Straße/Wilhelmstraße -->
+        <stop busStop="-1877848279" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="1877576997" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="5760341504" duration="30"/>  <!-- Philharmonie Süd -->
+    </trip>
+    <trip id="289_bus_300:1" type="pt_bus" depart="599.0" departLane="best" from="309644163#0" to="1126237668#0">
+        <stop busStop="1885277103" duration="30"/>  <!-- Philharmonie Süd -->
+        <stop busStop="1885312769" duration="30"/>  <!-- Kulturforum -->
+        <stop busStop="1877576992" duration="30"/>  <!-- Varian-Fry-Straße/Potsdamer Platz -->
+        <stop busStop="1877848283" duration="30"/>  <!-- S+U Potsdamer Platz -->
+        <stop busStop="3862767504" duration="30"/>  <!-- Leipziger Straße/Wilhelmstraße -->
+        <stop busStop="-272441719" duration="30"/>  <!-- U Anton-Wilhelm-Amo-Straße -->
+        <stop busStop="-4692172068" duration="30"/>  <!-- Behrenstraße/Wilhelmstraße -->
+        <stop busStop="3869306771" duration="30"/>  <!-- U Unter den Linden -->
+    </trip>
+</routes>

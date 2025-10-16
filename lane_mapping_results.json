@@ -1,0 +1,34 @@
+[
+  {
+    "point": 0,
+    "vehicle": 2,
+    "gps_lat": 52.50993,
+    "gps_lon": 13.357696666666667,
+    "mapped": false,
+    "error": "PoiDomain.add() got an unexpected keyword argument 'lane'"
+  },
+  {
+    "point": 0,
+    "vehicle": 4,
+    "gps_lat": 52.50994666666666,
+    "gps_lon": 13.358036666666669,
+    "mapped": false,
+    "error": "PoiDomain.add() got an unexpected keyword argument 'lane'"
+  },
+  {
+    "point": 1,
+    "vehicle": 2,
+    "gps_lat": 52.50994666666666,
+    "gps_lon": 13.358036666666669,
+    "mapped": false,
+    "error": "PoiDomain.add() got an unexpected keyword argument 'lane'"
+  },
+  {
+    "point": 1,
+    "vehicle": 4,
+    "gps_lat": 52.50993,
+    "gps_lon": 13.357696666666667,
+    "mapped": false,
+    "error": "PoiDomain.add() got an unexpected keyword argument 'lane'"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "calibration_enabled": true,
+  "calibration_factor": 0.607,
+  "num_waypoints": 30,
+  "total_waypoints_analyzed": 30,
+  "mean_error_m": 12.484655688274065,
+  "mean_absolute_error_m": 13.721089238413741,
+  "rmse_m": 15.024856271701431,
+  "mean_accuracy_percentage": 28.009681237636453,
+  "high_accuracy_count": 0,
+  "medium_accuracy_count": 3,
+  "low_accuracy_count": 27,
+  "best_waypoint": 2,
+  "worst_waypoint": 21
+}

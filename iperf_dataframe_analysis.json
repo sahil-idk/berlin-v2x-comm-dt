@@ -1,0 +1,722 @@
+{
+  "analyses": [
+    {
+      "file_name": "pc1.parquet",
+      "file_size_mb": 0.47873973846435547,
+      "total_records": 57238,
+      "columns": [
+        "datarate",
+        "jitter",
+        "ip_local",
+        "port_local",
+        "ip_remote",
+        "port_remote",
+        "measurement"
+      ],
+      "column_count": 7,
+      "data_types": {
+        "datarate": "float64",
+        "jitter": "float64",
+        "ip_local": "object",
+        "port_local": "object",
+        "ip_remote": "object",
+        "port_remote": "object",
+        "measurement": "int64"
+      },
+      "memory_usage_mb": 14.334495544433594,
+      "null_counts": {
+        "datarate": 0,
+        "jitter": 0,
+        "ip_local": 0,
+        "port_local": 0,
+        "ip_remote": 0,
+        "port_remote": 0,
+        "measurement": 0
+      },
+      "sample_data": [
+        {
+          "datarate": 68700000.0,
+          "jitter": 0.000848,
+          "ip_local": "10.175.117.136",
+          "port_local": "47474",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5204",
+          "measurement": 0
+        },
+        {
+          "datarate": 80300000.0,
+          "jitter": 0.000152,
+          "ip_local": "10.175.117.136",
+          "port_local": "47474",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5204",
+          "measurement": 0
+        },
+        {
+          "datarate": 82600000.0,
+          "jitter": 0.00014000000000000001,
+          "ip_local": "10.175.117.136",
+          "port_local": "47474",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5204",
+          "measurement": 0
+        },
+        {
+          "datarate": 79600000.0,
+          "jitter": 9.800000000000001e-05,
+          "ip_local": "10.175.117.136",
+          "port_local": "47474",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5204",
+          "measurement": 0
+        },
+        {
+          "datarate": 95700000.0,
+          "jitter": 0.000438,
+          "ip_local": "10.175.117.136",
+          "port_local": "47474",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5204",
+          "measurement": 0
+        }
+      ],
+      "timestamp_columns": [],
+      "location_columns": [],
+      "iperf_metrics": {
+        "datarate": {
+          "count": 57238,
+          "mean": 34809851.53569307,
+          "std": 40898215.7359879,
+          "min": 67200.0,
+          "max": 271000000.0,
+          "median": 24300000.0,
+          "q25": 403000.0,
+          "q75": 43700000.0
+        },
+        "jitter": {
+          "count": 57238,
+          "mean": 119.92233759516411,
+          "std": 26492.572115397244,
+          "min": 0.0,
+          "max": 6322261.712796,
+          "median": 0.041,
+          "q25": 0.000362,
+          "q75": 2.166
+        }
+      },
+      "network_performance": {},
+      "device_info": {},
+      "data_completeness": {
+        "total_cells": 400666,
+        "null_cells": "0",
+        "completeness_percentage": 100.0
+      },
+      "iperf_analysis": {
+        "has_gps": false,
+        "has_timing": false,
+        "has_bandwidth_data": true,
+        "has_network_performance": false,
+        "has_device_info": false,
+        "potential_sumo_approaches": []
+      },
+      "file_type": "client"
+    },
+    {
+      "file_name": "pc2.parquet",
+      "file_size_mb": 0.34112548828125,
+      "total_records": 39235,
+      "columns": [
+        "datarate",
+        "jitter",
+        "ip_local",
+        "port_local",
+        "ip_remote",
+        "port_remote",
+        "measurement"
+      ],
+      "column_count": 7,
+      "data_types": {
+        "datarate": "float64",
+        "jitter": "float64",
+        "ip_local": "object",
+        "port_local": "object",
+        "ip_remote": "object",
+        "port_remote": "object",
+        "measurement": "int64"
+      },
+      "memory_usage_mb": 9.869807243347168,
+      "null_counts": {
+        "datarate": 0,
+        "jitter": 0,
+        "ip_local": 0,
+        "port_local": 0,
+        "ip_remote": 0,
+        "port_remote": 0,
+        "measurement": 0
+      },
+      "sample_data": [
+        {
+          "datarate": 24500000.0,
+          "jitter": 0.000512,
+          "ip_local": "100.65.126.243",
+          "port_local": "49445",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5208",
+          "measurement": 0
+        },
+        {
+          "datarate": 20800000.0,
+          "jitter": 0.002268,
+          "ip_local": "100.65.126.243",
+          "port_local": "49445",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5208",
+          "measurement": 0
+        },
+        {
+          "datarate": 18100000.0,
+          "jitter": 0.00038700000000000003,
+          "ip_local": "100.65.126.243",
+          "port_local": "49445",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5208",
+          "measurement": 0
+        },
+        {
+          "datarate": 20400000.0,
+          "jitter": 0.000417,
+          "ip_local": "100.65.126.243",
+          "port_local": "49445",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5208",
+          "measurement": 0
+        },
+        {
+          "datarate": 20100000.0,
+          "jitter": 0.0005390000000000001,
+          "ip_local": "100.65.126.243",
+          "port_local": "49445",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5208",
+          "measurement": 0
+        }
+      ],
+      "timestamp_columns": [],
+      "location_columns": [],
+      "iperf_metrics": {
+        "datarate": {
+          "count": 39235,
+          "mean": 13996916.489129603,
+          "std": 21317511.59763914,
+          "min": 851.0,
+          "max": 213000000.0,
+          "median": 6010000.0,
+          "q25": 403000.0,
+          "q75": 21300000.0
+        },
+        "jitter": {
+          "count": 39235,
+          "mean": 6444.058774138832,
+          "std": 589887.8566549998,
+          "min": 2.3e-05,
+          "max": 101416259.240383,
+          "median": 0.041,
+          "q25": 0.0017695,
+          "q75": 1.081
+        }
+      },
+      "network_performance": {},
+      "device_info": {},
+      "data_completeness": {
+        "total_cells": 274645,
+        "null_cells": "0",
+        "completeness_percentage": 100.0
+      },
+      "iperf_analysis": {
+        "has_gps": false,
+        "has_timing": false,
+        "has_bandwidth_data": true,
+        "has_network_performance": false,
+        "has_device_info": false,
+        "potential_sumo_approaches": []
+      },
+      "file_type": "client"
+    },
+    {
+      "file_name": "pc3.parquet",
+      "file_size_mb": 0.4594106674194336,
+      "total_records": 54192,
+      "columns": [
+        "datarate",
+        "jitter",
+        "ip_local",
+        "port_local",
+        "ip_remote",
+        "port_remote",
+        "measurement"
+      ],
+      "column_count": 7,
+      "data_types": {
+        "datarate": "float64",
+        "jitter": "float64",
+        "ip_local": "object",
+        "port_local": "object",
+        "ip_remote": "object",
+        "port_remote": "object",
+        "measurement": "int64"
+      },
+      "memory_usage_mb": 13.582889556884766,
+      "null_counts": {
+        "datarate": 0,
+        "jitter": 0,
+        "ip_local": 0,
+        "port_local": 0,
+        "ip_remote": 0,
+        "port_remote": 0,
+        "measurement": 0
+      },
+      "sample_data": [
+        {
+          "datarate": 49800000.0,
+          "jitter": 8.999999999999999e-05,
+          "ip_local": "100.77.217.156",
+          "port_local": "59327",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5212",
+          "measurement": 0
+        },
+        {
+          "datarate": 49700000.0,
+          "jitter": 0.0005819999999999999,
+          "ip_local": "100.77.217.156",
+          "port_local": "59327",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5212",
+          "measurement": 0
+        },
+        {
+          "datarate": 39600000.0,
+          "jitter": 0.00046,
+          "ip_local": "100.77.217.156",
+          "port_local": "59327",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5212",
+          "measurement": 0
+        },
+        {
+          "datarate": 47800000.0,
+          "jitter": 0.000231,
+          "ip_local": "100.77.217.156",
+          "port_local": "59327",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5212",
+          "measurement": 0
+        },
+        {
+          "datarate": 50700000.0,
+          "jitter": 0.000162,
+          "ip_local": "100.77.217.156",
+          "port_local": "59327",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5212",
+          "measurement": 0
+        }
+      ],
+      "timestamp_columns": [],
+      "location_columns": [],
+      "iperf_metrics": {
+        "datarate": {
+          "count": 54192,
+          "mean": 18979773.76383968,
+          "std": 27134345.67354273,
+          "min": 9600.0,
+          "max": 215000000.0,
+          "median": 10900000.0,
+          "q25": 403000.0,
+          "q75": 27100000.0
+        },
+        "jitter": {
+          "count": 54192,
+          "mean": 2294.8023071785506,
+          "std": 120681.31934274375,
+          "min": 2.1000000000000002e-05,
+          "max": 7193328.883531,
+          "median": 0.041,
+          "q25": 0.00117,
+          "q75": 1.175
+        }
+      },
+      "network_performance": {},
+      "device_info": {},
+      "data_completeness": {
+        "total_cells": 379344,
+        "null_cells": "0",
+        "completeness_percentage": 100.0
+      },
+      "iperf_analysis": {
+        "has_gps": false,
+        "has_timing": false,
+        "has_bandwidth_data": true,
+        "has_network_performance": false,
+        "has_device_info": false,
+        "potential_sumo_approaches": []
+      },
+      "file_type": "client"
+    },
+    {
+      "file_name": "pc4.parquet",
+      "file_size_mb": 0.3492908477783203,
+      "total_records": 41928,
+      "columns": [
+        "datarate",
+        "jitter",
+        "ip_local",
+        "port_local",
+        "ip_remote",
+        "port_remote",
+        "measurement"
+      ],
+      "column_count": 7,
+      "data_types": {
+        "datarate": "float64",
+        "jitter": "float64",
+        "ip_local": "object",
+        "port_local": "object",
+        "ip_remote": "object",
+        "port_remote": "object",
+        "measurement": "int64"
+      },
+      "memory_usage_mb": 10.484990119934082,
+      "null_counts": {
+        "datarate": 0,
+        "jitter": 0,
+        "ip_local": 0,
+        "port_local": 0,
+        "ip_remote": 0,
+        "port_remote": 0,
+        "measurement": 0
+      },
+      "sample_data": [
+        {
+          "datarate": 70500000.0,
+          "jitter": 0.000207,
+          "ip_local": "10.72.149.143",
+          "port_local": "42830",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5216",
+          "measurement": 0
+        },
+        {
+          "datarate": 73900000.0,
+          "jitter": 0.00016900000000000002,
+          "ip_local": "10.72.149.143",
+          "port_local": "42830",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5216",
+          "measurement": 0
+        },
+        {
+          "datarate": 72600000.0,
+          "jitter": 7.6e-05,
+          "ip_local": "10.72.149.143",
+          "port_local": "42830",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5216",
+          "measurement": 0
+        },
+        {
+          "datarate": 79200000.0,
+          "jitter": 0.000125,
+          "ip_local": "10.72.149.143",
+          "port_local": "42830",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5216",
+          "measurement": 0
+        },
+        {
+          "datarate": 85400000.0,
+          "jitter": 0.00039000000000000005,
+          "ip_local": "10.72.149.143",
+          "port_local": "42830",
+          "ip_remote": "193.174.67.58",
+          "port_remote": "5216",
+          "measurement": 0
+        }
+      ],
+      "timestamp_columns": [],
+      "location_columns": [],
+      "iperf_metrics": {
+        "datarate": {
+          "count": 41928,
+          "mean": 19803327.177542455,
+          "std": 24534499.060998477,
+          "min": 95900.0,
+          "max": 245000000.0,
+          "median": 11800000.0,
+          "q25": 403000.0,
+          "q75": 35400000.0
+        },
+        "jitter": {
+          "count": 41928,
+          "mean": 0.9109198583762641,
+          "std": 1.4618446963601321,
+          "min": 0.0,
+          "max": 5.255,
+          "median": 0.042,
+          "q25": 0.000994,
+          "q75": 1.821
+        }
+      },
+      "network_performance": {},
+      "device_info": {},
+      "data_completeness": {
+        "total_cells": 293496,
+        "null_cells": "0",
+        "completeness_percentage": 100.0
+      },
+      "iperf_analysis": {
+        "has_gps": false,
+        "has_timing": false,
+        "has_bandwidth_data": true,
+        "has_network_performance": false,
+        "has_device_info": false,
+        "potential_sumo_approaches": []
+      },
+      "file_type": "client"
+    },
+    {
+      "file_name": "server.parquet",
+      "file_size_mb": 1.4505901336669922,
+      "total_records": 194942,
+      "columns": [
+        "datarate",
+        "jitter",
+        "ip_local",
+        "port_local",
+        "ip_remote",
+        "port_remote",
+        "measurement"
+      ],
+      "column_count": 7,
+      "data_types": {
+        "datarate": "float64",
+        "jitter": "float64",
+        "ip_local": "object",
+        "port_local": "object",
+        "ip_remote": "object",
+        "port_remote": "object",
+        "measurement": "int64"
+      },
+      "memory_usage_mb": 48.93050956726074,
+      "null_counts": {
+        "datarate": 0,
+        "jitter": 0,
+        "ip_local": 0,
+        "port_local": 0,
+        "ip_remote": 0,
+        "port_remote": 0,
+        "measurement": 0
+      },
+      "sample_data": [
+        {
+          "datarate": 350000000.0,
+          "jitter": 36.436,
+          "ip_local": "192.168.20.51",
+          "port_local": "5204",
+          "ip_remote": "80.187.70.136",
+          "port_remote": "31483",
+          "measurement": 0
+        },
+        {
+          "datarate": 349000000.0,
+          "jitter": 36.39,
+          "ip_local": "192.168.20.51",
+          "port_local": "5216",
+          "ip_remote": "80.187.68.143",
+          "port_remote": "18439",
+          "measurement": 0
+        },
+        {
+          "datarate": 350000000.0,
+          "jitter": 36.457,
+          "ip_local": "192.168.20.51",
+          "port_local": "5204",
+          "ip_remote": "80.187.70.136",
+          "port_remote": "31483",
+          "measurement": 0
+        },
+        {
+          "datarate": 350000000.0,
+          "jitter": 36.503,
+          "ip_local": "192.168.20.51",
+          "port_local": "5216",
+          "ip_remote": "80.187.68.143",
+          "port_remote": "18439",
+          "measurement": 0
+        },
+        {
+          "datarate": 350000000.0,
+          "jitter": 36.457,
+          "ip_local": "192.168.20.51",
+          "port_local": "5204",
+          "ip_remote": "80.187.70.136",
+          "port_remote": "31483",
+          "measurement": 0
+        }
+      ],
+      "timestamp_columns": [],
+      "location_columns": [],
+      "iperf_metrics": {
+        "datarate": {
+          "count": 194942,
+          "mean": 80462829.14133434,
+          "std": 117071675.27951479,
+          "min": 9590.0,
+          "max": 512000000.0,
+          "median": 16700000.0,
+          "q25": 403000.0,
+          "q75": 250000000.0
+        },
+        "jitter": {
+          "count": 194942,
+          "mean": 2057.360157185517,
+          "std": 168198.95189154858,
+          "min": 0.0,
+          "max": 49864517.910716005,
+          "median": 0.008947,
+          "q25": 0.00092,
+          "q75": 26.033
+        }
+      },
+      "network_performance": {},
+      "device_info": {},
+      "data_completeness": {
+        "total_cells": 1364594,
+        "null_cells": "0",
+        "completeness_percentage": 100.0
+      },
+      "iperf_analysis": {
+        "has_gps": false,
+        "has_timing": false,
+        "has_bandwidth_data": true,
+        "has_network_performance": false,
+        "has_device_info": false,
+        "potential_sumo_approaches": []
+      },
+      "file_type": "server"
+    }
+  ],
+  "comparison": {
+    "total_files": 5,
+    "common_columns": "{'port_local', 'jitter', 'datarate', 'ip_remote', 'measurement', 'ip_local', 'port_remote'}",
+    "file_sizes": {
+      "pc1.parquet": 0.47873973846435547,
+      "pc2.parquet": 0.34112548828125,
+      "pc3.parquet": 0.4594106674194336,
+      "pc4.parquet": 0.3492908477783203,
+      "server.parquet": 1.4505901336669922
+    },
+    "record_counts": {
+      "pc1.parquet": 57238,
+      "pc2.parquet": 39235,
+      "pc3.parquet": 54192,
+      "pc4.parquet": 41928,
+      "server.parquet": 194942
+    },
+    "file_types": "{'server', 'client'}",
+    "iperf_metrics_comparison": {
+      "bandwidth": {},
+      "throughput": {},
+      "datarate": {
+        "pc1.parquet": {
+          "mean": 34809851.53569307,
+          "std": 40898215.7359879,
+          "count": 57238
+        },
+        "pc2.parquet": {
+          "mean": 13996916.489129603,
+          "std": 21317511.59763914,
+          "count": 39235
+        },
+        "pc3.parquet": {
+          "mean": 18979773.76383968,
+          "std": 27134345.67354273,
+          "count": 54192
+        },
+        "pc4.parquet": {
+          "mean": 19803327.177542455,
+          "std": 24534499.060998477,
+          "count": 41928
+        },
+        "server.parquet": {
+          "mean": 80462829.14133434,
+          "std": 117071675.27951479,
+          "count": 194942
+        }
+      },
+      "jitter": {
+        "pc1.parquet": {
+          "mean": 119.92233759516411,
+          "std": 26492.572115397244,
+          "count": 57238
+        },
+        "pc2.parquet": {
+          "mean": 6444.058774138832,
+          "std": 589887.8566549998,
+          "count": 39235
+        },
+        "pc3.parquet": {
+          "mean": 2294.8023071785506,
+          "std": 120681.31934274375,
+          "count": 54192
+        },
+        "pc4.parquet": {
+          "mean": 0.9109198583762641,
+          "std": 1.4618446963601321,
+          "count": 41928
+        },
+        "server.parquet": {
+          "mean": 2057.360157185517,
+          "std": 168198.95189154858,
+          "count": 194942
+        }
+      },
+      "packet_loss": {},
+      "retransmits": {},
+      "bytes": {},
+      "bits": {}
+    },
+    "network_performance_comparison": {
+      "rtt": {},
+      "latency": {},
+      "ping": {},
+      "connection": {},
+      "socket": {},
+      "port": {},
+      "ip": {},
+      "host": {}
+    },
+    "data_completeness_comparison": {
+      "pc1.parquet": 100.0,
+      "pc2.parquet": 100.0,
+      "pc3.parquet": 100.0,
+      "pc4.parquet": 100.0,
+      "server.parquet": 100.0
+    }
+  },
+  "summary": {
+    "total_files": 5,
+    "total_records": 387535,
+    "total_size_mb": 3.0791568756103516,
+    "all_columns": [
+      "datarate",
+      "ip_local",
+      "ip_remote",
+      "jitter",
+      "measurement",
+      "port_local",
+      "port_remote"
+    ],
+    "sumo_feasibility": 0
+  }
+}

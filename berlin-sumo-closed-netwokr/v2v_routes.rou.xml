@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<routes><vType id="sourceType" color="0,0,255" length="4.5" width="1.8" /><vType id="destType" color="255,0,0" length="4.5" width="1.8" /><route id="sourceRoute" edges="-279549312#0" /><route id="destRoute" edges="-279549312#0" /><vehicle id="sourceVehicle" type="sourceType" route="sourceRoute" depart="0" /><vehicle id="destVehicle" type="destType" route="destRoute" depart="0" /></routes>

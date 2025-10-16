@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<net version="1.9" junctionCornerDetail="5" limitTurnSpeed="5.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+    <location netOffset="0.0,0.0" convBoundary="0.0,0.0,2000.0,2000.0" origBoundary="-10000000000.0,-10000000000.0,10000000000.0,10000000000.0" projParameter="+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+    
+    <!-- Junctions -->
+    <junction id="junction_1" type="priority" x="0.0" y="0.0" incLanes="" intLanes="" shape="0.0,0.0 0.0,0.0"/>
+    <junction id="junction_2" type="priority" x="500.0" y="0.0" incLanes="" intLanes="" shape="500.0,0.0 500.0,0.0"/>
+    <junction id="junction_3" type="priority" x="1000.0" y="0.0" incLanes="" intLanes="" shape="1000.0,0.0 1000.0,0.0"/>
+    <junction id="junction_4" type="priority" x="1500.0" y="0.0" incLanes="" intLanes="" shape="1500.0,0.0 1500.0,0.0"/>
+    <junction id="junction_5" type="priority" x="2000.0" y="0.0" incLanes="" intLanes="" shape="2000.0,0.0 2000.0,0.0"/>
+    
+    <!-- Edges -->
+    <edge id="edge_1" from="junction_1" to="junction_2" priority="1">
+        <lane id="edge_1_0" index="0" speed="13.89" length="500.0" shape="0.0,0.0 500.0,0.0"/>
+    </edge>
+    <edge id="edge_2" from="junction_2" to="junction_3" priority="1">
+        <lane id="edge_2_0" index="0" speed="13.89" length="500.0" shape="500.0,0.0 1000.0,0.0"/>
+    </edge>
+    <edge id="edge_3" from="junction_3" to="junction_4" priority="1">
+        <lane id="edge_3_0" index="0" speed="13.89" length="500.0" shape="1000.0,0.0 1500.0,0.0"/>
+    </edge>
+    <edge id="edge_4" from="junction_4" to="junction_5" priority="1">
+        <lane id="edge_4_0" index="0" speed="13.89" length="500.0" shape="1500.0,0.0 2000.0,0.0"/>
+    </edge>
+    
+    <!-- Connections -->
+    <connection from="edge_1" to="edge_2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="edge_2" to="edge_3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from="edge_3" to="edge_4" fromLane="0" toLane="0" dir="s" state="M"/>
+</net>

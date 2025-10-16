@@ -1,0 +1,15 @@
+{
+  "strategy_number": 2,
+  "strategy_name": "Velocity-Based Adjustment",
+  "mean_accuracy_pct": 76.77000551383247,
+  "median_accuracy_pct": 78.31719204003247,
+  "min_accuracy_pct": 55.88488299941024,
+  "max_accuracy_pct": 93.97943360544905,
+  "std_accuracy_pct": 8.602174270289323,
+  "mae_m": 4.482528930326482,
+  "rmse_m": 4.949097720620972,
+  "waypoints_analyzed": 96,
+  "high_accuracy_90_plus": 3,
+  "medium_accuracy_70_89": 75,
+  "low_accuracy_below_70": 18
+}

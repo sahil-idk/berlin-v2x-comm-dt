@@ -1,0 +1,22 @@
+TRUE VEHICLE SIMULATION V2V DIGITAL TWIN SUMMARY
+=======================================================
+
+Approach: Actual vehicle movement with moveToXY
+Calibration factor: 0.607
+Total steps: 10
+Theoretical mean error: 0.1%
+ACTUAL mean error: 1274.0%
+Theoretical distance range: 13.5m - 30.6m
+ACTUAL distance range: 13.6m - 3906.6m
+
+Step-by-step results:
+Step 0: Theoretical Error: 0.1%, ACTUAL Error: 12653.5%
+Step 1: Theoretical Error: 0.1%, ACTUAL Error: 9.4%
+Step 2: Theoretical Error: 0.1%, ACTUAL Error: 12.5%
+Step 3: Theoretical Error: 0.1%, ACTUAL Error: 13.9%
+Step 4: Theoretical Error: 0.1%, ACTUAL Error: 16.2%
+Step 5: Theoretical Error: 0.1%, ACTUAL Error: 16.3%
+Step 6: Theoretical Error: 0.1%, ACTUAL Error: 12.0%
+Step 7: Theoretical Error: 0.1%, ACTUAL Error: 5.7%
+Step 8: Theoretical Error: 0.1%, ACTUAL Error: 0.1%
+Step 9: Theoretical Error: 0.1%, ACTUAL Error: 0.5%

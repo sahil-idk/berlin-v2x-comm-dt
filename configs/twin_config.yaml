@@ -1,0 +1,33 @@
+# Digital Twin V2V Replay Configuration
+
+# Vehicle IDs to track
+source_id: 2
+destination_id: 4
+
+# Evaluation parameters
+evaluation_timestamps: 10  # Number of timestamps to evaluate
+min_gap_seconds: 5         # Minimum gap between evaluation timestamps
+
+# Simulation parameters
+simulation_tick: 0.5       # Simulation step size in seconds
+max_map_match_radius: 2000 # Maximum radius for edge matching
+
+# Distance calibration
+calibration_factor: 0.607   # Calibration factor for SUMO distances
+
+# Communication parameters
+carrier_frequency: 5900000000   # Carrier frequency in Hz (5.9 GHz)
+tx_power: 23                    # Transmit power in dBm
+noise_floor: -174               # Noise floor in dBm/Hz
+bandwidth: 10000000            # Bandwidth in Hz (10 MHz)
+
+# 3GPP Urban Macro parameters
+enable_3gpp_model: true
+los_probability_threshold: 0.5
+shadowing_std: 4.0         # Log-normal shadowing standard deviation in dB
+enable_fading: false       # Enable small-scale fading
+
+# Output settings
+output_dir: "twin_results"
+save_per_step_data: true
+save_evaluation_data: true

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+  <route id="improved_src_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+  <route id="improved_dst_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+  <vType id="improved_src_vType" accel="2.6" decel="4.5" sigma="0" length="4.5" maxSpeed="55" guiShape="passenger" color="0,0,255"/>
+  <vType id="improved_dst_vType" accel="2.6" decel="4.5" sigma="0" length="4.5" maxSpeed="55" guiShape="passenger" color="255,0,0"/>
+</routes>

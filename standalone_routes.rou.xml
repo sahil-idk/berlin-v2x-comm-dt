@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- Vehicle types -->
+    <vType id="PC2_Vehicle" accel="2.5" decel="4.5" sigma="0.5" length="4.3" maxSpeed="50"/>
+    
+    <!-- Main route -->
+    <route id="main_route" edges="edge_1 edge_2 edge_3 edge_4"/>
+    
+    <!-- Vehicles with speeds from PC2 data -->
+    <vehicle id="pc2_vehicle_0" type="PC2_Vehicle" route="main_route" depart="0" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_1" type="PC2_Vehicle" route="main_route" depart="2" departSpeed="1.028888888888889"/>
+    <vehicle id="pc2_vehicle_2" type="PC2_Vehicle" route="main_route" depart="4" departSpeed="9.877333333333333"/>
+    <vehicle id="pc2_vehicle_3" type="PC2_Vehicle" route="main_route" depart="6" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_4" type="PC2_Vehicle" route="main_route" depart="8" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_5" type="PC2_Vehicle" route="main_route" depart="10" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_6" type="PC2_Vehicle" route="main_route" depart="12" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_7" type="PC2_Vehicle" route="main_route" depart="14" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_8" type="PC2_Vehicle" route="main_route" depart="16" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_9" type="PC2_Vehicle" route="main_route" depart="18" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_10" type="PC2_Vehicle" route="main_route" depart="20" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_11" type="PC2_Vehicle" route="main_route" depart="22" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_12" type="PC2_Vehicle" route="main_route" depart="24" departSpeed="2.8294444444444444"/>
+    <vehicle id="pc2_vehicle_13" type="PC2_Vehicle" route="main_route" depart="26" departSpeed="13.272666666666668"/>
+    <vehicle id="pc2_vehicle_14" type="PC2_Vehicle" route="main_route" depart="28" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_15" type="PC2_Vehicle" route="main_route" depart="30" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_16" type="PC2_Vehicle" route="main_route" depart="32" departSpeed="12.192333333333334"/>
+    <vehicle id="pc2_vehicle_17" type="PC2_Vehicle" route="main_route" depart="34" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_18" type="PC2_Vehicle" route="main_route" depart="36" departSpeed="1.6462222222222225"/>
+    <vehicle id="pc2_vehicle_19" type="PC2_Vehicle" route="main_route" depart="38" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_20" type="PC2_Vehicle" route="main_route" depart="40" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_21" type="PC2_Vehicle" route="main_route" depart="42" departSpeed="4.578555555555556"/>
+    <vehicle id="pc2_vehicle_22" type="PC2_Vehicle" route="main_route" depart="44" departSpeed="0.5144444444444445"/>
+    <vehicle id="pc2_vehicle_23" type="PC2_Vehicle" route="main_route" depart="46" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_24" type="PC2_Vehicle" route="main_route" depart="48" departSpeed="10.391777777777778"/>
+    <vehicle id="pc2_vehicle_25" type="PC2_Vehicle" route="main_route" depart="50" departSpeed="8.848444444444445"/>
+    <vehicle id="pc2_vehicle_26" type="PC2_Vehicle" route="main_route" depart="52" departSpeed="7.459444444444445"/>
+    <vehicle id="pc2_vehicle_27" type="PC2_Vehicle" route="main_route" depart="54" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_28" type="PC2_Vehicle" route="main_route" depart="56" departSpeed="0.3601111111111111"/>
+    <vehicle id="pc2_vehicle_29" type="PC2_Vehicle" route="main_route" depart="58" departSpeed="7.768111111111111"/>
+    <vehicle id="pc2_vehicle_30" type="PC2_Vehicle" route="main_route" depart="60" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_31" type="PC2_Vehicle" route="main_route" depart="62" departSpeed="13.221222222222222"/>
+    <vehicle id="pc2_vehicle_32" type="PC2_Vehicle" route="main_route" depart="64" departSpeed="13.015444444444444"/>
+    <vehicle id="pc2_vehicle_33" type="PC2_Vehicle" route="main_route" depart="66" departSpeed="21.812444444444445"/>
+    <vehicle id="pc2_vehicle_34" type="PC2_Vehicle" route="main_route" depart="68" departSpeed="21.349444444444444"/>
+    <vehicle id="pc2_vehicle_35" type="PC2_Vehicle" route="main_route" depart="70" departSpeed="24.230333333333334"/>
+    <vehicle id="pc2_vehicle_36" type="PC2_Vehicle" route="main_route" depart="72" departSpeed="21.298"/>
+    <vehicle id="pc2_vehicle_37" type="PC2_Vehicle" route="main_route" depart="74" departSpeed="6.790666666666667"/>
+    <vehicle id="pc2_vehicle_38" type="PC2_Vehicle" route="main_route" depart="76" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_39" type="PC2_Vehicle" route="main_route" depart="78" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_40" type="PC2_Vehicle" route="main_route" depart="80" departSpeed="10.803333333333335"/>
+    <vehicle id="pc2_vehicle_41" type="PC2_Vehicle" route="main_route" depart="82" departSpeed="1.131777777777778"/>
+    <vehicle id="pc2_vehicle_42" type="PC2_Vehicle" route="main_route" depart="84" departSpeed="10.751888888888889"/>
+    <vehicle id="pc2_vehicle_43" type="PC2_Vehicle" route="main_route" depart="86" departSpeed="7.408"/>
+    <vehicle id="pc2_vehicle_44" type="PC2_Vehicle" route="main_route" depart="88" departSpeed="12.86111111111111"/>
+    <vehicle id="pc2_vehicle_45" type="PC2_Vehicle" route="main_route" depart="90" departSpeed="12.912555555555556"/>
+    <vehicle id="pc2_vehicle_46" type="PC2_Vehicle" route="main_route" depart="92" departSpeed="11.420666666666667"/>
+    <vehicle id="pc2_vehicle_47" type="PC2_Vehicle" route="main_route" depart="94" departSpeed="0.1"/>
+    <vehicle id="pc2_vehicle_48" type="PC2_Vehicle" route="main_route" depart="96" departSpeed="9.82588888888889"/>
+    <vehicle id="pc2_vehicle_49" type="PC2_Vehicle" route="main_route" depart="98" departSpeed="5.8646666666666665"/>
+</routes>

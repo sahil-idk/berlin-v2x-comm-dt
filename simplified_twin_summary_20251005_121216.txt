@@ -1,0 +1,20 @@
+SIMPLIFIED DIGITAL TWIN V2V SIMULATION SUMMARY
+==================================================
+
+Approach: Direct GPS-to-SUMO conversion with calibration
+Calibration factor: 0.607
+Total steps: 10
+Mean error: 0.1%
+Distance range: 13.5m - 30.6m
+
+Step-by-step results:
+Step 0: Error 0.1%
+Step 1: Error 0.1%
+Step 2: Error 0.1%
+Step 3: Error 0.1%
+Step 4: Error 0.1%
+Step 5: Error 0.1%
+Step 6: Error 0.1%
+Step 7: Error 0.1%
+Step 8: Error 0.1%
+Step 9: Error 0.1%

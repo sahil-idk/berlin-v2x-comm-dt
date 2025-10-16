@@ -1,0 +1,19 @@
+{
+  "approach": "Improved Baseline",
+  "total_waypoints": 8,
+  "timestamp": "2025-10-10 13:43:29",
+  "mean_accuracy": 52.79473537959146,
+  "median_accuracy": 70.69228591580696,
+  "std_accuracy": 45.101211281274296,
+  "rmse": 96.5660863347896,
+  "mae": 56.89602493659298,
+  "high_accuracy_count": 2,
+  "very_good_count": 2,
+  "good_count": 0,
+  "baseline_accuracy": 66.52,
+  "improvement": -13.725264620408538,
+  "advanced_calibration_enabled": true,
+  "outlier_detection_enabled": true,
+  "dynamic_tuning_enabled": true,
+  "assessment": "NEEDS IMPROVEMENT"
+}

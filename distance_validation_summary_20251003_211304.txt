@@ -1,0 +1,15 @@
+HEADLESS V2V DISTANCE VALIDATION SUMMARY
+==================================================
+
+Validation completed: 2025-10-03 21:13:04
+Total samples: 10
+Successful validations: 10
+Success rate: 100.0%
+
+ACCURACY STATISTICS
+--------------------
+Mean error: 25.71m (64.6%)
+Median error: 17.69m (64.6%)
+Error std dev: 19.62m (0.0%)
+Min error: 3.86m (64.6%)
+Max error: 75.98m (64.6%)

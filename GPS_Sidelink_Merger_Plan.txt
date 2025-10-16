@@ -1,0 +1,321 @@
+================================================================================
+GPS AND SIDELINK DATASET MERGER PLAN
+================================================================================
+
+EXECUTIVE SUMMARY
+================================================================================
+
+This document outlines a comprehensive plan for merging GPS datasets (pc1-pc4) with 
+sidelink datasets (ue1-ue4) to create a unified V2X dataset that combines spatial 
+context with V2V communication parameters. The merger will enable SUMO visualization 
+with both vehicle positioning and communication quality data.
+
+DATASET OVERVIEW
+================================================================================
+
+GPS DATASETS (Root Directory):
+- pc1 (1).parquet: 57,238 records - Network performance only (datarate, jitter)
+- pc2 (1).parquet: 44,464 records - GPS + Weather + Traffic data
+- pc3 (1).parquet: 60,097 records - GPS + Weather + Traffic data  
+- pc4 (1).parquet: 44,788 records - GPS + Weather + Traffic data
+
+SIDELINK DATASETS (sidelink/ directory):
+- 15 files total across 4 UEs (ue1-ue4) and multiple sessions (s1, s2)
+- Dates: 0622 (June 22) and 0623 (June 23)
+- Total records: ~20 million V2V communication measurements
+- Contains: SNR, RSRP, RSSI, MCS, timestamps, source/destination MAC addresses
+
+KEY FINDINGS
+================================================================================
+
+GPS DATASET CHARACTERISTICS:
+- pc1: Network performance data only (no GPS)
+- pc2, pc3, pc4: Complete GPS data with timestamps, weather, traffic
+- GPS coordinates: Latitude, Longitude, Altitude
+- Timestamps: ts_gps column with precise timing
+- Weather data: Temperature, humidity, pressure, wind, precipitation
+- Traffic data: Jam factor, street names, distances
+
+SIDELINK DATASET CHARACTERISTICS:
+- V2V communication parameters: SNR, RSRP, RSSI, MCS
+- Timestamps: time_epoch, TIME(S), TIME(FrS)
+- Source/Destination: MAC addresses for V2V communication
+- High data volume: 400K to 2M records per file
+- Multiple sessions and dates for comprehensive coverage
+
+MERGER STRATEGY
+================================================================================
+
+APPROACH 1: DEVICE-BASED CORRELATION (PRIMARY)
+-----------------------------------------------
+
+Mapping Strategy:
+- pc1 -> ue1 (Network performance correlation)
+- pc2 -> ue2 (GPS + V2V communication)
+- pc3 -> ue3 (GPS + V2V communication)
+- pc4 -> ue4 (GPS + V2V communication)
+
+Implementation:
+1. Load corresponding GPS and sidelink files
+2. Extract device identifiers from filenames
+3. Create device mapping table
+4. Merge datasets based on device correspondence
+
+APPROACH 2: TEMPORAL CORRELATION (SECONDARY)
+--------------------------------------------
+
+Timestamp Alignment:
+- GPS timestamps: ts_gps (datetime format)
+- Sidelink timestamps: time_epoch (Unix timestamp)
+- Convert both to common format for correlation
+- Use temporal interpolation for missing data points
+
+Implementation:
+1. Convert time_epoch to datetime format
+2. Align timestamps between GPS and sidelink data
+3. Interpolate GPS coordinates for sidelink timestamps
+4. Create temporal correlation matrix
+
+APPROACH 3: SPATIAL INTERPOLATION (VALIDATION)
+-----------------------------------------------
+
+Distance Calculation:
+- Use GPS coordinates to calculate inter-vehicle distances
+- Correlate distances with V2V signal strength (RSRP, RSSI)
+- Validate using path loss models
+- Create spatial correlation matrix
+
+Implementation:
+1. Calculate distances between all vehicle pairs
+2. Correlate distances with signal strength measurements
+3. Apply path loss models for validation
+4. Create spatial correlation matrix
+
+APPROACH 4: HYBRID INTEGRATION (COMPREHENSIVE)
+-----------------------------------------------
+
+Combined Strategy:
+- Use device mapping as primary correlation
+- Apply temporal alignment for precise timing
+- Validate with spatial distance calculations
+- Create unified dataset with all parameters
+
+Implementation:
+1. Start with device-based correlation
+2. Apply temporal alignment
+3. Validate with spatial calculations
+4. Generate comprehensive merged dataset
+
+DETAILED IMPLEMENTATION PLAN
+================================================================================
+
+PHASE 1: DATA PREPARATION
+-------------------------
+
+1.1 GPS Data Processing:
+- Load pc2, pc3, pc4 parquet files (skip pc1 - no GPS)
+- Extract GPS coordinates (Latitude, Longitude, Altitude)
+- Convert timestamps to common format
+- Clean and validate GPS data
+- Handle missing values appropriately
+
+1.2 Sidelink Data Processing:
+- Load all 15 sidelink parquet files
+- Extract V2V communication parameters (SNR, RSRP, RSSI, MCS)
+- Convert time_epoch to datetime format
+- Extract UE IDs and session information
+- Clean and validate communication data
+
+1.3 Data Quality Assessment:
+- Check for missing values and outliers
+- Validate timestamp ranges and consistency
+- Assess data completeness and quality
+- Identify potential correlation issues
+
+PHASE 2: CORRELATION IMPLEMENTATION
+-----------------------------------
+
+2.1 Device Mapping:
+- Create device correspondence table (pc2->ue2, pc3->ue3, pc4->ue4)
+- Map GPS data to corresponding sidelink data
+- Handle device-specific data characteristics
+- Validate device mapping accuracy
+
+2.2 Temporal Alignment:
+- Convert all timestamps to common format
+- Align GPS and sidelink timestamps
+- Implement temporal interpolation for missing data
+- Create temporal correlation matrix
+
+2.3 Spatial Validation:
+- Calculate inter-vehicle distances using GPS coordinates
+- Correlate distances with V2V signal strength
+- Apply path loss models for validation
+- Create spatial correlation matrix
+
+PHASE 3: MERGER EXECUTION
+-------------------------
+
+3.1 Primary Merger:
+- Merge GPS and sidelink data based on device mapping
+- Align timestamps for precise correlation
+- Combine spatial and communication parameters
+- Create initial merged dataset
+
+3.2 Data Enhancement:
+- Add calculated inter-vehicle distances
+- Include path loss model predictions
+- Add communication quality indicators
+- Create comprehensive V2X dataset
+
+3.3 Quality Validation:
+- Validate merged data integrity
+- Check for correlation accuracy
+- Assess data completeness
+- Identify and resolve issues
+
+PHASE 4: OUTPUT GENERATION
+--------------------------
+
+4.1 Unified Dataset:
+- Create comprehensive merged parquet file
+- Include all GPS, weather, traffic, and V2V data
+- Add calculated parameters (distances, path loss)
+- Generate metadata and documentation
+
+4.2 SUMO-Ready Format:
+- Convert to SUMO-compatible format
+- Include vehicle positioning data
+- Add communication quality indicators
+- Create visualization-ready dataset
+
+4.3 Analysis Tools:
+- Generate analysis scripts
+- Create visualization tools
+- Develop validation utilities
+- Provide documentation and examples
+
+TECHNICAL SPECIFICATIONS
+================================================================================
+
+DATA STRUCTURE:
+- Primary keys: Device ID, Timestamp
+- GPS data: Latitude, Longitude, Altitude, Speed, COG
+- Weather data: Temperature, Humidity, Pressure, Wind, Precipitation
+- Traffic data: Jam factor, Street names, Distances
+- V2V communication: SNR, RSRP, RSSI, MCS, Source, Destination
+- Calculated parameters: Inter-vehicle distances, Path loss predictions
+
+CORRELATION METHODS:
+- Device-based: Direct mapping (pc2->ue2, pc3->ue3, pc4->ue4)
+- Temporal: Timestamp alignment with interpolation
+- Spatial: Distance calculation and path loss validation
+- Quality: Communication parameter validation
+
+OUTPUT FORMATS:
+- Parquet: Efficient storage and analysis
+- CSV: Compatibility and portability
+- JSON: Metadata and configuration
+- SUMO: Simulation-ready format
+
+EXPECTED OUTCOMES
+================================================================================
+
+UNIFIED V2X DATASET:
+- Combined GPS positioning and V2V communication data
+- Temporal and spatial correlation
+- Comprehensive V2X communication parameters
+- SUMO visualization ready
+
+SUMO VISUALIZATION CAPABILITIES:
+- Real vehicle positioning with GPS coordinates
+- V2V communication quality visualization
+- Inter-vehicle distance and signal strength correlation
+- Weather and traffic impact on communication
+- Complete V2X scenario simulation
+
+RESEARCH APPLICATIONS:
+- V2V communication analysis with spatial context
+- Path loss model validation
+- Weather impact on V2X communication
+- Traffic condition effects on communication quality
+- Comprehensive V2X performance evaluation
+
+IMPLEMENTATION TIMELINE
+================================================================================
+
+WEEK 1: Data Preparation
+- Load and analyze all datasets
+- Implement data cleaning and validation
+- Create device mapping and correlation matrices
+- Develop temporal alignment algorithms
+
+WEEK 2: Correlation Implementation
+- Implement device-based correlation
+- Apply temporal alignment
+- Calculate spatial distances and path loss
+- Validate correlation accuracy
+
+WEEK 3: Merger Execution
+- Execute primary merger
+- Enhance data with calculated parameters
+- Validate merged data integrity
+- Resolve correlation issues
+
+WEEK 4: Output Generation
+- Create unified dataset
+- Generate SUMO-ready format
+- Develop analysis and visualization tools
+- Complete documentation and examples
+
+RISK ASSESSMENT
+================================================================================
+
+TECHNICAL RISKS:
+- Data quality issues in source datasets
+- Timestamp synchronization problems
+- GPS coordinate accuracy limitations
+- V2V communication parameter variability
+
+MITIGATION STRATEGIES:
+- Implement robust data validation
+- Use multiple correlation methods
+- Apply statistical validation techniques
+- Create fallback correlation approaches
+
+SUCCESS CRITERIA
+================================================================================
+
+PRIMARY OBJECTIVES:
+- Successful merger of GPS and sidelink datasets
+- Accurate temporal and spatial correlation
+- Comprehensive V2X dataset creation
+- SUMO visualization capability
+
+SECONDARY OBJECTIVES:
+- Path loss model validation
+- Weather impact analysis
+- Traffic condition correlation
+- Research application development
+
+CONCLUSION
+================================================================================
+
+The GPS and sidelink dataset merger represents a significant opportunity to create
+a comprehensive V2X dataset that combines spatial context with V2V communication
+parameters. The proposed hybrid approach using device-based correlation, temporal
+alignment, and spatial validation will ensure accurate and robust data integration.
+
+The resulting unified dataset will enable advanced SUMO visualization capabilities
+with real vehicle positioning, V2V communication quality, and environmental context.
+This will provide researchers and developers with a powerful tool for V2X analysis
+and simulation.
+
+The implementation plan provides a structured approach to data merger with clear
+phases, technical specifications, and success criteria. The expected outcomes will
+significantly enhance the value of the Berlin V2X dataset for research and
+development applications.
+
+================================================================================
+END OF PLAN
+================================================================================

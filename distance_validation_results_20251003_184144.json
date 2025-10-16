@@ -1,0 +1,125 @@
+{
+  "timestamp": "20251003_184144",
+  "statistics": {
+    "num_samples": 10,
+    "mean_error": 20.770250267003778,
+    "median_error": 14.732916552811156,
+    "std_error": 20.901072181685972,
+    "mean_accuracy": 35.53479455741217,
+    "median_accuracy": 35.529450129481745,
+    "min_accuracy": 35.49120842468302,
+    "max_accuracy": 35.591017252144354
+  },
+  "detailed_results": [
+    {
+      "sample_id": 1,
+      "real_distance_gps": 27.781279708707245,
+      "simulated_distance_sumo": 45.701207048828834,
+      "distance_error": 17.91992734012159,
+      "accuracy_percentage": 35.49639351384846,
+      "latitude_source": 52.513821666666665,
+      "longitude_source": 13.341478333333333,
+      "latitude_destination": 52.51377,
+      "longitude_destination": 13.341076666666666
+    },
+    {
+      "sample_id": 2,
+      "real_distance_gps": 8.917888597664955,
+      "simulated_distance_sumo": 14.665132761908227,
+      "distance_error": 5.747244164243272,
+      "accuracy_percentage": 35.55375690891542,
+      "latitude_source": 52.49842833333334,
+      "longitude_source": 13.307348333333334,
+      "latitude_destination": 52.49850333333333,
+      "longitude_destination": 13.307301666666667
+    },
+    {
+      "sample_id": 3,
+      "real_distance_gps": 7.494363025096222,
+      "simulated_distance_sumo": 12.323064503603105,
+      "distance_error": 4.828701478506883,
+      "accuracy_percentage": 35.568887411283555,
+      "latitude_source": 52.49443333333333,
+      "longitude_source": 13.287061666666666,
+      "latitude_destination": 52.49440666666667,
+      "longitude_destination": 13.28696
+    },
+    {
+      "sample_id": 4,
+      "real_distance_gps": 8.797658859026296,
+      "simulated_distance_sumo": 14.469847028515762,
+      "distance_error": 5.672188169489466,
+      "accuracy_percentage": 35.52616371718179,
+      "latitude_source": 52.505875,
+      "longitude_source": 13.341908333333333,
+      "latitude_destination": 52.50580833333333,
+      "longitude_destination": 13.341838333333332
+    },
+    {
+      "sample_id": 5,
+      "real_distance_gps": 101.42261518399837,
+      "simulated_distance_sumo": 166.80699972088152,
+      "distance_error": 65.38438453688315,
+      "accuracy_percentage": 35.5327365417817,
+      "latitude_source": 52.50376833333333,
+      "longitude_source": 13.334825,
+      "latitude_destination": 52.504401666666666,
+      "longitude_destination": 13.335903333333333
+    },
+    {
+      "sample_id": 6,
+      "real_distance_gps": 87.85435316959354,
+      "simulated_distance_sumo": 144.4404483458372,
+      "distance_error": 56.586095176243674,
+      "accuracy_percentage": 35.591017252144354,
+      "latitude_source": 52.48845833333333,
+      "longitude_source": 13.303696666666667,
+      "latitude_destination": 52.48854333333333,
+      "longitude_destination": 13.302406666666666
+    },
+    {
+      "sample_id": 7,
+      "real_distance_gps": 26.88039266376845,
+      "simulated_distance_sumo": 44.19436878987083,
+      "distance_error": 17.31397612610238,
+      "accuracy_percentage": 35.58882735578656,
+      "latitude_source": 52.48899,
+      "longitude_source": 13.299043333333334,
+      "latitude_destination": 52.48918333333334,
+      "longitude_destination": 13.298805
+    },
+    {
+      "sample_id": 8,
+      "real_distance_gps": 18.840080975677605,
+      "simulated_distance_sumo": 30.99193795519754,
+      "distance_error": 12.151856979519934,
+      "accuracy_percentage": 35.49997478669076,
+      "latitude_source": 52.51292333333333,
+      "longitude_source": 13.376996666666669,
+      "latitude_destination": 52.512755,
+      "longitude_destination": 13.376965
+    },
+    {
+      "sample_id": 9,
+      "real_distance_gps": 5.93729737129523,
+      "simulated_distance_sumo": 9.767376157750844,
+      "distance_error": 3.830078786455614,
+      "accuracy_percentage": 35.49120842468302,
+      "latitude_source": 52.51517666666667,
+      "longitude_source": 13.361338333333332,
+      "latitude_destination": 52.515185,
+      "longitude_destination": 13.361251666666666
+    },
+    {
+      "sample_id": 10,
+      "real_distance_gps": 28.32210997080075,
+      "simulated_distance_sumo": 46.59015988327257,
+      "distance_error": 18.26804991247182,
+      "accuracy_percentage": 35.498979661806146,
+      "latitude_source": 52.513125,
+      "longitude_source": 13.330251666666667,
+      "latitude_destination": 52.513085,
+      "longitude_destination": 13.329838333333331
+    }
+  ]
+}

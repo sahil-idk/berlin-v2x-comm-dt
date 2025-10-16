@@ -1,0 +1,15 @@
+{
+  "strategy_number": 1,
+  "strategy_name": "Multi-Zone Distance-Based Calibration",
+  "mean_accuracy_pct": 76.36515428403136,
+  "median_accuracy_pct": 76.9572515633013,
+  "min_accuracy_pct": 58.58678177819789,
+  "max_accuracy_pct": 90.62671477683158,
+  "std_accuracy_pct": 6.70863412579651,
+  "mae_m": 4.526986889876716,
+  "rmse_m": 4.843421482062414,
+  "waypoints_analyzed": 96,
+  "high_accuracy_90_plus": 1,
+  "medium_accuracy_70_89": 82,
+  "low_accuracy_below_70": 13
+}

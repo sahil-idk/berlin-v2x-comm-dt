@@ -1,0 +1,7 @@
+<routes>
+    <vType id="v2v_car" accel="2.0" decel="4.5" sigma="0.5" length="4.5" minGap="2.5" maxSpeed="50" color="0,0,255"/>
+    <vType id="v2v_car_dest" accel="2.0" decel="4.5" sigma="0.5" length="4.5" minGap="2.5" maxSpeed="50" color="255,0,0"/>
+    <route id="simple_route" edges="-279549312"/>
+    <vehicle id="sourceVehicle" type="v2v_car" route="simple_route" depart="0" departPos="0" departSpeed="max" departLane="best"/>
+    <vehicle id="destVehicle" type="v2v_car_dest" route="simple_route" depart="0" departPos="10" departSpeed="max" departLane="best"/>
+</routes>

@@ -1,0 +1,14 @@
+{
+  "total_waypoints": 20,
+  "mean_error_m": 25.289599403562953,
+  "mean_absolute_error_m": 26.851631585703228,
+  "rmse_m": 27.474167166972403,
+  "mean_error_percentage": 132.86465469101714,
+  "mean_absolute_error_percentage": 139.6366438906777,
+  "mean_accuracy_percentage": -39.6366438906777,
+  "high_accuracy_count": 0,
+  "medium_accuracy_count": 0,
+  "low_accuracy_count": 20,
+  "best_waypoint": 1,
+  "worst_waypoint": 19
+}

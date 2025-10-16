@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle 2-4 First 200 Points V2V Visualization</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .slider-container {
+            margin-bottom: 10px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        .progress-container {
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .info-panel {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .info-value {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: #e8f4fd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .legend {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        
+        .legend-text {
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-top: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 40vh;
+            }
+            
+            .map-container {
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="header">
+                <h1>🚗 Vehicle 2-4 First 200 Points</h1>
+                <p>Focused V2V Communication Simulation</p>
+            </div>
+            
+            <div class="status" id="status">
+                Loading dataset...
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label>Animation Controls</label>
+                    <div class="button-group">
+                        <button id="playBtn" class="btn-primary">▶️ Play</button>
+                        <button id="pauseBtn" class="btn-secondary">⏸️ Pause</button>
+                        <button id="stepBtn" class="btn-success">⏭️ Step</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Speed Control</label>
+                    <div class="slider-container">
+                        <input type="range" id="speedSlider" min="1" max="1000" value="100">
+                        <div style="text-align: center; font-size: 0.8em; color: #666;">
+                            <span id="speedValue">100</span> steps/sec
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Progress</label>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div style="text-align: center; font-size: 0.8em; color: #666; margin-top: 5px;">
+                            <span id="progressText">0 / 200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h3 style="margin-top: 0; color: #2c3e50;">📊 Dataset Info</h3>
+                <div class="info-row">
+                    <span class="info-label">Total Records:</span>
+                    <span class="info-value" id="totalRecords">200 records</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Coverage:</span>
+                    <span class="info-value" id="coverage">0.010° × 0.030°</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Distance Range:</span>
+                    <span class="info-value" id="distanceRange">11.4m - 23.1m</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Scenario:</span>
+                    <span class="info-value" id="scenario">S2</span>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="currentDistance">-</div>
+                    <div class="stat-label">Current Distance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentSNR">-</div>
+                    <div class="stat-label">Current SNR</div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <h4 style="margin-top: 0; color: #2c3e50;">🎨 Legend</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3498db;"></div>
+                    <span class="legend-text">Vehicle 2 Trajectory</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e67e22;"></div>
+                    <span class="legend-text">Vehicle 4 Trajectory</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e74c3c; border-style: dashed;"></div>
+                    <span class="legend-text">V2V Communication Link</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f39c12;"></div>
+                    <span class="legend-text">GPS Waypoints</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Papa Parse for CSV -->
+    <!-- Papa.parse not needed for embedded data -->
+    
+    <script>
+// Embedded optimized data (compact format)
+const embeddedOptimizedData = [
+  {
+    "timestamp": 1624457911.4891016,
+    "source_lat": 52.50993,
+    "source_lon": 13.357696666666667,
+    "dest_lat": 52.50994666666666,
+    "dest_lon": 13.358036666666669,
+    "distance": 23.06607609797377,
+    "snr": 16.822549130434783,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457911.4989383,
+    "source_lat": 52.50994666666666,
+    "source_lon": 13.358036666666669,
+    "dest_lat": 52.50993,
+    "dest_lon": 13.357696666666667,
+    "distance": 23.06607609797377,
+    "snr": 15.81210268292683,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457912.479215,
+    "source_lat": 52.50994666666666,
+    "source_lon": 13.35787,
+    "dest_lat": 52.50992166666666,
+    "dest_lon": 13.357541666666666,
+    "distance": 22.375356066218483,
+    "snr": 15.832974,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457912.5034437,
+    "source_lat": 52.50992166666666,
+    "source_lon": 13.357541666666666,
+    "dest_lat": 52.50994666666666,
+    "dest_lon": 13.35787,
+    "distance": 22.375356066218483,
+    "snr": 17.67434,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457913.5047529,
+    "source_lat": 52.50994166666667,
+    "source_lon": 13.357696666666667,
+    "dest_lat": 52.50991666666667,
+    "dest_lon": 13.357383333333331,
+    "distance": 21.369210755975924,
+    "snr": 15.497349795918367,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457913.5075817,
+    "source_lat": 52.50991666666667,
+    "source_lon": 13.357383333333331,
+    "dest_lat": 52.50994166666667,
+    "dest_lon": 13.357696666666667,
+    "distance": 21.369210755975924,
+    "snr": 18.2966554,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457914.5000665,
+    "source_lat": 52.50993833333333,
+    "source_lon": 13.357521666666669,
+    "dest_lat": 52.50991,
+    "dest_lon": 13.357221666666666,
+    "distance": 20.52890803927758,
+    "snr": 15.236907142857143,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457914.5044298,
+    "source_lat": 52.50991,
+    "source_lon": 13.357221666666666,
+    "dest_lat": 52.50993833333333,
+    "dest_lon": 13.357521666666669,
+    "distance": 20.52890803927758,
+    "snr": 16.30460081632653,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457915.4912431,
+    "source_lat": 52.50993166666667,
+    "source_lon": 13.357346666666666,
+    "dest_lat": 52.50990333333333,
+    "dest_lon": 13.357058333333333,
+    "distance": 19.74966462565046,
+    "snr": 15.99989081632653,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457915.4945643,
+    "source_lat": 52.50990333333333,
+    "source_lon": 13.357058333333333,
+    "dest_lat": 52.50993166666667,
+    "dest_lon": 13.357346666666666,
+    "distance": 19.74966462565046,
+    "snr": 17.17154,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457916.4863567,
+    "source_lat": 52.509925,
+    "source_lon": 13.35717,
+    "dest_lat": 52.50989666666667,
+    "dest_lon": 13.356893333333334,
+    "distance": 18.971223088084347,
+    "snr": 16.005374489795916,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457916.4884758,
+    "source_lat": 52.50989666666667,
+    "source_lon": 13.356893333333334,
+    "dest_lat": 52.509925,
+    "dest_lon": 13.35717,
+    "distance": 18.971223088084347,
+    "snr": 15.87385632653061,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457917.4891078,
+    "source_lat": 52.509888333333336,
+    "source_lon": 13.35673,
+    "dest_lat": 52.50991666666667,
+    "dest_lon": 13.356996666666667,
+    "distance": 18.304705222315,
+    "snr": 14.195590869565216,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457917.493123,
+    "source_lat": 52.50991666666667,
+    "source_lon": 13.356996666666667,
+    "dest_lat": 52.509888333333336,
+    "dest_lon": 13.35673,
+    "distance": 18.304705222315,
+    "snr": 13.42733588235294,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457918.5005727,
+    "source_lat": 52.509906666666666,
+    "source_lon": 13.356828333333333,
+    "dest_lat": 52.50987666666666,
+    "dest_lon": 13.356566666666666,
+    "distance": 18.00501005259536,
+    "snr": 15.107403921568627,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457918.5101976,
+    "source_lat": 52.50987666666666,
+    "source_lon": 13.356566666666666,
+    "dest_lat": 52.509906666666666,
+    "dest_lon": 13.356828333333333,
+    "distance": 18.00501005259536,
+    "snr": 16.618782765957448,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457919.5152435,
+    "source_lat": 52.509895,
+    "source_lon": 13.356663333333334,
+    "dest_lat": 52.50986666666667,
+    "dest_lon": 13.356406666666668,
+    "distance": 17.638939080054833,
+    "snr": 13.425282368421051,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457919.573169,
+    "source_lat": 52.50986666666667,
+    "source_lon": 13.356406666666668,
+    "dest_lat": 52.509895,
+    "dest_lon": 13.356663333333334,
+    "distance": 17.638939080054833,
+    "snr": 13.335847222222222,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457920.50555,
+    "source_lat": 52.509885,
+    "source_lon": 13.356501666666666,
+    "dest_lat": 52.50985666666666,
+    "dest_lon": 13.356243333333332,
+    "distance": 17.749859877562898,
+    "snr": 11.884058510638296,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457920.5061624,
+    "source_lat": 52.50985666666666,
+    "source_lon": 13.356243333333332,
+    "dest_lat": 52.509885,
+    "dest_lon": 13.356501666666666,
+    "distance": 17.749859877562898,
+    "snr": 12.5307058,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457921.4757948,
+    "source_lat": 52.509845,
+    "source_lon": 13.356083333333334,
+    "dest_lat": 52.50987333333333,
+    "dest_lon": 13.356341666666667,
+    "distance": 17.74987130667995,
+    "snr": 14.126218666666666,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457921.511875,
+    "source_lat": 52.50987333333333,
+    "source_lon": 13.356341666666667,
+    "dest_lat": 52.509845,
+    "dest_lon": 13.356083333333334,
+    "distance": 17.74987130667995,
+    "snr": 12.3048084,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457922.4463122,
+    "source_lat": 52.50986,
+    "source_lon": 13.356185,
+    "dest_lat": 52.50983166666666,
+    "dest_lon": 13.355921666666667,
+    "distance": 18.082746803875832,
+    "snr": 13.38728425,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457922.5066943,
+    "source_lat": 52.50983166666666,
+    "source_lon": 13.355921666666667,
+    "dest_lat": 52.50986,
+    "dest_lon": 13.356185,
+    "distance": 18.082746803875832,
+    "snr": 13.310999795918368,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457923.438302,
+    "source_lat": 52.50984666666667,
+    "source_lon": 13.356028333333333,
+    "dest_lat": 52.509815,
+    "dest_lon": 13.355761666666666,
+    "distance": 18.37194720609589,
+    "snr": 12.912164516129032,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457923.4962025,
+    "source_lat": 52.509815,
+    "source_lon": 13.355761666666666,
+    "dest_lat": 52.50984666666667,
+    "dest_lon": 13.356028333333333,
+    "distance": 18.37194720609589,
+    "snr": 12.941992040816324,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457924.392618,
+    "source_lat": 52.50983333333333,
+    "source_lon": 13.355873333333331,
+    "dest_lat": 52.509798333333336,
+    "dest_lon": 13.355603333333333,
+    "distance": 18.66673686646802,
+    "snr": 14.84085,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457924.4945123,
+    "source_lat": 52.509798333333336,
+    "source_lon": 13.355603333333333,
+    "dest_lat": 52.50983333333333,
+    "dest_lon": 13.355873333333331,
+    "distance": 18.66673686646802,
+    "snr": 13.309116862745098,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457925.522358,
+    "source_lat": 52.509818333333335,
+    "source_lon": 13.35572,
+    "dest_lat": 52.50978666666666,
+    "dest_lon": 13.355443333333334,
+    "distance": 19.03614661638192,
+    "snr": 14.210922272727272,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457925.527585,
+    "source_lat": 52.50978666666666,
+    "source_lon": 13.355443333333334,
+    "dest_lat": 52.509818333333335,
+    "dest_lon": 13.35572,
+    "distance": 19.03614661638192,
+    "snr": 13.224207916666666,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457926.4287362,
+    "source_lat": 52.50980333333333,
+    "source_lon": 13.355568333333334,
+    "dest_lat": 52.509771666666666,
+    "dest_lon": 13.355285,
+    "distance": 19.47940418739101,
+    "snr": 13.891805768108108,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457926.502655,
+    "source_lat": 52.509771666666666,
+    "source_lon": 13.355285,
+    "dest_lat": 52.50980333333333,
+    "dest_lon": 13.355568333333334,
+    "distance": 19.47940418739101,
+    "snr": 15.028542291666668,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457927.3125596,
+    "source_lat": 52.50978833333333,
+    "source_lon": 13.355415,
+    "dest_lat": 52.50975833333333,
+    "dest_lon": 13.355126666666669,
+    "distance": 19.78010086481037,
+    "snr": 12.4901425,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457927.5200715,
+    "source_lat": 52.50975833333333,
+    "source_lon": 13.355126666666669,
+    "dest_lat": 52.50978833333333,
+    "dest_lon": 13.355415,
+    "distance": 19.78010086481037,
+    "snr": 13.692902916666666,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457928.4583924,
+    "source_lat": 52.50974333333333,
+    "source_lon": 13.354973333333334,
+    "dest_lat": 52.509775,
+    "dest_lon": 13.355261666666667,
+    "distance": 19.81208905910582,
+    "snr": 13.59192931818182,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457928.704019,
+    "source_lat": 52.509775,
+    "source_lon": 13.355261666666667,
+    "dest_lat": 52.50974333333333,
+    "dest_lon": 13.354973333333334,
+    "distance": 19.81208905910582,
+    "snr": 13.878735666666667,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457929.5068142,
+    "source_lat": 52.50975833333333,
+    "source_lon": 13.355103333333334,
+    "dest_lat": 52.50973,
+    "dest_lon": 13.354823333333334,
+    "distance": 19.19371014468592,
+    "snr": 13.922103333333332,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457929.6970494,
+    "source_lat": 52.50973,
+    "source_lon": 13.354823333333334,
+    "dest_lat": 52.50975833333333,
+    "dest_lon": 13.355103333333334,
+    "distance": 19.19371014468592,
+    "snr": 17.299,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457930.5065105,
+    "source_lat": 52.509715,
+    "source_lon": 13.354676666666666,
+    "dest_lat": 52.50974166666666,
+    "dest_lon": 13.354946666666669,
+    "distance": 18.49646838656416,
+    "snr": 13.964457708333333,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457930.564921,
+    "source_lat": 52.50974166666666,
+    "source_lon": 13.354946666666669,
+    "dest_lat": 52.509715,
+    "dest_lon": 13.354676666666666,
+    "distance": 18.49646838656416,
+    "snr": 14.353973863636362,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457931.1378298,
+    "source_lat": 52.509726666666666,
+    "source_lon": 13.354788333333332,
+    "dest_lat": 52.50970333333333,
+    "dest_lon": 13.35453,
+    "distance": 17.660143545940393,
+    "snr": 17.430575,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457931.5053833,
+    "source_lat": 52.50970333333333,
+    "source_lon": 13.35453,
+    "dest_lat": 52.509726666666666,
+    "dest_lon": 13.354788333333332,
+    "distance": 17.660143545940393,
+    "snr": 18.903518,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457932.5082855,
+    "source_lat": 52.50969,
+    "source_lon": 13.354385,
+    "dest_lat": 52.509715,
+    "dest_lon": 13.354635,
+    "distance": 17.131894381472808,
+    "snr": 17.024282,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457933.511016,
+    "source_lat": 52.50967666666666,
+    "source_lon": 13.354245,
+    "dest_lat": 52.509701666666665,
+    "dest_lon": 13.354485,
+    "distance": 16.464966590972907,
+    "snr": 17.53579591836735,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457933.5902371,
+    "source_lat": 52.509701666666665,
+    "source_lon": 13.354485,
+    "dest_lat": 52.50967666666666,
+    "dest_lon": 13.354245,
+    "distance": 16.464966590972907,
+    "snr": 14.382817142857142,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457934.4994955,
+    "source_lat": 52.50969,
+    "source_lon": 13.35434,
+    "dest_lat": 52.509665,
+    "dest_lon": 13.354106666666668,
+    "distance": 16.020784322571078,
+    "snr": 13.404311875,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457934.5080404,
+    "source_lat": 52.509665,
+    "source_lon": 13.354106666666668,
+    "dest_lat": 52.50969,
+    "dest_lon": 13.35434,
+    "distance": 16.020784322571078,
+    "snr": 15.90212,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457935.4781244,
+    "source_lat": 52.50967666666666,
+    "source_lon": 13.354195,
+    "dest_lat": 52.50965333333333,
+    "dest_lon": 13.353968333333333,
+    "distance": 15.545099188587704,
+    "snr": 12.408876136363636,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457935.510954,
+    "source_lat": 52.50965333333333,
+    "source_lon": 13.353968333333333,
+    "dest_lat": 52.50967666666666,
+    "dest_lon": 13.354195,
+    "distance": 15.545099188587704,
+    "snr": 13.61236448979592,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457936.4707086,
+    "source_lat": 52.509663333333336,
+    "source_lon": 13.354055,
+    "dest_lat": 52.50964333333334,
+    "dest_lon": 13.35383,
+    "distance": 15.3762513675277,
+    "snr": 11.250582045454546,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457936.505931,
+    "source_lat": 52.50964333333334,
+    "source_lon": 13.35383,
+    "dest_lat": 52.509663333333336,
+    "dest_lon": 13.354055,
+    "distance": 15.3762513675277,
+    "snr": 14.64812448979592,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457937.4255164,
+    "source_lat": 52.50963333333333,
+    "source_lon": 13.35369,
+    "dest_lat": 52.50965,
+    "dest_lon": 13.353918333333333,
+    "distance": 15.551045574790706,
+    "snr": 17.502940714285714,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457937.4954224,
+    "source_lat": 52.50965,
+    "source_lon": 13.353918333333333,
+    "dest_lat": 52.50963333333333,
+    "dest_lon": 13.35369,
+    "distance": 15.551045574790706,
+    "snr": 14.613076734693877,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457938.4852085,
+    "source_lat": 52.509636666666665,
+    "source_lon": 13.353783333333332,
+    "dest_lat": 52.50962833333333,
+    "dest_lon": 13.353548333333332,
+    "distance": 15.918537370255224,
+    "snr": 14.43055625,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457938.489661,
+    "source_lat": 52.50962833333333,
+    "source_lon": 13.353548333333332,
+    "dest_lat": 52.509636666666665,
+    "dest_lon": 13.353783333333332,
+    "distance": 15.918537370255224,
+    "snr": 16.00733673469388,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457939.482626,
+    "source_lat": 52.50962833333333,
+    "source_lon": 13.353645,
+    "dest_lat": 52.509625,
+    "dest_lon": 13.353405,
+    "distance": 16.23415203577634,
+    "snr": 16.325456041666666,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457939.5114818,
+    "source_lat": 52.509625,
+    "source_lon": 13.353405,
+    "dest_lat": 52.50962833333333,
+    "dest_lon": 13.353645,
+    "distance": 16.23415203577634,
+    "snr": 17.10464,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457940.4735258,
+    "source_lat": 52.50962166666667,
+    "source_lon": 13.353506666666666,
+    "dest_lat": 52.509625,
+    "dest_lon": 13.35326,
+    "distance": 16.68515439936061,
+    "snr": 17.09033404255319,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457940.5117855,
+    "source_lat": 52.509625,
+    "source_lon": 13.35326,
+    "dest_lat": 52.50962166666667,
+    "dest_lon": 13.353506666666666,
+    "distance": 16.68515439936061,
+    "snr": 19.068897916666668,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457941.444476,
+    "source_lat": 52.50962,
+    "source_lon": 13.353365,
+    "dest_lat": 52.50963,
+    "dest_lon": 13.353113333333331,
+    "distance": 17.05567690755265,
+    "snr": 15.93889761904762,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457941.4891691,
+    "source_lat": 52.50963,
+    "source_lon": 13.353113333333331,
+    "dest_lat": 52.50962,
+    "dest_lon": 13.353365,
+    "distance": 17.05567690755265,
+    "snr": 18.2569,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457942.5095065,
+    "source_lat": 52.509636666666665,
+    "source_lon": 13.35297,
+    "dest_lat": 52.50962333333333,
+    "dest_lon": 13.353223333333334,
+    "distance": 17.196223806238162,
+    "snr": 18.644736734693875,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457942.596661,
+    "source_lat": 52.50962333333333,
+    "source_lon": 13.353223333333334,
+    "dest_lat": 52.509636666666665,
+    "dest_lon": 13.35297,
+    "distance": 17.196223806238162,
+    "snr": 15.558805555555557,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457943.4947295,
+    "source_lat": 52.50962833333333,
+    "source_lon": 13.353085,
+    "dest_lat": 52.50964666666667,
+    "dest_lon": 13.352828333333331,
+    "distance": 17.477026401445567,
+    "snr": 13.3493124,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457943.5004525,
+    "source_lat": 52.50964666666667,
+    "source_lon": 13.352828333333331,
+    "dest_lat": 52.50962833333333,
+    "dest_lon": 13.353085,
+    "distance": 17.477026401445567,
+    "snr": 16.0776164,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457944.5003746,
+    "source_lat": 52.509636666666665,
+    "source_lon": 13.352946666666666,
+    "dest_lat": 52.509656666666665,
+    "dest_lon": 13.352691666666669,
+    "distance": 17.3878471940073,
+    "snr": 13.190609,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457944.502601,
+    "source_lat": 52.509656666666665,
+    "source_lon": 13.352691666666669,
+    "dest_lat": 52.509636666666665,
+    "dest_lon": 13.352946666666666,
+    "distance": 17.3878471940073,
+    "snr": 14.0272396,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457945.5062482,
+    "source_lat": 52.50964333333334,
+    "source_lon": 13.35281,
+    "dest_lat": 52.50967166666667,
+    "dest_lon": 13.352558333333333,
+    "distance": 17.30887436606231,
+    "snr": 13.9546174,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457945.5240805,
+    "source_lat": 52.50967166666667,
+    "source_lon": 13.352558333333333,
+    "dest_lat": 52.50964333333334,
+    "dest_lon": 13.35281,
+    "distance": 17.30887436606231,
+    "snr": 14.295234285714288,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457946.4992187,
+    "source_lat": 52.509655,
+    "source_lon": 13.352676666666667,
+    "dest_lat": 52.50968833333334,
+    "dest_lon": 13.352431666666666,
+    "distance": 16.97842022011458,
+    "snr": 17.159682244897958,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457946.5036795,
+    "source_lat": 52.50968833333334,
+    "source_lon": 13.352431666666666,
+    "dest_lat": 52.509655,
+    "dest_lon": 13.352676666666667,
+    "distance": 16.97842022011458,
+    "snr": 17.743317551020407,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457947.404436,
+    "source_lat": 52.50967333333333,
+    "source_lon": 13.352546666666669,
+    "dest_lat": 52.509706666666666,
+    "dest_lon": 13.35231,
+    "distance": 16.428895693069936,
+    "snr": 12.98326,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457947.4859688,
+    "source_lat": 52.509706666666666,
+    "source_lon": 13.35231,
+    "dest_lat": 52.50967333333333,
+    "dest_lon": 13.352546666666669,
+    "distance": 16.428895693069936,
+    "snr": 14.360326734693878,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457948.486085,
+    "source_lat": 52.50972166666666,
+    "source_lon": 13.352188333333334,
+    "dest_lat": 52.50968833333334,
+    "dest_lon": 13.352423333333334,
+    "distance": 16.319096840044626,
+    "snr": 11.916598695652176,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457948.9895396,
+    "source_lat": 52.50968833333334,
+    "source_lon": 13.352423333333334,
+    "dest_lat": 52.50972166666666,
+    "dest_lon": 13.352188333333334,
+    "distance": 16.319096840044626,
+    "snr": 12.862100000000002,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457949.5050611,
+    "source_lat": 52.5097,
+    "source_lon": 13.352308333333331,
+    "dest_lat": 52.509728333333335,
+    "dest_lon": 13.352075,
+    "distance": 16.091296468521435,
+    "snr": 11.320295918367346,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457949.54765,
+    "source_lat": 52.509728333333335,
+    "source_lon": 13.352075,
+    "dest_lat": 52.5097,
+    "dest_lon": 13.352308333333331,
+    "distance": 16.091296468521435,
+    "snr": 14.8695,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457950.5174658,
+    "source_lat": 52.50973166666667,
+    "source_lon": 13.351976666666667,
+    "dest_lat": 52.509708333333336,
+    "dest_lon": 13.352205,
+    "distance": 15.658129446558654,
+    "snr": 19.035075,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457950.5313976,
+    "source_lat": 52.509708333333336,
+    "source_lon": 13.352205,
+    "dest_lat": 52.50973166666667,
+    "dest_lon": 13.351976666666667,
+    "distance": 15.658129446558654,
+    "snr": 16.725883555555555,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457951.492383,
+    "source_lat": 52.50971,
+    "source_lon": 13.352111666666667,
+    "dest_lat": 52.509726666666666,
+    "dest_lon": 13.351895,
+    "distance": 14.769333321035694,
+    "snr": 16.565232653061226,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457951.623916,
+    "source_lat": 52.509726666666666,
+    "source_lon": 13.351895,
+    "dest_lat": 52.50971,
+    "dest_lon": 13.352111666666667,
+    "distance": 14.769333321035694,
+    "snr": 17.699865714285714,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457952.491562,
+    "source_lat": 52.50972,
+    "source_lon": 13.351825,
+    "dest_lat": 52.50971,
+    "dest_lon": 13.352031666666669,
+    "distance": 14.020356683263428,
+    "snr": 14.792745652173917,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457952.4947336,
+    "source_lat": 52.50971,
+    "source_lon": 13.352031666666669,
+    "dest_lat": 52.50972,
+    "dest_lon": 13.351825,
+    "distance": 14.020356683263428,
+    "snr": 16.729916326530613,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457953.497512,
+    "source_lat": 52.50971666666667,
+    "source_lon": 13.351768333333334,
+    "dest_lat": 52.509708333333336,
+    "dest_lon": 13.351966666666666,
+    "distance": 13.444572759342426,
+    "snr": 17.8640876,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457953.4995377,
+    "source_lat": 52.509708333333336,
+    "source_lon": 13.351966666666666,
+    "dest_lat": 52.50971666666667,
+    "dest_lon": 13.351768333333334,
+    "distance": 13.444572759342426,
+    "snr": 16.037471,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457954.4975476,
+    "source_lat": 52.50971333333333,
+    "source_lon": 13.351721666666666,
+    "dest_lat": 52.509706666666666,
+    "dest_lon": 13.351916666666666,
+    "distance": 13.2079556279927,
+    "snr": 20.632706400000004,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457954.502616,
+    "source_lat": 52.509706666666666,
+    "source_lon": 13.351916666666666,
+    "dest_lat": 52.50971333333333,
+    "dest_lon": 13.351721666666666,
+    "distance": 13.2079556279927,
+    "snr": 16.816808599999998,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457955.5025332,
+    "source_lat": 52.509705,
+    "source_lon": 13.351881666666667,
+    "dest_lat": 52.50971333333333,
+    "dest_lon": 13.351695,
+    "distance": 12.65760253544302,
+    "snr": 18.769426,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457955.50823,
+    "source_lat": 52.50971333333333,
+    "source_lon": 13.351695,
+    "dest_lat": 52.509705,
+    "dest_lon": 13.351881666666667,
+    "distance": 12.65760253544302,
+    "snr": 16.598346799999998,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457956.4990892,
+    "source_lat": 52.509705,
+    "source_lon": 13.351868333333334,
+    "dest_lat": 52.50971166666667,
+    "dest_lon": 13.351688333333334,
+    "distance": 12.195307603436552,
+    "snr": 19.70442857142857,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457956.5004852,
+    "source_lat": 52.50971166666667,
+    "source_lon": 13.351688333333334,
+    "dest_lat": 52.509705,
+    "dest_lon": 13.351868333333334,
+    "distance": 12.195307603436552,
+    "snr": 20.94991632653061,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457957.5025885,
+    "source_lat": 52.509705,
+    "source_lon": 13.351866666666666,
+    "dest_lat": 52.50971,
+    "dest_lon": 13.35169,
+    "distance": 11.960217741100248,
+    "snr": 19.04641,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457957.506711,
+    "source_lat": 52.50971,
+    "source_lon": 13.35169,
+    "dest_lat": 52.509705,
+    "dest_lon": 13.351866666666666,
+    "distance": 11.960217741100248,
+    "snr": 21.43198979591837,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457958.4974637,
+    "source_lat": 52.50971,
+    "source_lon": 13.351683333333334,
+    "dest_lat": 52.50970333333333,
+    "dest_lon": 13.351866666666666,
+    "distance": 12.420316562396748,
+    "snr": 21.063180000000003,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457958.5025284,
+    "source_lat": 52.50970333333333,
+    "source_lon": 13.351866666666666,
+    "dest_lat": 52.50971,
+    "dest_lon": 13.351683333333334,
+    "distance": 12.420316562396748,
+    "snr": 18.877102,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457959.496976,
+    "source_lat": 52.50970333333333,
+    "source_lon": 13.351855,
+    "dest_lat": 52.509708333333336,
+    "dest_lon": 13.351663333333333,
+    "distance": 12.973586060039782,
+    "snr": 16.899777959183673,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457959.5128314,
+    "source_lat": 52.509708333333336,
+    "source_lon": 13.351663333333333,
+    "dest_lat": 52.50970333333333,
+    "dest_lon": 13.351855,
+    "distance": 12.973586060039782,
+    "snr": 15.912113958333334,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457960.490507,
+    "source_lat": 52.509701666666665,
+    "source_lon": 13.351821666666666,
+    "dest_lat": 52.509706666666666,
+    "dest_lon": 13.351623333333333,
+    "distance": 13.424021009914684,
+    "snr": 17.638227999999998,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457960.5082555,
+    "source_lat": 52.509706666666666,
+    "source_lon": 13.351623333333333,
+    "dest_lat": 52.509701666666665,
+    "dest_lon": 13.351821666666666,
+    "distance": 13.424021009914684,
+    "snr": 12.252300454545455,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457961.4868872,
+    "source_lat": 52.50970333333333,
+    "source_lon": 13.35156,
+    "dest_lat": 52.5097,
+    "dest_lon": 13.351768333333334,
+    "distance": 14.093574113700887,
+    "snr": 12.349933777777778,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457961.5003824,
+    "source_lat": 52.5097,
+    "source_lon": 13.351768333333334,
+    "dest_lat": 52.50970333333333,
+    "dest_lon": 13.35156,
+    "distance": 14.093574113700887,
+    "snr": 16.987052941176472,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457962.4981422,
+    "source_lat": 52.50969666666667,
+    "source_lon": 13.3517,
+    "dest_lat": 52.50969666666667,
+    "dest_lon": 13.351481666666666,
+    "distance": 14.764829160012368,
+    "snr": 16.495138775510203,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457962.5109963,
+    "source_lat": 52.50969666666667,
+    "source_lon": 13.351481666666666,
+    "dest_lat": 52.50969666666667,
+    "dest_lon": 13.3517,
+    "distance": 14.764829160012368,
+    "snr": 17.94087659574468,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457963.4868631,
+    "source_lat": 52.50969,
+    "source_lon": 13.351388333333333,
+    "dest_lat": 52.50969333333333,
+    "dest_lon": 13.351615,
+    "distance": 15.332717839396432,
+    "snr": 14.793708125,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457963.4965365,
+    "source_lat": 52.50969333333333,
+    "source_lon": 13.351615,
+    "dest_lat": 52.50969,
+    "dest_lon": 13.351388333333333,
+    "distance": 15.332717839396432,
+    "snr": 14.161660588235296,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457964.4885738,
+    "source_lat": 52.50967833333333,
+    "source_lon": 13.351278333333331,
+    "dest_lat": 52.50968666666667,
+    "dest_lon": 13.351515,
+    "distance": 16.0310675374722,
+    "snr": 13.790227083333331,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457964.4895756,
+    "source_lat": 52.50968666666667,
+    "source_lon": 13.351515,
+    "dest_lat": 52.50967833333333,
+    "dest_lon": 13.351278333333331,
+    "distance": 16.0310675374722,
+    "snr": 12.945090666666667,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457965.4944904,
+    "source_lat": 52.50967666666666,
+    "source_lon": 13.351403333333334,
+    "dest_lat": 52.509663333333336,
+    "dest_lon": 13.351156666666666,
+    "distance": 16.746030296081916,
+    "snr": 11.755374375,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457965.59217,
+    "source_lat": 52.509663333333336,
+    "source_lon": 13.351156666666666,
+    "dest_lat": 52.50967666666666,
+    "dest_lon": 13.351403333333334,
+    "distance": 16.746030296081916,
+    "snr": 11.943190294117649,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457966.4932156,
+    "source_lat": 52.50964333333334,
+    "source_lon": 13.351026666666666,
+    "dest_lat": 52.509663333333336,
+    "dest_lon": 13.351278333333331,
+    "distance": 17.162722732221518,
+    "snr": 13.0439278,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457966.498775,
+    "source_lat": 52.509663333333336,
+    "source_lon": 13.351278333333331,
+    "dest_lat": 52.50964333333334,
+    "dest_lon": 13.351026666666666,
+    "distance": 17.162722732221518,
+    "snr": 13.74485176470588,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457967.4953685,
+    "source_lat": 52.509618333333336,
+    "source_lon": 13.350888333333334,
+    "dest_lat": 52.50964666666667,
+    "dest_lon": 13.351146666666668,
+    "distance": 17.750182877134385,
+    "snr": 13.210995918367349,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457967.5203743,
+    "source_lat": 52.50964666666667,
+    "source_lon": 13.351146666666668,
+    "dest_lat": 52.509618333333336,
+    "dest_lon": 13.350888333333334,
+    "distance": 17.750182877134385,
+    "snr": 14.837957959183672,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457968.3278666,
+    "source_lat": 52.50962666666667,
+    "source_lon": 13.351006666666668,
+    "dest_lat": 52.50959,
+    "dest_lon": 13.350743333333334,
+    "distance": 18.26672207787048,
+    "snr": 14.450518064516128,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457968.4939492,
+    "source_lat": 52.50959,
+    "source_lon": 13.350743333333334,
+    "dest_lat": 52.50962666666667,
+    "dest_lon": 13.351006666666668,
+    "distance": 18.26672207787048,
+    "snr": 14.683827142857142,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457969.486426,
+    "source_lat": 52.50956,
+    "source_lon": 13.350596666666666,
+    "dest_lat": 52.509605,
+    "dest_lon": 13.350861666666669,
+    "distance": 18.603522257661805,
+    "snr": 15.643455319148936,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457969.656238,
+    "source_lat": 52.509605,
+    "source_lon": 13.350861666666669,
+    "dest_lat": 52.50956,
+    "dest_lon": 13.350596666666666,
+    "distance": 18.603522257661805,
+    "snr": 13.979797878787878,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457970.4890506,
+    "source_lat": 52.50958166666667,
+    "source_lon": 13.350711666666667,
+    "dest_lat": 52.50953333333333,
+    "dest_lon": 13.350448333333333,
+    "distance": 18.59843041423002,
+    "snr": 14.28657224489796,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457970.5567672,
+    "source_lat": 52.50953333333333,
+    "source_lon": 13.350448333333333,
+    "dest_lat": 52.50958166666667,
+    "dest_lon": 13.350711666666667,
+    "distance": 18.59843041423002,
+    "snr": 15.17987,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457971.4866035,
+    "source_lat": 52.509553333333336,
+    "source_lon": 13.350556666666666,
+    "dest_lat": 52.5095,
+    "dest_lon": 13.350308333333333,
+    "distance": 17.806634779101206,
+    "snr": 15.712065714285714,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457971.489897,
+    "source_lat": 52.5095,
+    "source_lon": 13.350308333333333,
+    "dest_lat": 52.509553333333336,
+    "dest_lon": 13.350556666666666,
+    "distance": 17.806634779101206,
+    "snr": 17.064763265306123,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457972.489746,
+    "source_lat": 52.50946166666667,
+    "source_lon": 13.350175,
+    "dest_lat": 52.50952333333333,
+    "dest_lon": 13.3504,
+    "distance": 16.685222266754426,
+    "snr": 19.35266326530612,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457972.5058143,
+    "source_lat": 52.50952333333333,
+    "source_lon": 13.3504,
+    "dest_lat": 52.50946166666667,
+    "dest_lon": 13.350175,
+    "distance": 16.685222266754426,
+    "snr": 16.308752083333335,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457973.4977007,
+    "source_lat": 52.509415,
+    "source_lon": 13.350048333333334,
+    "dest_lat": 52.509483333333336,
+    "dest_lon": 13.35025,
+    "distance": 15.606685698874651,
+    "snr": 19.76011836734694,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457973.5046103,
+    "source_lat": 52.509483333333336,
+    "source_lon": 13.35025,
+    "dest_lat": 52.509415,
+    "dest_lon": 13.350048333333334,
+    "distance": 15.606685698874651,
+    "snr": 17.44826,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457974.4956186,
+    "source_lat": 52.50936166666666,
+    "source_lon": 13.349923333333331,
+    "dest_lat": 52.50943333333333,
+    "dest_lon": 13.35011,
+    "distance": 14.922926006835182,
+    "snr": 19.282314,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457974.507652,
+    "source_lat": 52.50943333333333,
+    "source_lon": 13.35011,
+    "dest_lat": 52.50936166666666,
+    "dest_lon": 13.349923333333331,
+    "distance": 14.922926006835182,
+    "snr": 16.5769612,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457975.4959016,
+    "source_lat": 52.50929833333333,
+    "source_lon": 13.34981,
+    "dest_lat": 52.509375,
+    "dest_lon": 13.349978333333333,
+    "distance": 14.21580232034194,
+    "snr": 17.94683,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457975.51275,
+    "source_lat": 52.509375,
+    "source_lon": 13.349978333333333,
+    "dest_lat": 52.50929833333333,
+    "dest_lon": 13.34981,
+    "distance": 14.21580232034194,
+    "snr": 14.910945208333333,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457976.4974508,
+    "source_lat": 52.50922833333333,
+    "source_lon": 13.349708333333334,
+    "dest_lat": 52.50930833333334,
+    "dest_lon": 13.349855,
+    "distance": 13.316539755090052,
+    "snr": 17.9280254,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457976.4992769,
+    "source_lat": 52.50930833333334,
+    "source_lon": 13.349855,
+    "dest_lat": 52.50922833333333,
+    "dest_lon": 13.349708333333334,
+    "distance": 13.316539755090052,
+    "snr": 16.130707346938777,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457977.5045865,
+    "source_lat": 52.509235,
+    "source_lon": 13.349741666666668,
+    "dest_lat": 52.50915166666667,
+    "dest_lon": 13.34962,
+    "distance": 12.38471381265464,
+    "snr": 15.539446,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457977.5187092,
+    "source_lat": 52.50915166666667,
+    "source_lon": 13.34962,
+    "dest_lat": 52.509235,
+    "dest_lon": 13.349741666666668,
+    "distance": 12.38471381265464,
+    "snr": 16.46690979591837,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457978.5006063,
+    "source_lat": 52.50907,
+    "source_lon": 13.349541666666669,
+    "dest_lat": 52.509155,
+    "dest_lon": 13.349643333333333,
+    "distance": 11.680118938124956,
+    "snr": 18.03719625,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457978.5162525,
+    "source_lat": 52.509155,
+    "source_lon": 13.349643333333333,
+    "dest_lat": 52.50907,
+    "dest_lon": 13.349541666666669,
+    "distance": 11.680118938124956,
+    "snr": 17.22007,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457979.495776,
+    "source_lat": 52.50898166666666,
+    "source_lon": 13.349478333333334,
+    "dest_lat": 52.50907166666666,
+    "dest_lon": 13.349563333333334,
+    "distance": 11.532766806062716,
+    "snr": 17.927823958333335,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457979.5050087,
+    "source_lat": 52.50907166666666,
+    "source_lon": 13.349563333333334,
+    "dest_lat": 52.50898166666666,
+    "dest_lon": 13.349478333333334,
+    "distance": 11.532766806062716,
+    "snr": 16.94319795918367,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457980.491781,
+    "source_lat": 52.50888666666667,
+    "source_lon": 13.349431666666666,
+    "dest_lat": 52.50898,
+    "dest_lon": 13.3495,
+    "distance": 11.35201743129852,
+    "snr": 18.9920932,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457980.5199473,
+    "source_lat": 52.50898,
+    "source_lon": 13.3495,
+    "dest_lat": 52.50888666666667,
+    "dest_lon": 13.349431666666666,
+    "distance": 11.35201743129852,
+    "snr": 18.012670833333335,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457981.4973793,
+    "source_lat": 52.50888666666667,
+    "source_lon": 13.349455,
+    "dest_lat": 52.508788333333335,
+    "dest_lon": 13.349393333333332,
+    "distance": 11.693487867580323,
+    "snr": 17.00280612244898,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457981.5002692,
+    "source_lat": 52.508788333333335,
+    "source_lon": 13.349393333333332,
+    "dest_lat": 52.50888666666667,
+    "dest_lon": 13.349455,
+    "distance": 11.693487867580323,
+    "snr": 14.298569411764706,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457982.4779177,
+    "source_lat": 52.50868666666667,
+    "source_lon": 13.349355,
+    "dest_lat": 52.50879166666667,
+    "dest_lon": 13.34942,
+    "distance": 12.465965605694214,
+    "snr": 9.4706928125,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457982.492457,
+    "source_lat": 52.50879166666667,
+    "source_lon": 13.34942,
+    "dest_lat": 52.50868666666667,
+    "dest_lon": 13.349355,
+    "distance": 12.465965605694214,
+    "snr": 14.5839504,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457983.4931903,
+    "source_lat": 52.508696666666665,
+    "source_lon": 13.349388333333334,
+    "dest_lat": 52.50858166666666,
+    "dest_lon": 13.349313333333331,
+    "distance": 13.746087627377442,
+    "snr": 13.180140799999998,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457983.5876153,
+    "source_lat": 52.50858166666666,
+    "source_lon": 13.349313333333331,
+    "dest_lat": 52.508696666666665,
+    "dest_lon": 13.349388333333334,
+    "distance": 13.746087627377442,
+    "snr": 7.939011363636364,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457984.4579384,
+    "source_lat": 52.50859833333333,
+    "source_lon": 13.349353333333331,
+    "dest_lat": 52.50847666666667,
+    "dest_lon": 13.349266666666669,
+    "distance": 14.7326343442758,
+    "snr": 13.101644324324324,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457984.5746276,
+    "source_lat": 52.50847666666667,
+    "source_lon": 13.349266666666669,
+    "dest_lat": 52.50859833333333,
+    "dest_lon": 13.349353333333331,
+    "distance": 14.7326343442758,
+    "snr": 12.608657,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457985.5067892,
+    "source_lat": 52.50837,
+    "source_lon": 13.349211666666667,
+    "dest_lat": 52.508495,
+    "dest_lon": 13.349306666666669,
+    "distance": 15.300945143549736,
+    "snr": 16.038785081632653,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457985.5134385,
+    "source_lat": 52.508495,
+    "source_lon": 13.349306666666669,
+    "dest_lat": 52.50837,
+    "dest_lon": 13.349211666666667,
+    "distance": 15.300945143549736,
+    "snr": 14.599864583333334,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457986.275856,
+    "source_lat": 52.508265,
+    "source_lon": 13.349148333333334,
+    "dest_lat": 52.508388333333336,
+    "dest_lon": 13.349251666666667,
+    "distance": 15.38064564732818,
+    "snr": 17.202593166666666,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457986.4948647,
+    "source_lat": 52.508388333333336,
+    "source_lon": 13.349251666666667,
+    "dest_lat": 52.508265,
+    "dest_lon": 13.349148333333334,
+    "distance": 15.38064564732818,
+    "snr": 14.874502448979593,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457987.499391,
+    "source_lat": 52.50828333333333,
+    "source_lon": 13.349188333333334,
+    "dest_lat": 52.50816,
+    "dest_lon": 13.349076666666669,
+    "distance": 15.644612200899234,
+    "snr": 16.188692,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457987.5574863,
+    "source_lat": 52.50816,
+    "source_lon": 13.349076666666669,
+    "dest_lat": 52.50828333333333,
+    "dest_lon": 13.349188333333334,
+    "distance": 15.644612200899234,
+    "snr": 17.123825,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457988.3939197,
+    "source_lat": 52.508055,
+    "source_lon": 13.348996666666666,
+    "dest_lat": 52.50818,
+    "dest_lon": 13.34912,
+    "distance": 16.198618872407625,
+    "snr": 13.93078542857143,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457988.4973128,
+    "source_lat": 52.50818,
+    "source_lon": 13.34912,
+    "dest_lat": 52.508055,
+    "dest_lon": 13.348996666666666,
+    "distance": 16.198618872407625,
+    "snr": 14.960144375,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457989.477653,
+    "source_lat": 52.50807833333333,
+    "source_lon": 13.349043333333332,
+    "dest_lat": 52.50795166666666,
+    "dest_lon": 13.348913333333334,
+    "distance": 16.591965464630867,
+    "snr": 16.213767346938777,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457989.477851,
+    "source_lat": 52.50795166666666,
+    "source_lon": 13.348913333333334,
+    "dest_lat": 52.50807833333333,
+    "dest_lon": 13.349043333333332,
+    "distance": 16.591965464630867,
+    "snr": 15.03418852,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457990.4930727,
+    "source_lat": 52.50785166666667,
+    "source_lon": 13.348823333333334,
+    "dest_lat": 52.50797666666666,
+    "dest_lon": 13.348961666666666,
+    "distance": 16.743317359876347,
+    "snr": 17.818852,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457990.4998813,
+    "source_lat": 52.50797666666666,
+    "source_lon": 13.348961666666666,
+    "dest_lat": 52.50785166666667,
+    "dest_lon": 13.348823333333334,
+    "distance": 16.743317359876347,
+    "snr": 16.319712244897957,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457991.4503949,
+    "source_lat": 52.50788166666667,
+    "source_lon": 13.348873333333334,
+    "dest_lat": 52.50776,
+    "dest_lon": 13.348721666666666,
+    "distance": 16.966657095621052,
+    "snr": 16.03472619047619,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457991.4904137,
+    "source_lat": 52.50776,
+    "source_lon": 13.348721666666666,
+    "dest_lat": 52.50788166666667,
+    "dest_lon": 13.348873333333334,
+    "distance": 16.966657095621052,
+    "snr": 17.251147727272727,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457992.4171293,
+    "source_lat": 52.50779,
+    "source_lon": 13.34878,
+    "dest_lat": 52.507668333333335,
+    "dest_lon": 13.348618333333333,
+    "distance": 17.38370179036624,
+    "snr": 16.17150714285714,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457992.4983838,
+    "source_lat": 52.507668333333335,
+    "source_lon": 13.348618333333333,
+    "dest_lat": 52.50779,
+    "dest_lon": 13.34878,
+    "distance": 17.38370179036624,
+    "snr": 17.09134583333333,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457993.3456802,
+    "source_lat": 52.5077,
+    "source_lon": 13.348681666666666,
+    "dest_lat": 52.507585,
+    "dest_lon": 13.348505,
+    "distance": 17.490661615202704,
+    "snr": 17.62879285714286,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457993.489477,
+    "source_lat": 52.507585,
+    "source_lon": 13.348505,
+    "dest_lat": 52.5077,
+    "dest_lon": 13.348681666666666,
+    "distance": 17.490661615202704,
+    "snr": 17.001208163265307,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457994.4894762,
+    "source_lat": 52.50750666666666,
+    "source_lon": 13.348383333333333,
+    "dest_lat": 52.50761333333333,
+    "dest_lon": 13.348571666666668,
+    "distance": 17.395289829369688,
+    "snr": 15.39362,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457994.5721326,
+    "source_lat": 52.50761333333333,
+    "source_lon": 13.348571666666668,
+    "dest_lat": 52.50750666666666,
+    "dest_lon": 13.348383333333333,
+    "distance": 17.395289829369688,
+    "snr": 13.491605128205128,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457995.5212882,
+    "source_lat": 52.507531666666665,
+    "source_lon": 13.348455,
+    "dest_lat": 52.507435,
+    "dest_lon": 13.348258333333334,
+    "distance": 17.093069952706315,
+    "snr": 13.818373488372094,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457995.532077,
+    "source_lat": 52.507435,
+    "source_lon": 13.348258333333334,
+    "dest_lat": 52.507531666666665,
+    "dest_lon": 13.348455,
+    "distance": 17.093069952706315,
+    "snr": 15.251488095238097,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457996.2593305,
+    "source_lat": 52.50736833333333,
+    "source_lon": 13.348128333333332,
+    "dest_lat": 52.507455,
+    "dest_lon": 13.34833,
+    "distance": 16.693011484779717,
+    "snr": 16.30711,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457996.4916303,
+    "source_lat": 52.507455,
+    "source_lon": 13.34833,
+    "dest_lat": 52.50736833333333,
+    "dest_lon": 13.348128333333332,
+    "distance": 16.693011484779717,
+    "snr": 13.973089795918366,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457997.3633945,
+    "source_lat": 52.50730333333333,
+    "source_lon": 13.347998333333331,
+    "dest_lat": 52.50738666666667,
+    "dest_lon": 13.3482,
+    "distance": 16.48225923338286,
+    "snr": 15.003581818181818,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457997.511212,
+    "source_lat": 52.50738666666667,
+    "source_lon": 13.3482,
+    "dest_lat": 52.50730333333333,
+    "dest_lon": 13.347998333333331,
+    "distance": 16.48225923338286,
+    "snr": 12.61883448979592,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457998.501013,
+    "source_lat": 52.507241666666665,
+    "source_lon": 13.347866666666668,
+    "dest_lat": 52.50732,
+    "dest_lon": 13.348073333333334,
+    "distance": 16.46290263169671,
+    "snr": 15.55023,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624457998.5104723,
+    "source_lat": 52.50732,
+    "source_lon": 13.348073333333334,
+    "dest_lat": 52.507241666666665,
+    "dest_lon": 13.347866666666668,
+    "distance": 16.46290263169671,
+    "snr": 12.421058775510204,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457999.503536,
+    "source_lat": 52.50725666666666,
+    "source_lon": 13.347945,
+    "dest_lat": 52.50718,
+    "dest_lon": 13.347736666666666,
+    "distance": 16.46217784544581,
+    "snr": 12.92037,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624457999.8833227,
+    "source_lat": 52.50718,
+    "source_lon": 13.347736666666666,
+    "dest_lat": 52.50725666666666,
+    "dest_lon": 13.347945,
+    "distance": 16.46217784544581,
+    "snr": 14.866741666666668,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458000.4949925,
+    "source_lat": 52.50719333333333,
+    "source_lon": 13.347816666666668,
+    "dest_lat": 52.50712166666667,
+    "dest_lon": 13.347603333333334,
+    "distance": 16.477070655158577,
+    "snr": 13.858536734693878,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458000.5010235,
+    "source_lat": 52.50712166666667,
+    "source_lon": 13.347603333333334,
+    "dest_lat": 52.50719333333333,
+    "dest_lon": 13.347816666666668,
+    "distance": 16.477070655158577,
+    "snr": 15.202765,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458001.361596,
+    "source_lat": 52.507063333333335,
+    "source_lon": 13.347466666666667,
+    "dest_lat": 52.507133333333336,
+    "dest_lon": 13.347683333333332,
+    "distance": 16.587226687625282,
+    "snr": 16.281570000000002,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458001.5046852,
+    "source_lat": 52.507133333333336,
+    "source_lon": 13.347683333333332,
+    "dest_lat": 52.507063333333335,
+    "dest_lon": 13.347466666666667,
+    "distance": 16.587226687625282,
+    "snr": 14.769819591836734,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458002.4475904,
+    "source_lat": 52.507075,
+    "source_lon": 13.347548333333334,
+    "dest_lat": 52.50700666666667,
+    "dest_lon": 13.347323333333334,
+    "distance": 17.003635654259448,
+    "snr": 17.605761904761906,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458002.6576817,
+    "source_lat": 52.50700666666667,
+    "source_lon": 13.347323333333334,
+    "dest_lat": 52.507075,
+    "dest_lon": 13.347548333333334,
+    "distance": 17.003635654259448,
+    "snr": 19.88653703703704,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458003.3005571,
+    "source_lat": 52.50702,
+    "source_lon": 13.347408333333334,
+    "dest_lat": 52.50695666666667,
+    "dest_lon": 13.347175,
+    "distance": 17.276249877247267,
+    "snr": 18.49889,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458003.5056105,
+    "source_lat": 52.50695666666667,
+    "source_lon": 13.347175,
+    "dest_lat": 52.50702,
+    "dest_lon": 13.347408333333334,
+    "distance": 17.276249877247267,
+    "snr": 18.801158,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458004.4969652,
+    "source_lat": 52.50691333333333,
+    "source_lon": 13.347021666666668,
+    "dest_lat": 52.506965,
+    "dest_lon": 13.347265,
+    "distance": 17.42748377245947,
+    "snr": 18.66891632653061,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458004.5846255,
+    "source_lat": 52.506965,
+    "source_lon": 13.347265,
+    "dest_lat": 52.50691333333333,
+    "dest_lon": 13.347021666666668,
+    "distance": 17.42748377245947,
+    "snr": 18.0308175,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458005.4036448,
+    "source_lat": 52.50691833333333,
+    "source_lon": 13.347115,
+    "dest_lat": 52.50687666666666,
+    "dest_lon": 13.346868333333331,
+    "distance": 17.311149482779136,
+    "snr": 17.65762972972973,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458005.4956994,
+    "source_lat": 52.50687666666666,
+    "source_lon": 13.346868333333331,
+    "dest_lat": 52.50691833333333,
+    "dest_lon": 13.347115,
+    "distance": 17.311149482779136,
+    "snr": 18.182362,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458006.4934409,
+    "source_lat": 52.506843333333336,
+    "source_lon": 13.346716666666667,
+    "dest_lat": 52.50688,
+    "dest_lon": 13.346961666666669,
+    "distance": 17.061621625751844,
+    "snr": 19.288347916666662,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458006.5340905,
+    "source_lat": 52.50688,
+    "source_lon": 13.346961666666669,
+    "dest_lat": 52.506843333333336,
+    "dest_lon": 13.346716666666667,
+    "distance": 17.061621625751844,
+    "snr": 18.707679310344822,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458007.5022554,
+    "source_lat": 52.50684666666667,
+    "source_lon": 13.346815,
+    "dest_lat": 52.50681333333333,
+    "dest_lon": 13.34657,
+    "distance": 16.977115235880913,
+    "snr": 16.505855510204082,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458007.5267198,
+    "source_lat": 52.50681333333333,
+    "source_lon": 13.34657,
+    "dest_lat": 52.50684666666667,
+    "dest_lon": 13.346815,
+    "distance": 16.977115235880913,
+    "snr": 18.2759,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458008.4974134,
+    "source_lat": 52.506785,
+    "source_lon": 13.34643,
+    "dest_lat": 52.506818333333335,
+    "dest_lon": 13.346676666666667,
+    "distance": 17.087151419672338,
+    "snr": 20.41785,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458008.6316967,
+    "source_lat": 52.506818333333335,
+    "source_lon": 13.346676666666667,
+    "dest_lat": 52.506785,
+    "dest_lon": 13.34643,
+    "distance": 17.087151419672338,
+    "snr": 15.158848529411763,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458009.503525,
+    "source_lat": 52.50679333333333,
+    "source_lon": 13.346546666666669,
+    "dest_lat": 52.50676333333333,
+    "dest_lon": 13.3463,
+    "distance": 17.01083262533835,
+    "snr": 16.776923999999998,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458009.5186362,
+    "source_lat": 52.50676333333333,
+    "source_lon": 13.3463,
+    "dest_lat": 52.50679333333333,
+    "dest_lon": 13.346546666666669,
+    "distance": 17.01083262533835,
+    "snr": 16.57182619047619,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458010.494509,
+    "source_lat": 52.50674333333333,
+    "source_lon": 13.346181666666666,
+    "dest_lat": 52.50677,
+    "dest_lon": 13.34643,
+    "distance": 17.053256382385356,
+    "snr": 20.919385416666668,
+    "source": 4,
+    "destination": 2
+  },
+  {
+    "timestamp": 1624458010.503603,
+    "source_lat": 52.50677,
+    "source_lon": 13.34643,
+    "dest_lat": 52.50674333333333,
+    "dest_lon": 13.346181666666666,
+    "distance": 17.053256382385356,
+    "snr": 17.2986948,
+    "source": 2,
+    "destination": 4
+  },
+  {
+    "timestamp": 1624458011.3420863,
+    "source_lat": 52.506753333333336,
+    "source_lon": 13.346326666666666,
+    "dest_lat": 52.506705,
+    "dest_lon": 13.346086666666666,
+    "distance": 17.09509285309519,
+    "snr": 17.07347851851852,
+    "source": 2,
+    "destination": 4
+  }
+];
+
+        // Global variables
+        let map;
+        let allData = [];
+        let filteredData = [];
+        let vehicle2Trajectory = [];
+        let vehicle4Trajectory = [];
+        let currentIndex = 0;
+        let isPlaying = false;
+        let animationSpeed = 100; // steps per second
+        let animationInterval;
+        
+        // Vehicle trajectory layers
+        let vehicle2Layer;
+        let vehicle4Layer;
+        let communicationLayer;
+        let waypointLayer;
+        
+        // Initialize map
+        function initMap() {
+            // Center on Berlin area (approximate center of the data)
+            map = L.map('map').setView([52.5099, 13.3577], 18);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Initialize layers
+            vehicle2Layer = L.layerGroup().addTo(map);
+            vehicle4Layer = L.layerGroup().addTo(map);
+            communicationLayer = L.layerGroup().addTo(map);
+            waypointLayer = L.layerGroup().addTo(map);
+        }
+        
+        // Load first 200 points CSV data
+        function loadCsvData() {
+            setInfoText('Loading embedded optimized dataset...');
+            
+            try {
+                // Use embedded data instead of CSV file
+                const data = embeddedOptimizedData;
+                
+                if (!data || data.length === 0){ 
+                    setInfoText('No data found in embedded dataset'); 
+                    return; 
+                }
+                
+                // Convert compact data to full format for compatibility
+                allData = data.map(row => ({
+                    'timestamp': row.timestamp,
+                    'Latitude_source': row.source_lat,
+                    'Longitude_source': row.source_lon,
+                    'Latitude_destination': row.dest_lat,
+                    'Longitude_destination': row.dest_lon,
+                    'distance': row.distance,
+                    'SNR': row.snr,
+                    'Source': row.source,
+                    'Destination': row.destination,
+                    'Scenario': 'S2'
+                }));
+                
+                filteredData = allData; // Use all data since it's already filtered
+                
+                setInfoText(`Loaded ${allData.length} optimized V2V communication records`);
+                
+                // Update dataset info
+                document.getElementById('totalRecords').textContent = `${allData.length} records`;
+                document.getElementById('coverage').textContent = '0.010° × 0.030°';
+                document.getElementById('distanceRange').textContent = '11.4m - 23.1m';
+                document.getElementById('scenario').textContent = 'S2';
+                
+                // Build vehicle trajectories
+                buildVehicleTrajectories();
+                
+                // Initial display
+                currentIndex = 0;
+                updateForIndex(0);
+            } catch (err) {
+                setInfoText('Embedded data load error: ' + err); 
+                console.error('Embedded data load error:', err);
+            }
+        }function buildVehicleTrajectories() {
+            vehicle2Trajectory = [];
+            vehicle4Trajectory = [];
+            
+            allData.forEach(row => {
+                const sourceLat = parseFloat(row['Latitude_source']);
+                const sourceLon = parseFloat(row['Longitude_source']);
+                const destLat = parseFloat(row['Latitude_destination']);
+                const destLon = parseFloat(row['Longitude_destination']);
+                
+                // Add to trajectories based on Source field
+                if (row['Source'] == '2') {
+                    vehicle2Trajectory.push([sourceLat, sourceLon]);
+                    vehicle4Trajectory.push([destLat, destLon]);
+                } else if (row['Source'] == '4') {
+                    vehicle2Trajectory.push([destLat, destLon]);
+                    vehicle4Trajectory.push([sourceLat, sourceLon]);
+                }
+            });
+            
+            console.log(`Built trajectories: Vehicle 2 (${vehicle2Trajectory.length} points), Vehicle 4 (${vehicle4Trajectory.length} points)`);
+        }
+        
+        // Update visualization for given index
+        function updateForIndex(index) {
+            if (index >= allData.length) return;
+            
+            const row = allData[index];
+            const sourceLat = parseFloat(row['Latitude_source']);
+            const sourceLon = parseFloat(row['Longitude_source']);
+            const destLat = parseFloat(row['Latitude_destination']);
+            const destLon = parseFloat(row['Longitude_destination']);
+            const distance = parseFloat(row['distance']);
+            const snr = parseFloat(row['SNR']);
+            
+            // Clear previous visualization
+            vehicle2Layer.clearLayers();
+            vehicle4Layer.clearLayers();
+            communicationLayer.clearLayers();
+            waypointLayer.clearLayers();
+            
+            // Draw trajectories up to current point
+            if (vehicle2Trajectory.length > 0 && vehicle4Trajectory.length > 0) {
+                // Vehicle 2 trajectory (blue)
+                const vehicle2Path = L.polyline(vehicle2Trajectory.slice(0, index + 1), {
+                    color: '#3498db',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(vehicle2Layer);
+                
+                // Vehicle 4 trajectory (orange)
+                const vehicle4Path = L.polyline(vehicle4Trajectory.slice(0, index + 1), {
+                    color: '#e67e22',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(vehicle4Layer);
+                
+                // Add waypoints every 10 points
+                for (let i = 0; i <= index; i += 10) {
+                    if (i < vehicle2Trajectory.length) {
+                        L.circleMarker(vehicle2Trajectory[i], {
+                            radius: 4,
+                            fillColor: '#f39c12',
+                            color: '#d68910',
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(waypointLayer);
+                    }
+                }
+            }
+            
+            // Current communication link
+            const communicationLink = L.polyline([[sourceLat, sourceLon], [destLat, destLon]], {
+                color: '#e74c3c',
+                weight: 2,
+                opacity: 0.7,
+                dashArray: '5, 5'
+            }).addTo(communicationLayer);
+            
+            // Current vehicle positions
+            L.circleMarker([sourceLat, sourceLon], {
+                radius: 8,
+                fillColor: '#3498db',
+                color: '#2980b9',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(vehicle2Layer);
+            
+            L.circleMarker([destLat, destLon], {
+                radius: 8,
+                fillColor: '#e67e22',
+                color: '#d35400',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(vehicle4Layer);
+            
+            // Update stats
+            document.getElementById('currentDistance').textContent = `${distance.toFixed(1)}m`;
+            document.getElementById('currentSNR').textContent = `${snr.toFixed(1)} dB`;
+            
+            // Update progress
+            const progress = ((index + 1) / allData.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${index + 1} / ${allData.length}`;
+            
+            // Center map on current positions
+            const bounds = L.latLngBounds([[sourceLat, sourceLon], [destLat, destLon]]);
+            map.fitBounds(bounds, { padding: [20, 20] });
+        }
+        
+        // Animation controls
+        function playAnimation() {
+            if (isPlaying) return;
+            isPlaying = true;
+            document.getElementById('playBtn').textContent = '⏸️ Playing';
+            document.getElementById('playBtn').classList.remove('btn-primary');
+            document.getElementById('playBtn').classList.add('btn-secondary');
+            
+            animationInterval = setInterval(() => {
+                currentIndex++;
+                if (currentIndex >= allData.length) {
+                    pauseAnimation();
+                    return;
+                }
+                updateForIndex(currentIndex);
+            }, 1000 / animationSpeed);
+        }
+        
+        function pauseAnimation() {
+            isPlaying = false;
+            clearInterval(animationInterval);
+            document.getElementById('playBtn').textContent = '▶️ Play';
+            document.getElementById('playBtn').classList.remove('btn-secondary');
+            document.getElementById('playBtn').classList.add('btn-primary');
+        }
+        
+        function stepAnimation() {
+            if (isPlaying) pauseAnimation();
+            currentIndex++;
+            if (currentIndex >= allData.length) {
+                currentIndex = allData.length - 1;
+            }
+            updateForIndex(currentIndex);
+        }
+        
+        // Utility functions
+        function setInfoText(text) {
+            document.getElementById('status').textContent = text;
+        }
+        
+        // Event listeners
+        document.getElementById('playBtn').addEventListener('click', () => {
+            if (isPlaying) {
+                pauseAnimation();
+            } else {
+                playAnimation();
+            }
+        });
+        
+        document.getElementById('pauseBtn').addEventListener('click', pauseAnimation);
+        document.getElementById('stepBtn').addEventListener('click', stepAnimation);
+        
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedValue').textContent = animationSpeed;
+            
+            // Restart animation with new speed if currently playing
+            if (isPlaying) {
+                pauseAnimation();
+                playAnimation();
+            }
+        });
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            loadCsvData();
+        });
+    </script>
+</body>
+</html>

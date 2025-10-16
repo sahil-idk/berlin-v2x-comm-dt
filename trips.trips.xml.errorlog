@@ -1,0 +1,45 @@
+Warning: At actuated tlLogic '1352310847', linkIndex 18,19,20 has no controlling detector.
+Warning: At actuated tlLogic 'GS_25663395', linkIndex 6,7,8 has no controlling detector.
+Warning: At actuated tlLogic 'GS_26731291', linkIndex 15,16,17 has no controlling detector.
+Warning: At actuated tlLogic 'GS_26734490', linkIndex 15,16,17,18 has no controlling detector.
+Warning: At actuated tlLogic 'GS_26784969', linkIndex 17,18,19 has no controlling detector.
+Warning: At actuated tlLogic 'GS_cluster_11199180736_26703747_4513717200', actuated phase 2 has no controlling detector.
+Warning: At actuated tlLogic 'GS_cluster_1277967223_1277967230_26704521_26869178', actuated phase 7 has no controlling detector.
+Warning: At actuated tlLogic 'GS_cluster_16541471_26745972_26868066_26868067', actuated phase 2 has no controlling detector.
+Warning: At actuated tlLogic 'GS_cluster_21487101_26662404_26784928_26784929', actuated phase 7 has no controlling detector.
+Warning: At actuated tlLogic 'GS_cluster_21487141_26708459_26745960_26745961', actuated phase 2 has no controlling detector.
+Warning: No connection between edge '1229879589#0' and edge '1396063587' found.
+Warning: Vehicle '125_bus_123:0' has no valid route from edge '1229879589#0' to stop edge '1396063587'.
+Warning: No connection between edge '4543586' and edge '375861849' found.
+Warning: Vehicle '168_bus_142:0' has no valid route from edge '4543586' to stop edge '375861849'.
+Warning: No connection between edge '4543586' and edge '375861849' found.
+Warning: Vehicle '163_bus_221:3' has no valid route from edge '4543586' to stop edge '375861849'.
+Warning: No connection between edge '4543586' and edge '375861849' found.
+Warning: Vehicle '160_bus_221:0' has no valid route from edge '4543586' to stop edge '375861849'.
+Warning: No connection between edge '213138836#0' and edge '25187132#0' found.
+Warning: Vehicle '241_bus_N44:1' has no valid route from edge '213138836#0' to stop edge '25187132#0'.
+Warning: Vehicle '230_bus_147:1' has no valid route from edge '4543586' to stop edge '375861849'.
+Warning: Vehicle '269_bus_N70:0' has no valid route from edge '213138836#0' to stop edge '25187132#0'.
+Warning: Vehicle '13_bus_N1365:0' performs emergency braking on lane ':cluster_21487141_26708459_26745960_26745961_28_0' with decel=7.00, wished=4.00, severity=1.00, time=596.00.
+Warning: Teleporting vehicle '160_bus_221:0'; waited too long (wrong lane, disconnected), lane='4543586_0', time=771.00.
+Warning: Vehicle '160_bus_221:0' skips stop on lane '4543586_0' time=771.00.
+Warning: Vehicle '160_bus_221:0' ends teleporting on edge '375861849', time=771.00.
+Warning: Teleporting vehicle '163_bus_221:3'; waited too long (wrong lane, disconnected), lane='4543586_0', time=815.00.
+Warning: Vehicle '163_bus_221:3' ends teleporting on edge '375861849', time=815.00.
+Warning: Teleporting vehicle '168_bus_142:0'; waited too long (wrong lane, disconnected), lane='4543586_0', time=2073.00.
+Warning: Vehicle '168_bus_142:0' skips stop on lane '4543586_0' time=2073.00.
+Warning: Vehicle '168_bus_142:0' ends teleporting on edge '375861849', time=2073.00.
+Warning: Teleporting vehicle '230_bus_147:1'; waited too long (wrong lane, disconnected), lane='4543586_0', time=2237.00.
+Warning: Vehicle '230_bus_147:1' skips stop on lane '4543586_0' time=2237.00.
+Warning: Vehicle '230_bus_147:1' ends teleporting on edge '375861849', time=2237.00.
+Warning: Teleporting vehicle '125_bus_123:0'; waited too long (wrong lane, disconnected), lane='1229879589#0_0', time=2435.00.
+Warning: Vehicle '125_bus_123:0' skips stop on lane '1229879589#0_0' time=2435.00.
+Warning: Vehicle '125_bus_123:0' ends teleporting on edge '1396063587', time=2435.00.
+Warning: Teleporting vehicle '241_bus_N44:1'; waited too long (blocked, disconnected), lane='213138836#0_0', time=3192.00.
+Warning: Vehicle '241_bus_N44:1' skips stop on lane '213138836#0_0' time=3192.00.
+Warning: Teleporting vehicle '269_bus_N70:0'; waited too long (blocked, disconnected), lane='213138836#0_0', time=3238.00.
+Warning: 39 total messages of type: At actuated tlLogic '%', actuated phase % has no controlling detector.
+Warning: 72 total messages of type: At actuated tlLogic '%', linkIndex % has no controlling detector.
+Warning: 7 total messages of type: No connection between edge '%' and edge '%' found.
+Warning: 7 total messages of type: Vehicle '%' ends teleporting on edge '%', time=%.
+Warning: 6 total messages of type: Vehicle '%' skips stop on lane '%' time=%.

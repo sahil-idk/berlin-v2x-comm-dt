@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Berlin V2X - GPS Simulation (pc2)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html,body,#map { height: 100%; margin:0; padding:0; }
+    #controls { position: absolute; left:8px; top:8px; z-index:999; background:rgba(255,255,255,0.95); padding:8px; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+    #info { margin-left:12px; font-size:0.9em; color:#333; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="controls">
+    <button id="btnPlay">Play</button>
+    <button id="btnPause">Pause</button>
+    <label>Speed: <input id="speed" type="range" min="1" max="1000" value="100"></label>
+    <button id="start">Start</button>
+    <button id="end">End</button>
+    <a id="download" href="pc3_parsed.csv" download>Download CSV</a>
+    <div id="info">Loading...</div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- PapaParse to parse CSV client-side -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<script>
+const csvFile = 'pc2_parsed.csv'; // must be in same folder as HTML when served
+
+let points = [];
+let idx = 0;
+let timer = null;
+let running = false;
+
+const map = L.map('map').setView([52.52, 13.405], 13); // fallback center (Berlin)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19}).addTo(map);
+
+const polyline = L.polyline([], {color:'blue'}).addTo(map);
+const marker = L.circleMarker([0,0], {radius:7}).addTo(map).bindPopup('');
+
+function refreshInfo() {
+  document.getElementById('info').innerText = `Point ${idx+1}/${points.length}`;
+}
+
+function updateMarker(i) {
+  const p = points[i];
+  marker.setLatLng([p.lat, p.lon]);
+  marker.setRadius(6);
+  marker.bindPopup(`#${i+1}<br>${p.timestamp_iso || p.timestamp || ''}<br>speed: ${p.speed || 'n/a'}`);
+  map.panTo([p.lat, p.lon], {animate:true});
+  refreshInfo();
+}
+
+function startAnim() {
+  if (running || points.length===0) return;
+  running = true;
+  const speed = Number(document.getElementById('speed').value);
+  const delay = Math.max(10, 1000 / speed); // ms between frames (tweakable)
+  timer = setInterval(()=> {
+    idx = Math.min(idx+1, points.length-1);
+    updateMarker(idx);
+    if (idx >= points.length-1) stopAnim();
+  }, delay);
+}
+
+function stopAnim() {
+  running = false;
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+}
+
+document.getElementById('btnPlay').addEventListener('click', startAnim);
+document.getElementById('btnPause').addEventListener('click', stopAnim);
+document.getElementById('start').addEventListener('click', ()=> { idx=0; updateMarker(0); });
+document.getElementById('end').addEventListener('click', ()=> { idx=points.length-1; updateMarker(idx); });
+
+document.getElementById('speed').addEventListener('input', ()=> {
+  if (running) { stopAnim(); startAnim(); }
+});
+
+// load CSV using PapaParse
+Papa.parse(csvFile, {
+  download: true,
+  header: true,
+  dynamicTyping: false,
+  skipEmptyLines: true,
+  complete: function(results) {
+    const data = results.data;
+    // expected columns: timestamp, timestamp_iso, lat, lon, speed, heading (speed/heading optional)
+    points = data.map(r => {
+      return {
+        timestamp: r.timestamp || null,
+        timestamp_iso: r.timestamp_iso || null,
+        lat: parseFloat(r.lat),
+        lon: parseFloat(r.lon),
+        speed: r.speed ? parseFloat(r.speed) : null,
+        heading: r.heading ? parseFloat(r.heading) : null
+      };
+    }).filter(p => !isNaN(p.lat) && !isNaN(p.lon));
+
+    if (points.length === 0) {
+      document.getElementById('info').innerText = 'No valid lat/lon points found in CSV.';
+      return;
+    }
+    // build polyline and center map
+    const latlngs = points.map(p => [p.lat, p.lon]);
+    polyline.setLatLngs(latlngs);
+    map.fitBounds(polyline.getBounds(), {padding:[20,20]});
+    idx = 0;
+    marker.setLatLng(latlngs[0]);
+    refreshInfo();
+
+    // change download link to the CSV path
+    document.getElementById('download').href = csvFile;
+  },
+  error: function(err) {
+    document.getElementById('info').innerText = 'Error loading CSV: ' + err;
+  }
+});
+</script>
+</body>
+</html>

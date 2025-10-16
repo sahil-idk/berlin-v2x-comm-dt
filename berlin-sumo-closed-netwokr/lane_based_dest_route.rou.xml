@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+  <route id="lane_dest_route" edges="-279549312#1 -279549312#0 -66514461#2 153376938 309602349"/>
+  <vType id="lane_dest_vType" accel="2.0" decel="4.5" sigma="0.5" length="4.5" maxSpeed="50" guiShape="passenger" color="red"/>
+</routes>

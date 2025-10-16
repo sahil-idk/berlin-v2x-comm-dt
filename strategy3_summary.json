@@ -1,0 +1,15 @@
+{
+  "strategy_number": 3,
+  "strategy_name": "Statistical Outlier Detection",
+  "mean_accuracy_pct": 71.6189304117719,
+  "median_accuracy_pct": 71.77181501008104,
+  "min_accuracy_pct": 55.885459776438125,
+  "max_accuracy_pct": 86.33606954318046,
+  "std_accuracy_pct": 6.638689938518997,
+  "mae_m": 5.421542046649837,
+  "rmse_m": 5.70278192299911,
+  "waypoints_analyzed": 96,
+  "high_accuracy_90_plus": 0,
+  "medium_accuracy_70_89": 55,
+  "low_accuracy_below_70": 41
+}

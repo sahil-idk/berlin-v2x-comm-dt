@@ -1,0 +1,31 @@
+{
+  "simulation_settings": {
+    "num_waypoints": 50,
+    "calibration_enabled": true,
+    "path_loss_model": "fspl",
+    "frequency_ghz": 5.9,
+    "tx_power_dbm": 20
+  },
+  "distance_accuracy": {
+    "mean_accuracy_pct": 78.25264447485579,
+    "median_accuracy_pct": 79.42054276273595
+  },
+  "path_loss_accuracy": {
+    "mean_accuracy_pct": 98.3586379364018,
+    "median_accuracy_pct": 98.49399422021258,
+    "mean_error_db": -2.1934303433085875,
+    "mean_abs_error_db": 2.1934303433085875
+  },
+  "snr_accuracy": {
+    "mean_accuracy_pct": 63.44282761152354,
+    "median_accuracy_pct": 66.64413367191433,
+    "mean_error_db": 2.1934303433085875,
+    "mean_abs_error_db": 2.1934303433085875
+  },
+  "prr_accuracy": {
+    "mean_accuracy_pct": 100.0,
+    "median_accuracy_pct": 100.0,
+    "mean_error_pct": 0.0,
+    "mean_abs_error_pct": 0.0
+  }
+}
