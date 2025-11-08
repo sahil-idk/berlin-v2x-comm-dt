@@ -46,13 +46,24 @@ def get_adaptive_calibration(actual_distance_m, dataset_type="continuous"):
     else:
         return 1.0000  # Very long distances - no calibration needed
 
-# V2V Communication Parameters (based on sidelink dataset)
+# V2V Communication Parameters (CORRECTED for SNR accuracy)
 CARRIER_FREQUENCY_GHZ = 5.9  # V2V frequency (5.9 GHz)
 CARRIER_FREQUENCY_MHZ = 5900
-TX_POWER_DBM = 20  # Transmission power
-NOISE_FLOOR_DBM = -90  # Noise floor
+TX_POWER_DBM = 23  # ✅ FIXED: Standard V2V/PC5 Sidelink TX power (was 20)
 BANDWIDTH_MHZ = 10  # Channel bandwidth
-ANTENNA_GAIN_DB = 3  # Antenna gain
+BANDWIDTH_HZ = BANDWIDTH_MHZ * 1e6  # Convert to Hz for noise calculation
+
+# Antenna gains (both TX and RX)
+TX_ANTENNA_GAIN_DB = 3
+RX_ANTENNA_GAIN_DB = 3
+TOTAL_ANTENNA_GAIN_DB = TX_ANTENNA_GAIN_DB + RX_ANTENNA_GAIN_DB  # = 6 dB
+
+# ✅ FIXED: Correct thermal noise calculation
+# Thermal noise = -174 dBm/Hz + 10*log10(Bandwidth)
+# For 10 MHz: -174 + 10*log10(10e6) = -174 + 70 = -104 dBm
+THERMAL_NOISE_DENSITY_DBM_HZ = -174
+NOISE_FLOOR_DBM = THERMAL_NOISE_DENSITY_DBM_HZ + 10 * math.log10(BANDWIDTH_HZ)
+# Result: -104 dBm (was incorrectly -90 dBm, causing 14 dB SNR underestimation)
 
 # 3GPP Urban Macro Parameters
 URBAN_MACRO_PARAMS = {
@@ -94,12 +105,22 @@ def calculate_3gpp_urban_macro_path_loss(distance_m, frequency_ghz=5.9):
           20 * math.log10(frequency_ghz / 5.0))
     return pl
 
-def calculate_snr(distance_m, tx_power_dbm, noise_floor_dbm, model='FSPL', 
-                  frequency_ghz=5.9, antenna_gain_db=3):
+def calculate_snr(distance_m, tx_power_dbm, noise_floor_dbm, model='FSPL',
+                  frequency_ghz=5.9, tx_antenna_gain_db=3, rx_antenna_gain_db=3):
     """
-    Calculate Signal-to-Noise Ratio (SNR)
-    
-    SNR = Tx_power + Antenna_gain - Path_loss - Noise_floor
+    Calculate Signal-to-Noise Ratio (CORRECTED)
+
+    Args:
+        distance_m: Distance in meters
+        tx_power_dbm: Transmit power in dBm
+        noise_floor_dbm: Noise floor in dBm
+        model: Path loss model ('FSPL' or '3GPP')
+        frequency_ghz: Carrier frequency in GHz
+        tx_antenna_gain_db: Transmitter antenna gain in dB
+        rx_antenna_gain_db: Receiver antenna gain in dB
+
+    Returns:
+        tuple: (snr_db, path_loss)
     """
     if model == 'FSPL':
         path_loss = calculate_fspl(distance_m, frequency_ghz)
@@ -107,8 +128,13 @@ def calculate_snr(distance_m, tx_power_dbm, noise_floor_dbm, model='FSPL',
         path_loss = calculate_3gpp_urban_macro_path_loss(distance_m, frequency_ghz)
     else:
         path_loss = calculate_fspl(distance_m, frequency_ghz)
-    
-    snr_db = tx_power_dbm + antenna_gain_db - path_loss - noise_floor_dbm
+
+    # ✅ FIXED: Correct SNR calculation
+    # Include both TX and RX antenna gains
+    total_antenna_gain = tx_antenna_gain_db + rx_antenna_gain_db
+    received_power_dbm = tx_power_dbm + total_antenna_gain - path_loss
+    snr_db = received_power_dbm - noise_floor_dbm
+
     return snr_db, path_loss
 
 def calculate_prr(snr_db):
@@ -130,28 +156,29 @@ def calculate_prr(snr_db):
     prr = 1.0 / (1.0 + math.exp(-k * (snr_db - snr_threshold)))
     return prr * 100  # Return as percentage
 
-def calculate_communication_range(tx_power_dbm, noise_floor_dbm, snr_threshold_db=10, 
-                                 model='FSPL', frequency_ghz=5.9, antenna_gain_db=3):
+def calculate_communication_range(tx_power_dbm, noise_floor_dbm, snr_threshold_db=10,
+                                 model='FSPL', frequency_ghz=5.9,
+                                 tx_antenna_gain_db=3, rx_antenna_gain_db=3):
     """
     Calculate maximum communication range
-    
+
     Range where SNR drops below threshold
     """
     # Binary search for range
     min_range = 1
     max_range = 1000
     target_range = 100
-    
+
     for _ in range(20):  # 20 iterations for convergence
-        snr, _ = calculate_snr(target_range, tx_power_dbm, noise_floor_dbm, 
-                              model, frequency_ghz, antenna_gain_db)
+        snr, _ = calculate_snr(target_range, tx_power_dbm, noise_floor_dbm,
+                              model, frequency_ghz, tx_antenna_gain_db, rx_antenna_gain_db)
         if snr > snr_threshold_db:
             min_range = target_range
             target_range = (target_range + max_range) / 2
         else:
             max_range = target_range
             target_range = (min_range + target_range) / 2
-    
+
     return target_range
 
 # ============================================================================
@@ -803,15 +830,17 @@ class V2VCommunicationDigitalTwin:
                         
                         # Communication parameters based on SIMULATED distance
                         model = self.path_loss_model.get()
-                        sim_snr, sim_path_loss = calculate_snr(simulated_distance, TX_POWER_DBM, 
-                                                              NOISE_FLOOR_DBM, model, 
-                                                              CARRIER_FREQUENCY_GHZ, ANTENNA_GAIN_DB)
+                        sim_snr, sim_path_loss = calculate_snr(simulated_distance, TX_POWER_DBM,
+                                                              NOISE_FLOOR_DBM, model,
+                                                              CARRIER_FREQUENCY_GHZ,
+                                                              TX_ANTENNA_GAIN_DB, RX_ANTENNA_GAIN_DB)
                         sim_prr = calculate_prr(sim_snr)
-                        
+
                         # Communication parameters based on ACTUAL distance (ground truth)
-                        actual_snr, actual_path_loss = calculate_snr(actual_distance, TX_POWER_DBM, 
-                                                                    NOISE_FLOOR_DBM, model, 
-                                                                    CARRIER_FREQUENCY_GHZ, ANTENNA_GAIN_DB)
+                        actual_snr, actual_path_loss = calculate_snr(actual_distance, TX_POWER_DBM,
+                                                                    NOISE_FLOOR_DBM, model,
+                                                                    CARRIER_FREQUENCY_GHZ,
+                                                                    TX_ANTENNA_GAIN_DB, RX_ANTENNA_GAIN_DB)
                         actual_prr = calculate_prr(actual_snr)
                         
                         # Communication accuracy metrics
@@ -933,11 +962,11 @@ class V2VCommunicationDigitalTwin:
                     # Log every 200 steps
                     if step - last_log_step >= 200:
                         avg_dist = sum(distances_calibrated[-200:]) / len(distances_calibrated[-200:])
-                        
+
                         # Calculate current communication params
-                        temp_snr, temp_pl = calculate_snr(avg_dist, TX_POWER_DBM, NOISE_FLOOR_DBM, 
-                                                         self.path_loss_model.get(), CARRIER_FREQUENCY_GHZ, 
-                                                         ANTENNA_GAIN_DB)
+                        temp_snr, temp_pl = calculate_snr(avg_dist, TX_POWER_DBM, NOISE_FLOOR_DBM,
+                                                         self.path_loss_model.get(), CARRIER_FREQUENCY_GHZ,
+                                                         TX_ANTENNA_GAIN_DB, RX_ANTENNA_GAIN_DB)
                         temp_prr = calculate_prr(temp_snr)
                         
                         # Calculate progress percentage
@@ -1028,8 +1057,9 @@ class V2VCommunicationDigitalTwin:
                     },
                     'communication_range': {
                         'estimated_range_m': float(calculate_communication_range(
-                            TX_POWER_DBM, NOISE_FLOOR_DBM, 10, 
-                            self.path_loss_model.get(), CARRIER_FREQUENCY_GHZ, ANTENNA_GAIN_DB))
+                            TX_POWER_DBM, NOISE_FLOOR_DBM, 10,
+                            self.path_loss_model.get(), CARRIER_FREQUENCY_GHZ,
+                            TX_ANTENNA_GAIN_DB, RX_ANTENNA_GAIN_DB))
                     }
                 }
                 
