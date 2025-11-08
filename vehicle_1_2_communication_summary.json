@@ -1,0 +1,46 @@
+{
+  "simulation_settings": {
+    "num_waypoints": 1019,
+    "calibration_enabled": false,
+    "calibration_type": "none",
+    "realistic_speed_enabled": true,
+    "path_loss_model": "3GPP",
+    "use_all_waypoints": true,
+    "total_steps": 61140
+  },
+  "v2v_parameters": {
+    "carrier_frequency_ghz": 5.9,
+    "tx_power_dbm": 20,
+    "noise_floor_dbm": -90,
+    "antenna_gain_db": 3,
+    "bandwidth_mhz": 10
+  },
+  "distance_accuracy": {
+    "mean_accuracy_pct": 38.17100119505707,
+    "median_accuracy_pct": 35.68246223892682,
+    "std_dev_pct": 35.997962829357675
+  },
+  "path_loss_accuracy": {
+    "mean_accuracy_pct": 85.14644920915016,
+    "median_accuracy_pct": 90.63882847693672,
+    "mean_error_db": 4.898561051751909,
+    "mean_absolute_error_db": 14.435844182169813,
+    "rmse_db": 18.532048324242393,
+    "std_dev_db": 18.00780188067445
+  },
+  "snr_accuracy": {
+    "mean_accuracy_pct": 34.93380877499897,
+    "mean_error_db": -4.898561051751909,
+    "mean_absolute_error_db": 14.435844182169813,
+    "rmse_db": 18.532048324242393,
+    "std_dev_db": 18.00780188067445
+  },
+  "prr_accuracy": {
+    "mean_accuracy_pct": 39.3684551463037,
+    "median_accuracy_pct": 44.5217916137317,
+    "std_dev_pct": 35.99902599482017
+  },
+  "communication_range": {
+    "estimated_range_m": 48.1648645401001
+  }
+}

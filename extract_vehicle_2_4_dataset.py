@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
 """
 Extract focused dataset for Vehicle 2 and Vehicle 4 interactions
-Creates a small, relevant subset for visualization
+Creates datasets of various sizes for digital twin validation
 """
 
 import pandas as pd
 import numpy as np
 import json
 from datetime import datetime
+import argparse
 
-def extract_vehicle_2_4_dataset():
+def extract_vehicle_2_4_dataset(num_points=200, sampling_method='sequential'):
     """Extract and analyze Vehicle 2-4 interactions"""
     
     print("🔍 Extracting Vehicle 2-4 Interaction Dataset")
     print("=" * 50)
+    print(f"📊 Target size: {num_points} points")
+    print(f"📊 Sampling method: {sampling_method}")
     
     # Load the full dataset
-    print("📋 Loading sidelink dataset...")
+    print("\n📋 Loading sidelink dataset...")
     df = pd.read_csv('sidelink_parsed.csv')
     print(f"✅ Loaded {len(df)} total records")
     
@@ -71,19 +74,35 @@ def extract_vehicle_2_4_dataset():
     lon_range = bounds['max_lon'] - bounds['min_lon']
     print(f"   Coverage: {lat_range:.6f}° × {lon_range:.6f}°")
     
-    # Sample a small subset for visualization (around 10-15 entries)
-    print("\n📊 Creating focused subset...")
+    # Sample subset based on specified size and method
+    print(f"\n📊 Creating {num_points}-point dataset using {sampling_method} sampling...")
     
     # Sort by timestamp to get chronological order
     vehicle_2_4_data = vehicle_2_4_data.sort_values('timestamp').reset_index(drop=True)
     
-    # Take every nth record to get a good spread
-    subset_size = min(15, len(vehicle_2_4_data))
-    step = max(1, len(vehicle_2_4_data) // subset_size)
+    # Apply sampling method
+    if sampling_method == 'sequential':
+        # Take first N points (simple, preserves temporal order)
+        focused_subset = vehicle_2_4_data.head(num_points).copy()
+        print(f"✅ Extracted first {len(focused_subset)} sequential records")
+    elif sampling_method == 'uniform':
+        # Uniform sampling across entire dataset
+        if num_points >= len(vehicle_2_4_data):
+            focused_subset = vehicle_2_4_data.copy()
+            print(f"⚠️ Requested {num_points} points, but only {len(focused_subset)} available")
+        else:
+            step = len(vehicle_2_4_data) // num_points
+            focused_subset = vehicle_2_4_data.iloc[::step].head(num_points).copy()
+            print(f"✅ Sampled {len(focused_subset)} records uniformly (every {step}th record)")
+    elif sampling_method == 'all':
+        # Take all available records
+        focused_subset = vehicle_2_4_data.copy()
+        print(f"✅ Extracted all {len(focused_subset)} available records")
+    else:
+        print(f"⚠️ Unknown sampling method '{sampling_method}', using sequential")
+        focused_subset = vehicle_2_4_data.head(num_points).copy()
     
-    focused_subset = vehicle_2_4_data.iloc[::step].head(subset_size).copy()
-    
-    print(f"✅ Created focused subset with {len(focused_subset)} records")
+    print(f"✅ Final dataset size: {len(focused_subset)} records")
     
     # Analyze the subset
     print("\n📈 Subset Analysis:")
@@ -97,17 +116,23 @@ def extract_vehicle_2_4_dataset():
     if 'RSRP' in focused_subset.columns:
         print(f"   RSRP range: {focused_subset['RSRP'].min():.1f} to {focused_subset['RSRP'].max():.1f} dBm")
     
-    # Save the focused dataset
-    output_file = 'vehicle_2_4_focused.csv'
+    # Save the focused dataset with descriptive name
+    if num_points == len(vehicle_2_4_data) or sampling_method == 'all':
+        output_file = 'vehicle_2_4_full.csv'
+    else:
+        output_file = f'vehicle_2_4_{len(focused_subset)}.csv'
+    
     focused_subset.to_csv(output_file, index=False)
-    print(f"\n💾 Saved focused dataset: {output_file}")
+    print(f"\n💾 Saved dataset: {output_file}")
     
     # Save metadata
     metadata = {
         'extraction_date': datetime.now().isoformat(),
         'total_records': len(df),
         'vehicle_2_4_records': len(vehicle_2_4_data),
-        'focused_subset_size': len(focused_subset),
+        'extracted_subset_size': len(focused_subset),
+        'target_points': num_points,
+        'sampling_method': sampling_method,
         'coordinate_bounds': bounds,
         'coverage_degrees': {
             'latitude': lat_range,
@@ -121,10 +146,11 @@ def extract_vehicle_2_4_dataset():
         }
     }
     
-    with open('vehicle_2_4_metadata.json', 'w') as f:
+    metadata_file = output_file.replace('.csv', '_metadata.json')
+    with open(metadata_file, 'w') as f:
         json.dump(metadata, f, indent=2)
     
-    print("💾 Saved metadata: vehicle_2_4_metadata.json")
+    print(f"💾 Saved metadata: {metadata_file}")
     
     # Display sample of the focused data
     print("\n📋 Sample of focused dataset:")
@@ -134,4 +160,33 @@ def extract_vehicle_2_4_dataset():
     return focused_subset, bounds
 
 if __name__ == "__main__":
-    extract_vehicle_2_4_dataset()
+    parser = argparse.ArgumentParser(description='Extract Vehicle 2-4 interaction dataset')
+    parser.add_argument('--points', type=int, default=200, 
+                       help='Number of points to extract (default: 200)')
+    parser.add_argument('--method', type=str, default='sequential',
+                       choices=['sequential', 'uniform', 'all'],
+                       help='Sampling method: sequential (first N), uniform (spread), or all (default: sequential)')
+    parser.add_argument('--preset', type=str, choices=['200', '500', '1000', 'full'],
+                       help='Use preset: 200, 500, 1000, or full dataset')
+    
+    args = parser.parse_args()
+    
+    # Handle presets
+    if args.preset:
+        if args.preset == '200':
+            num_points, method = 200, 'sequential'
+        elif args.preset == '500':
+            num_points, method = 500, 'sequential'
+        elif args.preset == '1000':
+            num_points, method = 1000, 'sequential'
+        elif args.preset == 'full':
+            num_points, method = 999999, 'all'  # Large number to ensure all records
+    else:
+        num_points = args.points
+        method = args.method
+    
+    print(f"\n🚀 Starting extraction with:")
+    print(f"   Points: {num_points if method != 'all' else 'ALL'}")
+    print(f"   Method: {method}\n")
+    
+    extract_vehicle_2_4_dataset(num_points, method)

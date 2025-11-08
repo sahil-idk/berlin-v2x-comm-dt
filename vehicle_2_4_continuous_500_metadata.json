@@ -1,0 +1,25 @@
+{
+  "extraction_date": "2025-10-17T13:13:43.425970",
+  "source": "Continuous extraction from working GPS region",
+  "num_records": 500,
+  "gps_region": {
+    "lat_min": 52.50653833333333,
+    "lat_max": 52.50994666666666,
+    "lon_min": 13.345015,
+    "lon_max": 13.35922
+  },
+  "time_range": {
+    "start": 1624349788.4749243,
+    "end": 1624354446.5081165
+  },
+  "distance_stats": {
+    "min": 7.337504955706222,
+    "max": 47.390592076492304,
+    "mean": 18.141628161292747
+  },
+  "snr_stats": {
+    "min": 10.25715125,
+    "max": 26.49152,
+    "mean": 18.046498354481123
+  }
+}

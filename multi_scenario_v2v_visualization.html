@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Scenario V2V Visualization</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            margin: 0;
+            font-size: 0.9em;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        
+        select:hover {
+            border-color: #3498db;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .slider-container {
+            margin-bottom: 10px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin: 5px 0;
+        }
+        
+        .progress-container {
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .info-panel {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .info-value {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: #e8f4fd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .legend {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 3px;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+        
+        .legend-text {
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            margin-top: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 40vh;
+            }
+            
+            .map-container {
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="header">
+                <h1>🚗 Multi-Scenario V2V</h1>
+                <p>Vehicle-to-Vehicle Communication Visualization</p>
+            </div>
+            
+            <div class="status" id="status">
+                Loading scenarios...
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label>Select Scenario</label>
+                    <select id="scenarioSelect">
+                        <option value="">Loading scenarios...</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label>Animation Controls</label>
+                    <div class="button-group">
+                        <button id="playBtn" class="btn-primary">▶️ Play</button>
+                        <button id="pauseBtn" class="btn-secondary">⏸️ Pause</button>
+                        <button id="stepBtn" class="btn-success">⏭️ Step</button>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Speed Control</label>
+                    <div class="slider-container">
+                        <input type="range" id="speedSlider" min="1" max="1000" value="100">
+                        <div style="text-align: center; font-size: 0.8em; color: #666;">
+                            <span id="speedValue">100</span> steps/sec
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label>Progress</label>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div style="text-align: center; font-size: 0.8em; color: #666; margin-top: 5px;">
+                            <span id="progressText">0 / 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h3 style="margin-top: 0; color: #2c3e50;">📊 Dataset Info</h3>
+                <div class="info-row">
+                    <span class="info-label">Total Records:</span>
+                    <span class="info-value" id="totalRecords">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Coverage:</span>
+                    <span class="info-value" id="coverage">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Distance Range:</span>
+                    <span class="info-value" id="distanceRange">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Scenario:</span>
+                    <span class="info-value" id="scenario">-</span>
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="currentDistance">-</div>
+                    <div class="stat-label">Current Distance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentSNR">-</div>
+                    <div class="stat-label">Current SNR</div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <h4 style="margin-top: 0; color: #2c3e50;">🎨 Legend</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3498db;"></div>
+                    <span class="legend-text" id="vehicle1Label">Vehicle 1 Trajectory</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e67e22;"></div>
+                    <span class="legend-text" id="vehicle2Label">Vehicle 2 Trajectory</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e74c3c; border-style: dashed;"></div>
+                    <span class="legend-text">V2V Communication Link</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f39c12;"></div>
+                    <span class="legend-text">GPS Waypoints</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Papa Parse for CSV -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    
+    <script>
+        // Global variables
+        let map;
+        let allData = [];
+        let scenariosList = [];
+        let currentScenario = null;
+        let vehicle1Trajectory = [];
+        let vehicle2Trajectory = [];
+        let vehicle1Id = null;
+        let vehicle2Id = null;
+        let currentIndex = 0;
+        let isPlaying = false;
+        let animationSpeed = 100; // steps per second
+        let animationInterval;
+        
+        // Vehicle trajectory layers
+        let vehicle1Layer;
+        let vehicle2Layer;
+        let communicationLayer;
+        let waypointLayer;
+        
+        // Initialize map
+        function initMap() {
+            // Center on Berlin area (approximate center of the data)
+            map = L.map('map').setView([52.5099, 13.3577], 18);
+            
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Initialize layers
+            vehicle1Layer = L.layerGroup().addTo(map);
+            vehicle2Layer = L.layerGroup().addTo(map);
+            communicationLayer = L.layerGroup().addTo(map);
+            waypointLayer = L.layerGroup().addTo(map);
+        }
+        
+        // Load scenarios list
+        function loadScenariosList() {
+            setInfoText('Loading scenarios list...');
+            
+            fetch('scenarios/scenarios_list.json')
+                .then(response => response.json())
+                .then(data => {
+                    scenariosList = data.scenarios;
+                    
+                    // Populate dropdown
+                    const select = document.getElementById('scenarioSelect');
+                    select.innerHTML = '<option value="">-- Select a Scenario --</option>';
+                    
+                    scenariosList.forEach((scenario, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.textContent = `${scenario.display_name} (${scenario.record_count.toLocaleString()} records)`;
+                        select.appendChild(option);
+                    });
+                    
+                    setInfoText('Ready to select a scenario');
+                    
+                    // Auto-select first scenario
+                    if (scenariosList.length > 0) {
+                        select.value = '0';
+                        loadScenario(0);
+                    }
+                })
+                .catch(error => {
+                    setInfoText('Error loading scenarios: ' + error);
+                    console.error('Error loading scenarios:', error);
+                });
+        }
+        
+        // Load scenario CSV data
+        function loadScenario(scenarioIndex) {
+            if (scenarioIndex < 0 || scenarioIndex >= scenariosList.length) {
+                setInfoText('Invalid scenario index');
+                return;
+            }
+            
+            const scenario = scenariosList[scenarioIndex];
+            currentScenario = scenario;
+            
+            // Reset animation
+            pauseAnimation();
+            currentIndex = 0;
+            
+            setInfoText(`Loading ${scenario.display_name}...`);
+            
+            // Load metadata first
+            fetch(scenario.metadata_file)
+                .then(response => response.json())
+                .then(metadata => {
+                    // Update UI with metadata
+                    vehicle1Id = metadata.source_vehicle;
+                    vehicle2Id = metadata.destination_vehicle;
+                    
+                    document.getElementById('vehicle1Label').textContent = `Vehicle ${vehicle1Id} Trajectory`;
+                    document.getElementById('vehicle2Label').textContent = `Vehicle ${vehicle2Id} Trajectory`;
+                    
+                    document.getElementById('coverage').textContent = 
+                        `${metadata.coverage_degrees.latitude.toFixed(6)}° × ${metadata.coverage_degrees.longitude.toFixed(6)}°`;
+                    document.getElementById('distanceRange').textContent = 
+                        `${metadata.distance_stats.min.toFixed(1)}m - ${metadata.distance_stats.max.toFixed(1)}m`;
+                    document.getElementById('scenario').textContent = 
+                        metadata.scenarios.length > 0 ? metadata.scenarios.join(', ') : 'N/A';
+                    
+                    // Load CSV data
+                    Papa.parse(scenario.csv_file, {
+                        download: true, 
+                        header: true, 
+                        skipEmptyLines: true,
+                        complete: function(results) {
+                            const data = results.data;
+                            if (!data || data.length === 0) {
+                                setInfoText('No data found in CSV');
+                                return;
+                            }
+                            
+                            // Filter out rows without valid GPS coordinates
+                            allData = data.filter(row => {
+                                const sourceLat = parseFloat(row['Latitude_source']);
+                                const sourceLon = parseFloat(row['Longitude_source']);
+                                const destLat = parseFloat(row['Latitude_destination']);
+                                const destLon = parseFloat(row['Longitude_destination']);
+                                
+                                return !isNaN(sourceLat) && !isNaN(sourceLon) && 
+                                       !isNaN(destLat) && !isNaN(destLon) &&
+                                       sourceLat !== 0 && sourceLon !== 0 &&
+                                       destLat !== 0 && destLon !== 0;
+                            });
+                            
+                            setInfoText(`Loaded ${allData.length.toLocaleString()} V2V communication records`);
+                            
+                            // Update dataset info
+                            document.getElementById('totalRecords').textContent = 
+                                `${allData.length.toLocaleString()} records`;
+                            
+                            // Build vehicle trajectories
+                            buildVehicleTrajectories();
+                            
+                            // Initial display
+                            currentIndex = 0;
+                            updateForIndex(0);
+                        },
+                        error: function(err) {
+                            setInfoText('CSV load error: ' + err);
+                            console.error('CSV load error:', err);
+                        }
+                    });
+                })
+                .catch(error => {
+                    setInfoText('Error loading metadata: ' + error);
+                    console.error('Error loading metadata:', error);
+                });
+        }
+        
+        // Build vehicle trajectories from data
+        function buildVehicleTrajectories() {
+            vehicle1Trajectory = [];
+            vehicle2Trajectory = [];
+            
+            allData.forEach(row => {
+                const sourceLat = parseFloat(row['Latitude_source']);
+                const sourceLon = parseFloat(row['Longitude_source']);
+                const destLat = parseFloat(row['Latitude_destination']);
+                const destLon = parseFloat(row['Longitude_destination']);
+                const sourceId = parseInt(row['Source']);
+                const destId = parseInt(row['Destination']);
+                
+                // Determine which vehicle is which based on the pair
+                if (sourceId === vehicle1Id) {
+                    vehicle1Trajectory.push([sourceLat, sourceLon]);
+                    vehicle2Trajectory.push([destLat, destLon]);
+                } else if (sourceId === vehicle2Id) {
+                    vehicle1Trajectory.push([destLat, destLon]);
+                    vehicle2Trajectory.push([sourceLat, sourceLon]);
+                } else if (destId === vehicle1Id) {
+                    vehicle1Trajectory.push([destLat, destLon]);
+                    vehicle2Trajectory.push([sourceLat, sourceLon]);
+                } else if (destId === vehicle2Id) {
+                    vehicle1Trajectory.push([sourceLat, sourceLon]);
+                    vehicle2Trajectory.push([destLat, destLon]);
+                }
+            });
+            
+            console.log(`Built trajectories: Vehicle ${vehicle1Id} (${vehicle1Trajectory.length} points), Vehicle ${vehicle2Id} (${vehicle2Trajectory.length} points)`);
+        }
+        
+        // Update visualization for given index
+        function updateForIndex(index) {
+            if (index >= allData.length || allData.length === 0) return;
+            
+            const row = allData[index];
+            const sourceLat = parseFloat(row['Latitude_source']);
+            const sourceLon = parseFloat(row['Longitude_source']);
+            const destLat = parseFloat(row['Latitude_destination']);
+            const destLon = parseFloat(row['Longitude_destination']);
+            const distance = parseFloat(row['distance']) || 0;
+            const snr = parseFloat(row['SNR']) || 0;
+            const sourceId = parseInt(row['Source']);
+            const destId = parseInt(row['Destination']);
+            
+            // Determine current vehicle positions
+            let vehicle1Pos, vehicle2Pos;
+            if (sourceId === vehicle1Id) {
+                vehicle1Pos = [sourceLat, sourceLon];
+                vehicle2Pos = [destLat, destLon];
+            } else {
+                vehicle1Pos = [destLat, destLon];
+                vehicle2Pos = [sourceLat, sourceLon];
+            }
+            
+            // Clear previous visualization
+            vehicle1Layer.clearLayers();
+            vehicle2Layer.clearLayers();
+            communicationLayer.clearLayers();
+            waypointLayer.clearLayers();
+            
+            // Draw trajectories up to current point
+            if (vehicle1Trajectory.length > 0 && vehicle2Trajectory.length > 0) {
+                // Vehicle 1 trajectory (blue)
+                const vehicle1Path = L.polyline(vehicle1Trajectory.slice(0, index + 1), {
+                    color: '#3498db',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(vehicle1Layer);
+                
+                // Vehicle 2 trajectory (orange)
+                const vehicle2Path = L.polyline(vehicle2Trajectory.slice(0, index + 1), {
+                    color: '#e67e22',
+                    weight: 3,
+                    opacity: 0.8
+                }).addTo(vehicle2Layer);
+                
+                // Add waypoints every 100 points (adjust for large datasets)
+                const waypointInterval = Math.max(10, Math.floor(allData.length / 100));
+                for (let i = 0; i <= index; i += waypointInterval) {
+                    if (i < vehicle1Trajectory.length) {
+                        L.circleMarker(vehicle1Trajectory[i], {
+                            radius: 4,
+                            fillColor: '#f39c12',
+                            color: '#d68910',
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(waypointLayer);
+                    }
+                }
+            }
+            
+            // Current communication link
+            const communicationLink = L.polyline([[sourceLat, sourceLon], [destLat, destLon]], {
+                color: '#e74c3c',
+                weight: 2,
+                opacity: 0.7,
+                dashArray: '5, 5'
+            }).addTo(communicationLayer);
+            
+            // Current vehicle positions
+            L.circleMarker(vehicle1Pos, {
+                radius: 8,
+                fillColor: '#3498db',
+                color: '#2980b9',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(vehicle1Layer);
+            
+            L.circleMarker(vehicle2Pos, {
+                radius: 8,
+                fillColor: '#e67e22',
+                color: '#d35400',
+                weight: 3,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(vehicle2Layer);
+            
+            // Update stats
+            document.getElementById('currentDistance').textContent = `${distance.toFixed(1)}m`;
+            document.getElementById('currentSNR').textContent = `${snr.toFixed(1)} dB`;
+            
+            // Update progress
+            const progress = ((index + 1) / allData.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = 
+                `${(index + 1).toLocaleString()} / ${allData.length.toLocaleString()}`;
+            
+            // Center map on current positions
+            const bounds = L.latLngBounds([vehicle1Pos, vehicle2Pos]);
+            map.fitBounds(bounds, { padding: [20, 20] });
+        }
+        
+        // Animation controls
+        function playAnimation() {
+            if (isPlaying || allData.length === 0) return;
+            isPlaying = true;
+            document.getElementById('playBtn').textContent = '⏸️ Playing';
+            document.getElementById('playBtn').classList.remove('btn-primary');
+            document.getElementById('playBtn').classList.add('btn-secondary');
+            
+            animationInterval = setInterval(() => {
+                currentIndex++;
+                if (currentIndex >= allData.length) {
+                    pauseAnimation();
+                    return;
+                }
+                updateForIndex(currentIndex);
+            }, 1000 / animationSpeed);
+        }
+        
+        function pauseAnimation() {
+            isPlaying = false;
+            clearInterval(animationInterval);
+            document.getElementById('playBtn').textContent = '▶️ Play';
+            document.getElementById('playBtn').classList.remove('btn-secondary');
+            document.getElementById('playBtn').classList.add('btn-primary');
+        }
+        
+        function stepAnimation() {
+            if (isPlaying) pauseAnimation();
+            currentIndex++;
+            if (currentIndex >= allData.length) {
+                currentIndex = allData.length - 1;
+            }
+            updateForIndex(currentIndex);
+        }
+        
+        // Utility functions
+        function setInfoText(text) {
+            document.getElementById('status').textContent = text;
+        }
+        
+        // Event listeners
+        document.getElementById('scenarioSelect').addEventListener('change', (e) => {
+            const index = parseInt(e.target.value);
+            if (!isNaN(index)) {
+                loadScenario(index);
+            }
+        });
+        
+        document.getElementById('playBtn').addEventListener('click', () => {
+            if (isPlaying) {
+                pauseAnimation();
+            } else {
+                playAnimation();
+            }
+        });
+        
+        document.getElementById('pauseBtn').addEventListener('click', pauseAnimation);
+        document.getElementById('stepBtn').addEventListener('click', stepAnimation);
+        
+        document.getElementById('speedSlider').addEventListener('input', (e) => {
+            animationSpeed = parseInt(e.target.value);
+            document.getElementById('speedValue').textContent = animationSpeed;
+            
+            // Restart animation with new speed if currently playing
+            if (isPlaying) {
+                pauseAnimation();
+                playAnimation();
+            }
+        });
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            loadScenariosList();
+        });
+    </script>
+</body>
+</html>
+

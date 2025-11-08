@@ -1,0 +1,242 @@
+{
+  "extraction_date": "2025-10-31T01:18:55.709580",
+  "total_scenarios": 6,
+  "scenarios": [
+    {
+      "name": "vehicle_1_2",
+      "display_name": "Vehicle 1 \u2194 Vehicle 2",
+      "csv_file": "scenarios/vehicle_1_2.csv",
+      "metadata_file": "scenarios/vehicle_1_2_metadata.json",
+      "record_count": 57381
+    },
+    {
+      "name": "vehicle_1_3",
+      "display_name": "Vehicle 1 \u2194 Vehicle 3",
+      "csv_file": "scenarios/vehicle_1_3.csv",
+      "metadata_file": "scenarios/vehicle_1_3_metadata.json",
+      "record_count": 58907
+    },
+    {
+      "name": "vehicle_1_4",
+      "display_name": "Vehicle 1 \u2194 Vehicle 4",
+      "csv_file": "scenarios/vehicle_1_4.csv",
+      "metadata_file": "scenarios/vehicle_1_4_metadata.json",
+      "record_count": 48534
+    },
+    {
+      "name": "vehicle_2_3",
+      "display_name": "Vehicle 2 \u2194 Vehicle 3",
+      "csv_file": "scenarios/vehicle_2_3.csv",
+      "metadata_file": "scenarios/vehicle_2_3_metadata.json",
+      "record_count": 56916
+    },
+    {
+      "name": "vehicle_2_4",
+      "display_name": "Vehicle 2 \u2194 Vehicle 4",
+      "csv_file": "scenarios/vehicle_2_4.csv",
+      "metadata_file": "scenarios/vehicle_2_4_metadata.json",
+      "record_count": 61925
+    },
+    {
+      "name": "vehicle_3_4",
+      "display_name": "Vehicle 3 \u2194 Vehicle 4",
+      "csv_file": "scenarios/vehicle_3_4.csv",
+      "metadata_file": "scenarios/vehicle_3_4_metadata.json",
+      "record_count": 42165
+    }
+  ],
+  "metadata": {
+    "vehicle_1_2": {
+      "scenario_name": "vehicle_1_2",
+      "vehicle_pair": "1-2",
+      "source_vehicle": 1,
+      "destination_vehicle": 2,
+      "total_records": 57381,
+      "coordinate_bounds": {
+        "min_lat": 52.487993333333335,
+        "max_lat": 52.51616666666666,
+        "min_lon": 13.280038333333334,
+        "max_lon": 13.377518333333333,
+        "center_lat": 52.5053761966795,
+        "center_lon": 13.325221044422369
+      },
+      "coverage_degrees": {
+        "latitude": 0.028173333333327832,
+        "longitude": 0.09747999999999912
+      },
+      "distance_stats": {
+        "min": 0.8108271961782954,
+        "max": 408.48038131067904,
+        "mean": 31.375823462945856
+      },
+      "scenarios": [
+        "S1",
+        "S2"
+      ],
+      "snr_range": {
+        "min": -1.79848,
+        "max": 28.403335
+      }
+    },
+    "vehicle_1_3": {
+      "scenario_name": "vehicle_1_3",
+      "vehicle_pair": "1-3",
+      "source_vehicle": 1,
+      "destination_vehicle": 3,
+      "total_records": 58907,
+      "coordinate_bounds": {
+        "min_lat": 52.48799666666667,
+        "max_lat": 52.51617333333333,
+        "min_lon": 13.280081666666666,
+        "max_lon": 13.377518333333333,
+        "center_lat": 52.5056983345075,
+        "center_lon": 13.326154685210021
+      },
+      "coverage_degrees": {
+        "latitude": 0.028176666666659855,
+        "longitude": 0.09743666666666684
+      },
+      "distance_stats": {
+        "min": 0.0,
+        "max": 250.2059232011513,
+        "mean": 13.338889292890961
+      },
+      "scenarios": [
+        "S1",
+        "S2"
+      ],
+      "snr_range": {
+        "min": -2.78329,
+        "max": 28.761175
+      }
+    },
+    "vehicle_1_4": {
+      "scenario_name": "vehicle_1_4",
+      "vehicle_pair": "1-4",
+      "source_vehicle": 1,
+      "destination_vehicle": 4,
+      "total_records": 48534,
+      "coordinate_bounds": {
+        "min_lat": 52.48799666666667,
+        "max_lat": 52.51616666666666,
+        "min_lon": 13.280081666666666,
+        "max_lon": 13.377518333333333,
+        "center_lat": 52.505467661210005,
+        "center_lon": 13.32593838544457
+      },
+      "coverage_degrees": {
+        "latitude": 0.02816999999999581,
+        "longitude": 0.09743666666666684
+      },
+      "distance_stats": {
+        "min": 2.11190848681651,
+        "max": 394.9001418868137,
+        "mean": 44.81401725273415
+      },
+      "scenarios": [
+        "S1",
+        "S2"
+      ],
+      "snr_range": {
+        "min": -1.70824,
+        "max": 26.805345
+      }
+    },
+    "vehicle_2_3": {
+      "scenario_name": "vehicle_2_3",
+      "vehicle_pair": "2-3",
+      "source_vehicle": 2,
+      "destination_vehicle": 3,
+      "total_records": 56916,
+      "coordinate_bounds": {
+        "min_lat": 52.487993333333335,
+        "max_lat": 52.51617333333333,
+        "min_lon": 13.280038333333334,
+        "max_lon": 13.377491666666666,
+        "center_lat": 52.505082116261974,
+        "center_lon": 13.324840545365097
+      },
+      "coverage_degrees": {
+        "latitude": 0.028179999999991878,
+        "longitude": 0.09745333333333228
+      },
+      "distance_stats": {
+        "min": 1.146890254297506,
+        "max": 229.308009900794,
+        "mean": 17.396331273825723
+      },
+      "scenarios": [
+        "S1",
+        "S2"
+      ],
+      "snr_range": {
+        "min": -4.13102,
+        "max": 31.327585
+      }
+    },
+    "vehicle_2_4": {
+      "scenario_name": "vehicle_2_4",
+      "vehicle_pair": "2-4",
+      "source_vehicle": 2,
+      "destination_vehicle": 4,
+      "total_records": 61925,
+      "coordinate_bounds": {
+        "min_lat": 52.487993333333335,
+        "max_lat": 52.51616333333333,
+        "min_lon": 13.280091666666667,
+        "max_lon": 13.377491666666666,
+        "center_lat": 52.505589448445704,
+        "center_lon": 13.326603715691023
+      },
+      "coverage_degrees": {
+        "latitude": 0.02816999999999581,
+        "longitude": 0.0973999999999986
+      },
+      "distance_stats": {
+        "min": 0.1851850032333057,
+        "max": 272.43858849489567,
+        "mean": 19.69580786008801
+      },
+      "scenarios": [
+        "S1",
+        "S2"
+      ],
+      "snr_range": {
+        "min": -1.59031,
+        "max": 32.451075
+      }
+    },
+    "vehicle_3_4": {
+      "scenario_name": "vehicle_3_4",
+      "vehicle_pair": "3-4",
+      "source_vehicle": 3,
+      "destination_vehicle": 4,
+      "total_records": 42165,
+      "coordinate_bounds": {
+        "min_lat": 52.488,
+        "max_lat": 52.51617333333333,
+        "min_lon": 13.280098333333331,
+        "max_lon": 13.377491666666666,
+        "center_lat": 52.50450312156607,
+        "center_lon": 13.32475781060516
+      },
+      "coverage_degrees": {
+        "latitude": 0.028173333333327832,
+        "longitude": 0.09739333333333455
+      },
+      "distance_stats": {
+        "min": 1.7338557314083942,
+        "max": 377.3335793379897,
+        "mean": 31.368695859124234
+      },
+      "scenarios": [
+        "S1",
+        "S2"
+      ],
+      "snr_range": {
+        "min": -3.25688,
+        "max": 29.302715
+      }
+    }
+  }
+}

@@ -1,11 +1,12 @@
 {
   "simulation_settings": {
-    "num_waypoints": 103,
+    "num_waypoints": 208,
     "calibration_enabled": true,
-    "calibration_factor": 0.607,
+    "calibration_type": "adaptive",
     "realistic_speed_enabled": true,
     "path_loss_model": "3GPP",
-    "total_steps": 4020
+    "use_all_waypoints": true,
+    "total_steps": 1023
   },
   "v2v_parameters": {
     "carrier_frequency_ghz": 5.9,
@@ -15,29 +16,29 @@
     "bandwidth_mhz": 10
   },
   "distance_accuracy": {
-    "mean_accuracy_pct": 73.23477300052461,
-    "median_accuracy_pct": 75.13562292678013,
-    "std_dev_pct": 13.078957379150893
+    "mean_accuracy_pct": 79.28833994686897,
+    "median_accuracy_pct": 88.49661991733815,
+    "std_dev_pct": 22.408465940213652
   },
   "path_loss_accuracy": {
-    "mean_accuracy_pct": 95.19329271111455,
-    "median_accuracy_pct": 95.24237119295121,
-    "mean_error_db": 0.36407827684914956,
-    "mean_absolute_error_db": 4.171008180807987,
-    "rmse_db": 4.530852334446026,
-    "std_dev_db": 4.531330517623701
+    "mean_accuracy_pct": 96.01155493088301,
+    "median_accuracy_pct": 98.05732138209787,
+    "mean_error_db": -0.27547282756794106,
+    "mean_absolute_error_db": 3.6629720331611253,
+    "rmse_db": 5.477889235363528,
+    "std_dev_db": 5.499982198846839
   },
   "snr_accuracy": {
-    "mean_accuracy_pct": 84.01581517962057,
-    "mean_error_db": -0.36407827684914956,
-    "mean_absolute_error_db": 4.171008180807987,
-    "rmse_db": 4.530852334446026,
-    "std_dev_db": 4.531330517623701
+    "mean_accuracy_pct": 80.00184515148015,
+    "mean_error_db": 0.27547282756794106,
+    "mean_absolute_error_db": 3.6629720331611253,
+    "rmse_db": 5.477889235363528,
+    "std_dev_db": 5.499982198846839
   },
   "prr_accuracy": {
-    "mean_accuracy_pct": 99.98637081854429,
-    "median_accuracy_pct": 99.99452585702231,
-    "std_dev_pct": 0.012679371172742985
+    "mean_accuracy_pct": 99.6814163988168,
+    "median_accuracy_pct": 99.96238211812123,
+    "std_dev_pct": 0.847213754675882
   },
   "communication_range": {
     "estimated_range_m": 48.1648645401001

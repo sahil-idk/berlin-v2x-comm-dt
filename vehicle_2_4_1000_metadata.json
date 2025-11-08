@@ -1,0 +1,28 @@
+{
+  "extraction_date": "2025-10-17T12:50:50.691170",
+  "total_records": 325868,
+  "vehicle_2_4_records": 61925,
+  "extracted_subset_size": 1000,
+  "target_points": 1000,
+  "sampling_method": "sequential",
+  "coordinate_bounds": {
+    "min_lat": 52.487993333333335,
+    "max_lat": 52.51616333333333,
+    "min_lon": 13.280091666666667,
+    "max_lon": 13.377491666666666,
+    "center_lat": 52.505589448445704,
+    "center_lon": 13.326603715691023
+  },
+  "coverage_degrees": {
+    "latitude": 0.02816999999999581,
+    "longitude": 0.0973999999999986
+  },
+  "scenarios": [
+    "S1"
+  ],
+  "distance_range": {
+    "min": 5.933261305268005,
+    "max": 250.26850048104572,
+    "mean": 35.338003945049515
+  }
+}

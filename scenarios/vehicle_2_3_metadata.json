@@ -1,0 +1,32 @@
+{
+  "scenario_name": "vehicle_2_3",
+  "vehicle_pair": "2-3",
+  "source_vehicle": 2,
+  "destination_vehicle": 3,
+  "total_records": 56916,
+  "coordinate_bounds": {
+    "min_lat": 52.487993333333335,
+    "max_lat": 52.51617333333333,
+    "min_lon": 13.280038333333334,
+    "max_lon": 13.377491666666666,
+    "center_lat": 52.505082116261974,
+    "center_lon": 13.324840545365097
+  },
+  "coverage_degrees": {
+    "latitude": 0.028179999999991878,
+    "longitude": 0.09745333333333228
+  },
+  "distance_stats": {
+    "min": 1.146890254297506,
+    "max": 229.308009900794,
+    "mean": 17.396331273825723
+  },
+  "scenarios": [
+    "S1",
+    "S2"
+  ],
+  "snr_range": {
+    "min": -4.13102,
+    "max": 31.327585
+  }
+}

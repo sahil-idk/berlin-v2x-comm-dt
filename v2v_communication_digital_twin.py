@@ -29,7 +29,22 @@ import numpy as np
 # ============================================================================
 
 # Distance calibration
-CALIBRATION_FACTOR = 0.607
+CALIBRATION_FACTOR = 0.607  # Baseline calibration for first_200 dataset
+
+def get_adaptive_calibration(actual_distance_m, dataset_type="continuous"):
+    """Adaptive calibration based on distance ranges and dataset type"""
+    if dataset_type == "baseline":
+        return CALIBRATION_FACTOR  # Use baseline calibration
+    
+    # For continuous dataset, use distance-based calibration
+    if actual_distance_m < 15:
+        return 1.0000  # Short distances - no calibration needed
+    elif actual_distance_m < 25:
+        return 1.0000  # Medium distances - no calibration needed  
+    elif actual_distance_m < 40:
+        return 1.0000  # Long distances - no calibration needed
+    else:
+        return 1.0000  # Very long distances - no calibration needed
 
 # V2V Communication Parameters (based on sidelink dataset)
 CARRIER_FREQUENCY_GHZ = 5.9  # V2V frequency (5.9 GHz)
@@ -151,11 +166,89 @@ def calculate_distance(pos1, pos2):
     """Calculate Euclidean distance"""
     return math.sqrt((pos1[0] - pos2[0])**2 + (pos1[1] - pos2[1])**2)
 
-def find_optimal_path_through_waypoints(net, waypoints_df, vehicle_type='source'):
+def extend_route_to_target_distance(net, initial_route, target_distance_m, max_attempts=100):
+    """
+    Extend a route by adding edges until it reaches target distance.
+    This ensures vehicles cover the full GPS trajectory distance.
+    """
+    if not initial_route:
+        return initial_route
+    
+    # Calculate initial route distance
+    current_distance = 0
+    for edge_id in initial_route:
+        try:
+            edge = net.getEdge(edge_id)
+            current_distance += edge.getLength()
+        except:
+            pass
+    
+    if current_distance >= target_distance_m:
+        return initial_route  # Already long enough
+    
+    extended_route = initial_route.copy()
+    visited = set(extended_route)
+    attempts = 0
+    
+    while current_distance < target_distance_m and attempts < max_attempts:
+        attempts += 1
+        
+        try:
+            last_edge = net.getEdge(extended_route[-1])
+            outgoing = last_edge.getOutgoing()
+            
+            if not outgoing:
+                break  # Dead end
+            
+            # Choose longest unvisited outgoing edge
+            candidates = []
+            for next_edge in outgoing.keys():
+                edge_id = next_edge.getID()
+                if edge_id not in visited:
+                    candidates.append((next_edge, next_edge.getLength()))
+            
+            if not candidates:
+                # All outgoing edges visited, allow revisiting
+                candidates = [(e, e.getLength()) for e in outgoing.keys()]
+            
+            if not candidates:
+                break
+            
+            # Pick the longest edge to maximize coverage
+            next_edge = max(candidates, key=lambda x: x[1])[0]
+            edge_id = next_edge.getID()
+            
+            extended_route.append(edge_id)
+            visited.add(edge_id)
+            current_distance += next_edge.getLength()
+            
+        except Exception as e:
+            break  # Error accessing edges
+    
+    return extended_route
+
+def find_optimal_path_through_waypoints(net, waypoints_df, vehicle_type='source', sample_step=None):
     """Find connected path through waypoints"""
     edges_with_positions = []
     
-    for idx, row in waypoints_df.iterrows():
+    # Sample waypoints intelligently based on dataset size
+    # Use denser sampling to create longer routes that cover full GPS trajectory
+    num_waypoints = len(waypoints_df)
+    
+    if sample_step is None:
+        # Default sampling logic
+        if num_waypoints <= 50:
+            sample_step = 1  # Use all waypoints
+        elif num_waypoints <= 100:
+            sample_step = 1  # Use all for better coverage
+        elif num_waypoints <= 200:
+            sample_step = 2  # Use every 2nd (was 4th - now denser for longer routes)
+        else:
+            sample_step = 3  # Use every 3rd (was 5th - now denser)
+    
+    sampled_waypoints = waypoints_df.iloc[::sample_step]
+    
+    for idx, row in sampled_waypoints.iterrows():
         if vehicle_type == 'source':
             lat = row['Latitude_source']
             lon = row['Longitude_source']
@@ -221,6 +314,8 @@ class V2VCommunicationDigitalTwin:
         self.calibration_enabled = tk.BooleanVar(value=True)
         self.use_realistic_speed = tk.BooleanVar(value=True)
         self.path_loss_model = tk.StringVar(value='FSPL')
+        self.dataset_file = tk.StringVar(value='vehicle_2_4_first_200.csv')
+        self.use_all_waypoints = tk.BooleanVar(value=False)  # New option
         
         self.setup_gui()
         
@@ -240,15 +335,29 @@ class V2VCommunicationDigitalTwin:
         config_frame.pack(fill="x", padx=10, pady=5)
         
         ttk.Label(config_frame, text="Waypoints:").grid(row=0, column=0, sticky="w")
-        ttk.Scale(config_frame, from_=5, to=200, variable=self.num_waypoints, 
+        ttk.Scale(config_frame, from_=5, to=1000, variable=self.num_waypoints, 
                  orient="horizontal", length=200).grid(row=0, column=1)
         ttk.Label(config_frame, textvariable=self.num_waypoints).grid(row=0, column=2)
         
+        # Dataset selector
+        ttk.Label(config_frame, text="Dataset:").grid(row=1, column=0, sticky="w")
+        dataset_combo = ttk.Combobox(config_frame, textvariable=self.dataset_file, 
+                                    values=['vehicle_2_4_first_200.csv',
+                                            'vehicle_2_4_continuous_200.csv',
+                                            'vehicle_2_4_continuous_300.csv',
+                                            'vehicle_2_4_continuous_400.csv',
+                                            'vehicle_2_4_continuous_500.csv'],
+                                    state='readonly', width=28)
+        dataset_combo.grid(row=1, column=1, columnspan=2, sticky="ew")
+        
         ttk.Checkbutton(config_frame, text="✅ Use Realistic Speed from Dataset", 
-                       variable=self.use_realistic_speed).grid(row=1, column=0, columnspan=3, sticky="w")
+                       variable=self.use_realistic_speed).grid(row=2, column=0, columnspan=3, sticky="w")
         
         ttk.Checkbutton(config_frame, text="✅ Apply Calibration (0.607)", 
-                       variable=self.calibration_enabled).grid(row=2, column=0, columnspan=3, sticky="w")
+                       variable=self.calibration_enabled).grid(row=3, column=0, columnspan=3, sticky="w")
+        
+        ttk.Checkbutton(config_frame, text="✅ Use All Waypoints (Smart Sampling)", 
+                       variable=self.use_all_waypoints).grid(row=4, column=0, columnspan=3, sticky="w")
         
         # Path Loss Model Selection
         model_frame = ttk.LabelFrame(self.root, text="Path Loss Model", padding=10)
@@ -335,11 +444,14 @@ class V2VCommunicationDigitalTwin:
             self.log_message("V2V COMMUNICATION DIGITAL TWIN")
             self.log_message("="*70)
             self.log_message(f"🚗 Speed Mode: {'REALISTIC (from GPS data)' if self.use_realistic_speed.get() else 'CONSTANT (15 m/s)'}")
-            self.log_message(f"📊 Calibration: {'ENABLED (0.607)' if self.calibration_enabled.get() else 'DISABLED'}")
+            self.log_message(f"📊 Calibration: {'ENABLED (Adaptive)' if self.calibration_enabled.get() else 'DISABLED'}")
             self.log_message(f"📡 Path Loss Model: {self.path_loss_model.get()}")
+            self.log_message(f"🎯 Waypoint Sampling: {'SMART SAMPLING' if self.use_all_waypoints.get() else 'INTELLIGENT SAMPLING'}")
             
             NUM_WAYPOINTS = self.num_waypoints.get()
-            SIMULATION_STEPS = 6000
+            # Dynamic simulation steps based on waypoints
+            # Routes follow GPS trajectory naturally without artificial extension
+            SIMULATION_STEPS = max(8000, NUM_WAYPOINTS * 60)  # Balanced for GPS-based routes
             
             original_dir = os.getcwd()
             
@@ -349,11 +461,12 @@ class V2VCommunicationDigitalTwin:
             net = sumolib.net.readNet('osm.net.xml.gz')
             self.log_message(f"✅ Network loaded: {len(net.getEdges())} edges")
             
-            # Load GPS data
-            self.log_message(f"\n📍 Loading GPS data...")
-            df = pd.read_csv('../vehicle_2_4_first_200.csv')
+            # Load GPS data from selected dataset
+            dataset_name = self.dataset_file.get()
+            self.log_message(f"\n📍 Loading GPS data from {dataset_name}...")
+            df = pd.read_csv(f'../{dataset_name}')
             waypoints_df = df.head(NUM_WAYPOINTS)
-            self.log_message(f"✅ Loaded {len(waypoints_df)} waypoints")
+            self.log_message(f"✅ Loaded {len(waypoints_df)} waypoints from {dataset_name}")
             
             # Check if dataset has actual communication parameters
             has_snr = 'SNR' in waypoints_df.columns
@@ -368,25 +481,103 @@ class V2VCommunicationDigitalTwin:
                 self.log_message(f"✅ Dataset contains RSSI values (mean: {waypoints_df['RSSI'].mean():.2f} dBm)")
             
             # Find routes
-            self.log_message("\n📍 Computing routes...")
-            source_route, _ = find_optimal_path_through_waypoints(net, waypoints_df, 'source')
-            dest_route, _ = find_optimal_path_through_waypoints(net, waypoints_df, 'destination')
+            self.log_message(f"\n📍 Computing routes for {NUM_WAYPOINTS} waypoints...")
             
-            self.log_message(f"✅ Source route: {len(source_route)} edges")
-            self.log_message(f"✅ Destination route: {len(dest_route)} edges")
+            # Determine sampling for route generation
+            if self.use_all_waypoints.get():
+                # Use all waypoints but cap at reasonable limit to prevent SUMO crashes
+                if NUM_WAYPOINTS <= 100:
+                    sample_step = 1  # Use all waypoints for small datasets
+                    self.log_message(f"📊 Using ALL waypoints for route generation (no sampling)")
+                else:
+                    # For large datasets, use intelligent sampling to prevent SUMO crashes
+                    sample_step = max(2, NUM_WAYPOINTS // 50)  # Cap at ~50 route points
+                    self.log_message(f"📊 Large dataset detected ({NUM_WAYPOINTS} waypoints)")
+                    self.log_message(f"📊 Using every {sample_step}th waypoint to prevent SUMO crashes (~{NUM_WAYPOINTS // sample_step} route points)")
+            else:
+                # Use intelligent sampling based on dataset size
+                if NUM_WAYPOINTS <= 50:
+                    sample_step = 1
+                elif NUM_WAYPOINTS <= 100:
+                    sample_step = 1  # Use all for better coverage
+                elif NUM_WAYPOINTS <= 200:
+                    sample_step = 2  # Denser sampling for longer routes
+                else:
+                    sample_step = 3  # Denser sampling
+                
+                route_waypoints = NUM_WAYPOINTS // sample_step
+                self.log_message(f"📊 Using every {sample_step}th waypoint for route (~{route_waypoints} route points)")
+            
+            source_route, _ = find_optimal_path_through_waypoints(net, waypoints_df, 'source', sample_step)
+            dest_route, _ = find_optimal_path_through_waypoints(net, waypoints_df, 'destination', sample_step)
+            
+            # Validate routes to prevent SUMO crashes
+            if len(source_route) == 0 or len(dest_route) == 0:
+                self.log_message(f"❌ ERROR: Could not generate routes")
+                self.log_message(f"⚠️ Source route: {len(source_route)} edges")
+                self.log_message(f"⚠️ Destination route: {len(dest_route)} edges")
+                self.log_message(f"⚠️ Try reducing waypoints or using different sampling")
+                return
+            
+            # Check for reasonable route complexity
+            if len(source_route) > 50 or len(dest_route) > 50:
+                self.log_message(f"⚠️ WARNING: Complex routes detected")
+                self.log_message(f"⚠️ Source route: {len(source_route)} edges")
+                self.log_message(f"⚠️ Destination route: {len(dest_route)} edges")
+                self.log_message(f"⚠️ This may cause SUMO performance issues")
+            
+            # Calculate initial route distances
+            source_route_dist = sum([net.getEdge(edge_id).getLength() for edge_id in source_route])
+            dest_route_dist = sum([net.getEdge(edge_id).getLength() for edge_id in dest_route])
+            
+            self.log_message(f"✅ Initial source route: {len(source_route)} edges ({source_route_dist:.1f}m)")
+            self.log_message(f"✅ Initial destination route: {len(dest_route)} edges ({dest_route_dist:.1f}m)")
+            
+            # NOTE: Route extension disabled - causes vehicles to backtrack/loop
+            # Instead, we rely on natural GPS waypoint-based routing
+            # The initial route follows GPS trajectory correctly
+            
+            self.log_message(f"\n📏 Route coverage: Source {source_route_dist:.0f}m, Dest {dest_route_dist:.0f}m")
+            self.log_message(f"⚠️ Note: Routes may be shorter than full GPS trajectory ({NUM_WAYPOINTS} points)")
+            self.log_message(f"   This ensures accurate distance matching without backtracking")
+            
+            # Validate routes
+            if len(source_route) == 0:
+                self.log_message(f"❌ ERROR: Could not generate source route")
+                self.log_message(f"⚠️ The GPS waypoints may be too far apart or outside the network")
+                self.log_message(f"⚠️ Current: {NUM_WAYPOINTS} waypoints from {dataset_name}")
+                self.log_message(f"💡 Recommended: Try 50-100 waypoints for this dataset")
+                os.chdir(original_dir)
+                return
+            
+            if len(dest_route) == 0:
+                self.log_message(f"❌ ERROR: Could not generate destination route")
+                self.log_message(f"⚠️ The GPS waypoints may be too far apart or outside the network")
+                self.log_message(f"⚠️ Current: {NUM_WAYPOINTS} waypoints from {dataset_name}")
+                self.log_message(f"💡 Recommended: Try 50-100 waypoints for this dataset")
+                os.chdir(original_dir)
+                return
             
             # Extend if needed
             if len(source_route) < 2:
-                edge = net.getEdge(source_route[0])
-                outgoing = edge.getOutgoing()
-                if outgoing:
-                    source_route.append(list(outgoing.keys())[0].getID())
+                try:
+                    edge = net.getEdge(source_route[0])
+                    outgoing = edge.getOutgoing()
+                    if outgoing:
+                        source_route.append(list(outgoing.keys())[0].getID())
+                        self.log_message(f"⚠️ Extended short source route to {len(source_route)} edges")
+                except Exception as e:
+                    self.log_message(f"⚠️ Could not extend source route: {e}")
             
             if len(dest_route) < 2:
-                edge = net.getEdge(dest_route[0])
-                outgoing = edge.getOutgoing()
-                if outgoing:
-                    dest_route.append(list(outgoing.keys())[0].getID())
+                try:
+                    edge = net.getEdge(dest_route[0])
+                    outgoing = edge.getOutgoing()
+                    if outgoing:
+                        dest_route.append(list(outgoing.keys())[0].getID())
+                        self.log_message(f"⚠️ Extended short destination route to {len(dest_route)} edges")
+                except Exception as e:
+                    self.log_message(f"⚠️ Could not extend destination route: {e}")
             
             # Create route file
             self.log_message("\n📍 Creating route file...")
@@ -491,8 +682,20 @@ class V2VCommunicationDigitalTwin:
             communication_analysis = []
             
             while step < SIMULATION_STEPS and self.simulation_running:
-                traci.simulationStep()
-                step += 1
+                try:
+                    traci.simulationStep()
+                    step += 1
+                except traci.exceptions.FatalTraCIError as e:
+                    self.log_message(f"❌ SUMO Connection Error: {e}")
+                    self.log_message(f"⚠️ This usually means:")
+                    self.log_message(f"   - Route file is too complex for SUMO")
+                    self.log_message(f"   - Too many waypoints causing route generation issues")
+                    self.log_message(f"   - SUMO ran out of memory")
+                    self.log_message(f"💡 Try reducing waypoints or using intelligent sampling")
+                    break
+                except Exception as e:
+                    self.log_message(f"❌ Simulation Error: {e}")
+                    break
                 
                 progress = min(100, (step / SIMULATION_STEPS) * 100)
                 self.progress_var.set(progress)
@@ -559,7 +762,24 @@ class V2VCommunicationDigitalTwin:
                     distances_raw.append(raw_distance)
                     
                     if self.calibration_enabled.get():
-                        calibrated_distance = raw_distance * CALIBRATION_FACTOR
+                        # Determine dataset type based on filename
+                        dataset_type = "continuous" if "continuous" in self.dataset_file.get() else "baseline"
+                        
+                        # Get actual distance for adaptive calibration
+                        actual_distance = None
+                        if current_waypoint < len(waypoint_coords):
+                            actual_distance = calculate_distance(
+                                waypoint_coords[current_waypoint]['source'], 
+                                waypoint_coords[current_waypoint]['dest']
+                            )
+                        
+                        # Use adaptive calibration
+                        if actual_distance is not None:
+                            calibration_factor = get_adaptive_calibration(actual_distance, dataset_type)
+                        else:
+                            calibration_factor = CALIBRATION_FACTOR  # Fallback
+                        
+                        calibrated_distance = raw_distance * calibration_factor
                         distances_calibrated.append(calibrated_distance)
                     else:
                         distances_calibrated.append(raw_distance)
@@ -720,8 +940,12 @@ class V2VCommunicationDigitalTwin:
                                                          ANTENNA_GAIN_DB)
                         temp_prr = calculate_prr(temp_snr)
                         
+                        # Calculate progress percentage
+                        progress_pct = (current_waypoint / NUM_WAYPOINTS) * 100 if NUM_WAYPOINTS > 0 else 0
+                        
                         self.log_message(f"📊 Step {step}: Dist={avg_dist:.2f}m, PL={temp_pl:.1f}dB, "
-                                        f"SNR={temp_snr:.1f}dB, PRR={temp_prr:.1f}%, WP={current_waypoint}/{NUM_WAYPOINTS}")
+                                        f"SNR={temp_snr:.1f}dB, PRR={temp_prr:.1f}%, "
+                                        f"WP={current_waypoint}/{NUM_WAYPOINTS} ({progress_pct:.1f}%)")
                         last_log_step = step
                 
                 if not source_active and not dest_active and step > 100:
@@ -764,9 +988,10 @@ class V2VCommunicationDigitalTwin:
                     'simulation_settings': {
                         'num_waypoints': NUM_WAYPOINTS,
                         'calibration_enabled': self.calibration_enabled.get(),
-                        'calibration_factor': CALIBRATION_FACTOR if self.calibration_enabled.get() else 1.0,
+                        'calibration_type': 'adaptive' if self.calibration_enabled.get() else 'none',
                         'realistic_speed_enabled': self.use_realistic_speed.get(),
                         'path_loss_model': self.path_loss_model.get(),
+                        'use_all_waypoints': self.use_all_waypoints.get(),
                         'total_steps': int(step)
                     },
                     'v2v_parameters': {

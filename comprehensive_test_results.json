@@ -1,0 +1,98 @@
+{
+  "vehicle_2_4_first_200.csv_50pts": {
+    "baseline_calibration": 60.699999999999996,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 60.699999999999996,
+    "distance_stats": {
+      "mean": 18.75032621582773,
+      "std": 1.8265753619507308,
+      "min": 15.388712793562982,
+      "max": 23.08431035056544,
+      "count": 50
+    }
+  },
+  "vehicle_2_4_first_200.csv_100pts": {
+    "baseline_calibration": 60.70000000000001,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 60.70000000000001,
+    "distance_stats": {
+      "mean": 16.94261962465008,
+      "std": 2.577550771206977,
+      "min": 11.969054627443075,
+      "max": 23.08431035056544,
+      "count": 100
+    }
+  },
+  "vehicle_2_4_first_200.csv_133pts": {
+    "baseline_calibration": 60.70000000000001,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 60.70000000000001,
+    "distance_stats": {
+      "mean": 16.730754411494793,
+      "std": 2.4427704746301577,
+      "min": 11.969054627443075,
+      "max": 23.08431035056544,
+      "count": 133
+    }
+  },
+  "vehicle_2_4_continuous_500.csv_50pts": {
+    "baseline_calibration": 60.699999999999996,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 100.0,
+    "distance_stats": {
+      "mean": 25.787373667574517,
+      "std": 6.508041084372051,
+      "min": 21.2083544765606,
+      "max": 47.425360283413454,
+      "count": 50
+    }
+  },
+  "vehicle_2_4_continuous_500.csv_100pts": {
+    "baseline_calibration": 60.70000000000001,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 100.0,
+    "distance_stats": {
+      "mean": 27.97576976701491,
+      "std": 5.4317474089031785,
+      "min": 21.2083544765606,
+      "max": 47.425360283413454,
+      "count": 100
+    }
+  },
+  "vehicle_2_4_continuous_500.csv_133pts": {
+    "baseline_calibration": 60.70000000000001,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 100.0,
+    "distance_stats": {
+      "mean": 23.54651429280168,
+      "std": 9.306271533539054,
+      "min": 7.890142340977749,
+      "max": 47.425360283413454,
+      "count": 133
+    }
+  },
+  "vehicle_2_4_continuous_500.csv_133pts_all_waypoints": {
+    "baseline_calibration": 60.70000000000001,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 100.0,
+    "distance_stats": {
+      "mean": 23.54651429280168,
+      "std": 9.306271533539054,
+      "min": 7.890142340977749,
+      "max": 47.425360283413454,
+      "count": 133
+    }
+  },
+  "vehicle_2_4_continuous_500.csv_133pts_no_calibration": {
+    "baseline_calibration": 60.70000000000001,
+    "no_calibration": 100.0,
+    "adaptive_calibration": 100.0,
+    "distance_stats": {
+      "mean": 23.54651429280168,
+      "std": 9.306271533539054,
+      "min": 7.890142340977749,
+      "max": 47.425360283413454,
+      "count": 133
+    }
+  }
+}

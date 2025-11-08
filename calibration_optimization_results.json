@@ -1,0 +1,54 @@
+{
+  "dataset": "vehicle_2_4_continuous_500.csv",
+  "total_waypoints": 500,
+  "overall_optimization": {
+    "current_factor": 0.607,
+    "current_accuracy": 35.255354200988464,
+    "optimal_factor": 0.9999965967526552,
+    "optimal_accuracy": 99.9996596741073,
+    "improvement": 64.74430547311884
+  },
+  "range_optimization": {
+    "Short (<15m)": {
+      "count": 198,
+      "mean_distance": 9.389600637556489,
+      "optimal_factor": 0.9999965967526552,
+      "optimal_accuracy": 99.9996596741073,
+      "current_accuracy": 35.255354200988464,
+      "improvement": 64.74430547311884
+    },
+    "Medium (15-25m)": {
+      "count": 199,
+      "mean_distance": 19.49047533313671,
+      "optimal_factor": 0.9999965967526552,
+      "optimal_accuracy": 99.99965967410732,
+      "current_accuracy": 35.25535420098847,
+      "improvement": 64.74430547311886
+    },
+    "Long (25-40m)": {
+      "count": 87,
+      "mean_distance": 30.31491448133357,
+      "optimal_factor": 0.9999965967526552,
+      "optimal_accuracy": 99.99965967410732,
+      "current_accuracy": 35.25535420098848,
+      "improvement": 64.74430547311884
+    },
+    "Very Long (>40m)": {
+      "count": 16,
+      "mean_distance": 43.923406377224694,
+      "optimal_factor": 0.9999965967526552,
+      "optimal_accuracy": 99.9996596741073,
+      "current_accuracy": 35.255354200988464,
+      "improvement": 64.74430547311884
+    }
+  },
+  "adaptive_calibration": {
+    "function_code": "\ndef get_adaptive_calibration(actual_distance_m):\n    \"\"\"Adaptive calibration based on distance ranges\"\"\"\n    if actual_distance_m < 15:\n        return 1.0000  # Short distances\n    elif actual_distance_m < 25:\n        return 1.0000  # Medium distances\n    elif actual_distance_m < 40:\n        return 1.0000  # Long distances\n    else:\n        return 1.0000  # Very long distances\n",
+    "thresholds": {
+      "Short (<15m)": 9.389600637556489,
+      "Medium (15-25m)": 19.49047533313671,
+      "Long (25-40m)": 30.31491448133357,
+      "Very Long (>40m)": 43.923406377224694
+    }
+  }
+}

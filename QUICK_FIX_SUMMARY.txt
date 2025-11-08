@@ -1,0 +1,62 @@
+================================================================================
+TRAJECTORY COVERAGE - QUICK FIX SUMMARY
+================================================================================
+
+PROBLEM:
+--------
+Vehicles only traveled ~150-200m in simulation while real GPS was 845m
+Didn't reach traffic junction as shown in screenshot
+
+ROOT CAUSE:
+-----------
+Route generation was too sparse:
+- Old: Used every 4th waypoint → 50 route points → 7 edges → 150m
+- Vehicles completed short route quickly and disappeared
+
+FIX APPLIED:
+------------
+✓ Changed sampling from "every 4th" to "every 2nd" waypoint
+✓ Now creates 100 route points → 20-40 edges → 600-800m
+✓ Added route distance display in logs
+
+EXPECTED IMPROVEMENT:
+---------------------
+Before:
+  ✅ Source route: 7 edges
+  Coverage: ~150m (15-25% of real trajectory)
+
+After:
+  ✅ Source route: 32 edges (685m)
+  Coverage: ~685m (70-95% of real trajectory)
+
+HOW TO TEST:
+------------
+1. Run: python v2v_communication_digital_twin.py
+2. Select: vehicle_2_4_first_200.csv, 200 waypoints
+3. Check logs for:
+   ✅ Source route: 20-40 edges (600-800m)  ← Should see this!
+4. Watch SUMO-GUI: Vehicles should reach junction area
+
+BONUS - USE MORE DATA:
+----------------------
+For even better coverage, use the continuous datasets:
+
+  vehicle_2_4_continuous_300.csv → More GPS points
+  vehicle_2_4_continuous_400.csv → Even more coverage
+  vehicle_2_4_continuous_500.csv → Maximum coverage
+
+These have MORE data points from the same GPS region = even longer routes!
+
+FILES CHANGED:
+--------------
+✓ v2v_communication_digital_twin.py (sampling logic updated)
+
+DOCUMENTATION:
+--------------
+- TRAJECTORY_COVERAGE_ISSUE.md (detailed problem analysis)
+- TRAJECTORY_FIX_APPLIED.md (fix details and testing)
+- QUICK_FIX_SUMMARY.txt (this file)
+
+READY TO TEST!
+==============
+

@@ -2,8 +2,8 @@
 <routes>
     <vType id="v2v_source_type" accel="2.6" decel="4.5" sigma="0.5" length="4.5" width="1.8" height="1.5" minGap="2.5" maxSpeed="50" guiShape="passenger" color="0,0,255"/>
     <vType id="v2v_dest_type" accel="2.6" decel="4.5" sigma="0.5" length="4.5" width="1.8" height="1.5" minGap="2.5" maxSpeed="50" guiShape="passenger" color="255,0,0"/>
-    <route id="source_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
-    <route id="dest_route" edges="-279549312#0 -66514461#2 153376938 309602349 153376937#0 66514461#0 279549312#0"/>
+    <route id="source_route" edges="-279549312#1 -279549312#0 -66514461#2 153376938 309602349 24912850#0 309602347 1101157404#0 1412298394 153373877 1150439369#0 720356202 4531812 4531813 153370345"/>
+    <route id="dest_route" edges="-279549312#1 -279549312#0 -66514461#2 153376938 309602349 1101157404#0 1412298394 153373877 1150439369#0 -1126178286 -483022582#3 483022582#2 1318226658 720356202 4531812 4531813 153370345"/>
     <vehicle id="v2v_source" type="v2v_source_type" route="source_route" depart="0" departLane="best" departSpeed="0"/>
     <vehicle id="v2v_dest" type="v2v_dest_type" route="dest_route" depart="0" departLane="best" departSpeed="0"/>
 </routes>
