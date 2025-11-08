@@ -1027,7 +1027,9 @@ class V2VCommunicationDigitalTwin:
                         'carrier_frequency_ghz': CARRIER_FREQUENCY_GHZ,
                         'tx_power_dbm': TX_POWER_DBM,
                         'noise_floor_dbm': NOISE_FLOOR_DBM,
-                        'antenna_gain_db': ANTENNA_GAIN_DB,
+                        'tx_antenna_gain_db': TX_ANTENNA_GAIN_DB,
+                        'rx_antenna_gain_db': RX_ANTENNA_GAIN_DB,
+                        'total_antenna_gain_db': TOTAL_ANTENNA_GAIN_DB,
                         'bandwidth_mhz': BANDWIDTH_MHZ
                     },
                     'distance_accuracy': {
