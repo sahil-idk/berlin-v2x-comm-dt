@@ -1,0 +1,10 @@
+
+# Large simulation output files
+cellular_parsed.csv
+dynamic_simulation_fcd.xml
+v2v_fcd.xml
+sidelink_parsed.csv
+
+# Ignore all large XML and CSV files over 100MB
+*_fcd.xml
+*_parsed.csv
