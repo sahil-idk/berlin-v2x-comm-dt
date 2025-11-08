@@ -1,10 +1,102 @@
-
-# Large simulation output files
-cellular_parsed.csv
-dynamic_simulation_fcd.xml
+# Create a comprehensive .gitignore file
+@"
+# ============================================
+# Large Simulation Output Files (>100MB)
+# ============================================
+# These specific files exceed GitHub's 100MB limit
 v2v_fcd.xml
 sidelink_parsed.csv
+dynamic_simulation_fcd.xml
+cellular_parsed.csv
 
-# Ignore all large XML and CSV files over 100MB
+# ============================================
+# Pattern Matching for Large Files
+# ============================================
+# FCD (Floating Car Data) files tend to be large
 *_fcd.xml
+*fcd*.xml
+
+# Parsed CSV files are typically large
 *_parsed.csv
+*parsed*.csv
+
+# Simulation output files
+*simulation*.xml
+*simulation*.csv
+
+# ============================================
+# General Large File Patterns
+# ============================================
+# Ignore all CSV files by default
+*.csv
+
+# Ignore all XML files by default  
+*.xml
+
+# ============================================
+# EXCEPTIONS - Small files we want to keep
+# ============================================
+# Keep configuration and settings files
+!*/settings.xml
+!*/osm.view.xml
+!*/stats.xml
+!*/osm.passenger.trips.xml
+!*/osm.bicycle.trips.xml
+!*/osm.bus.trips.xml
+!*/osm.motorcycle.trips.xml
+!*/osm.truck.trips.xml
+!*/osm.pedestrian.trips.xml
+!*/osm.pedestrian.rou.xml
+!*/osm_pt.rou.xml
+!*/osm_ptlines.xml
+!*/osm_stops.add.xml
+!*/output.add.xml
+!*/edgeData.xml
+!*/tripinfos.xml
+!*/stopinfos.xml
+!*/vehroutes.xml
+!.gitattributes
+
+# Keep network and route files (usually small)
+!berlin_network.net.xml
+!berlin_routes.rou.xml
+!berlin_additional.add.xml
+!standalone_network.net.xml
+!standalone_routes.rou.xml
+
+# Keep small route files
+!*routes.rou.xml
+!*trips.xml
+
+# Keep small CSV files (if needed, add specific ones)
+# !specific_small_file.csv
+
+# ============================================
+# Other Files to Ignore
+# ============================================
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+"@ | Out-File -FilePath .gitignore -Encoding UTF8
+
+Write-Host ".gitignore file created successfully!" -ForegroundColor Green
