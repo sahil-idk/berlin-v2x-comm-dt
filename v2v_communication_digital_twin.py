@@ -864,10 +864,11 @@ class V2VCommunicationDigitalTwin:
                         dataset_rx_power = wp_data.get('Rx_power', None)
                         
                         # Calculate RSRP and RSSI from simulated and actual distances
-                        # RSRP ≈ Tx_Power - Path_Loss
-                        sim_rsrp = TX_POWER_DBM - sim_path_loss
-                        actual_rsrp = TX_POWER_DBM - actual_path_loss
-                        
+                        # RSRP = Tx_Power + Total_Antenna_Gain - Path_Loss
+                        # ✅ FIXED: Include antenna gains in RSRP calculation
+                        sim_rsrp = TX_POWER_DBM + TOTAL_ANTENNA_GAIN_DB - sim_path_loss
+                        actual_rsrp = TX_POWER_DBM + TOTAL_ANTENNA_GAIN_DB - actual_path_loss
+
                         # RSSI ≈ RSRP + noise contribution (simplified)
                         # RSSI = 10*log10(10^(RSRP/10) + 10^(Noise/10))
                         sim_rssi = 10 * math.log10(10**(sim_rsrp/10) + 10**(NOISE_FLOOR_DBM/10))

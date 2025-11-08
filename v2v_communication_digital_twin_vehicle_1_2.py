@@ -949,12 +949,13 @@ class V2VCommunicationDigitalTwinVehicle12:
                         # Get dataset communication params if available
                         dataset_snr = wp_data.get('SNR', None)
                         dataset_rsrp = wp_data.get('RSRP', None)
-                        
+
                         # Calculate RSRP and RSSI from simulated and actual distances
-                        # RSRP ≈ Tx_Power - Path_Loss
-                        sim_rsrp = TX_POWER_DBM - sim_path_loss
-                        actual_rsrp = TX_POWER_DBM - actual_path_loss
-                        
+                        # RSRP = Tx_Power + Total_Antenna_Gain - Path_Loss
+                        # ✅ FIXED: Include antenna gains in RSRP calculation
+                        sim_rsrp = TX_POWER_DBM + TOTAL_ANTENNA_GAIN_DB - sim_path_loss
+                        actual_rsrp = TX_POWER_DBM + TOTAL_ANTENNA_GAIN_DB - actual_path_loss
+
                         # RSSI ≈ RSRP + noise contribution (simplified)
                         sim_rssi = 10 * math.log10(10**(sim_rsrp/10) + 10**(NOISE_FLOOR_DBM/10))
                         actual_rssi = 10 * math.log10(10**(actual_rsrp/10) + 10**(NOISE_FLOOR_DBM/10))
