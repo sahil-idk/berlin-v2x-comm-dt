@@ -47,12 +47,17 @@ TX_ANTENNA_GAIN_DB = 3
 RX_ANTENNA_GAIN_DB = 3
 TOTAL_ANTENNA_GAIN_DB = TX_ANTENNA_GAIN_DB + RX_ANTENNA_GAIN_DB  # = 6 dB
 
-# ✅ FIXED: Correct thermal noise calculation
-# Thermal noise = -174 dBm/Hz + 10*log10(Bandwidth)
-# For 10 MHz: -174 + 10*log10(10e6) = -174 + 70 = -104 dBm
+# Noise floor configuration
 THERMAL_NOISE_DENSITY_DBM_HZ = -174
-NOISE_FLOOR_DBM = THERMAL_NOISE_DENSITY_DBM_HZ + 10 * math.log10(BANDWIDTH_HZ)
-# Result: -104 dBm (was incorrectly -90 dBm, causing 14 dB SNR underestimation)
+THERMAL_NOISE_FLOOR_DBM = THERMAL_NOISE_DENSITY_DBM_HZ + 10 * math.log10(BANDWIDTH_HZ)  # -104 dBm
+
+# ✅ CALIBRATION MODES
+# 'thermal': Use theoretical thermal noise (-104 dBm)
+# 'calibrated': Use calibrated effective noise floor from dataset (recommended for accuracy)
+NOISE_CALIBRATION_MODE = 'calibrated'  # Change to 'thermal' for theoretical calculations
+
+# This will be set after loading the dataset
+NOISE_FLOOR_DBM = THERMAL_NOISE_FLOOR_DBM  # Default, will be calibrated if mode='calibrated'
 
 # 3GPP Urban Macro Parameters
 URBAN_MACRO_PARAMS = {
@@ -147,6 +152,59 @@ def calculate_communication_range(tx_power_dbm, noise_floor_dbm, snr_threshold_d
             target_range = (min_range + target_range) / 2
 
     return target_range
+
+def calibrate_noise_floor_from_dataset(df):
+    """
+    Calibrate effective noise floor from dataset RSRP and SNR
+
+    In real-world scenarios, the effective noise floor is higher than
+    theoretical thermal noise due to:
+    - Receiver noise figure (5-20 dB)
+    - Interference from other sources
+    - Implementation losses
+    - Urban environment effects
+
+    This function derives the effective noise floor from measurements:
+    Effective_Noise_Floor = mean(RSRP) - mean(SNR)
+
+    Returns:
+        tuple: (effective_noise_floor_dbm, noise_figure_db, calibration_info)
+    """
+    if 'RSRP' not in df.columns or 'SNR' not in df.columns:
+        return THERMAL_NOISE_FLOOR_DBM, 0, None
+
+    # Filter out outliers for robust calibration
+    df_clean = df[(df['SNR'] > -10) & (df['SNR'] < 40)]
+    df_clean = df_clean[(df_clean['RSRP'] > -120) & (df_clean['RSRP'] < -40)]
+
+    if len(df_clean) < 10:
+        return THERMAL_NOISE_FLOOR_DBM, 0, None
+
+    # Calculate effective noise floor
+    mean_rsrp = df_clean['RSRP'].mean()
+    median_rsrp = df_clean['RSRP'].median()
+    mean_snr = df_clean['SNR'].mean()
+    median_snr = df_clean['SNR'].median()
+
+    # Use median for robustness
+    effective_noise_floor = median_rsrp - median_snr
+
+    # Calculate implied noise figure
+    noise_figure = effective_noise_floor - THERMAL_NOISE_FLOOR_DBM
+
+    calibration_info = {
+        'mean_rsrp_dbm': mean_rsrp,
+        'median_rsrp_dbm': median_rsrp,
+        'mean_snr_db': mean_snr,
+        'median_snr_db': median_snr,
+        'thermal_noise_floor_dbm': THERMAL_NOISE_FLOOR_DBM,
+        'effective_noise_floor_dbm': effective_noise_floor,
+        'implied_noise_figure_db': noise_figure,
+        'samples_used': len(df_clean),
+        'samples_total': len(df)
+    }
+
+    return effective_noise_floor, noise_figure, calibration_info
 
 # ============================================================================
 # UTILITY FUNCTIONS
@@ -458,16 +516,16 @@ class V2VCommunicationDigitalTwinVehicle12:
             df = pd.read_csv(f'../{SCENARIO_CSV}')
             waypoints_df = df.head(NUM_WAYPOINTS)
             self.log_message(f"✅ Loaded {len(waypoints_df)} waypoints")
-            
+
             # Load metadata
             metadata_file = f'../scenarios/{SCENARIO_NAME}_metadata.json'
             with open(metadata_file, 'r') as f:
                 metadata = json.load(f)
-            
+
             vehicle1_id = metadata['source_vehicle']
             vehicle2_id = metadata['destination_vehicle']
             self.log_message(f"📊 Vehicle Pair: {vehicle1_id} ↔ {vehicle2_id}")
-            
+
             # Check communication parameters
             has_snr = 'SNR' in waypoints_df.columns
             has_rsrp = 'RSRP' in waypoints_df.columns
@@ -475,6 +533,28 @@ class V2VCommunicationDigitalTwinVehicle12:
                 self.log_message(f"✅ Dataset contains SNR values (mean: {waypoints_df['SNR'].mean():.2f} dB)")
             if has_rsrp:
                 self.log_message(f"✅ Dataset contains RSRP values (mean: {waypoints_df['RSRP'].mean():.2f} dBm)")
+
+            # ✅ CALIBRATE NOISE FLOOR FROM DATASET
+            global NOISE_FLOOR_DBM
+            if NOISE_CALIBRATION_MODE == 'calibrated' and has_snr and has_rsrp:
+                self.log_message(f"\n📊 Calibrating noise floor from dataset...")
+                effective_noise, noise_figure, calib_info = calibrate_noise_floor_from_dataset(waypoints_df)
+
+                if calib_info:
+                    NOISE_FLOOR_DBM = effective_noise
+                    self.log_message(f"✅ Noise Floor Calibration Complete:")
+                    self.log_message(f"   Thermal Noise Floor: {calib_info['thermal_noise_floor_dbm']:.2f} dBm (theoretical)")
+                    self.log_message(f"   Effective Noise Floor: {calib_info['effective_noise_floor_dbm']:.2f} dBm (calibrated)")
+                    self.log_message(f"   Implied Noise Figure: {calib_info['implied_noise_figure_db']:.2f} dB")
+                    self.log_message(f"   Calibration samples: {calib_info['samples_used']}/{calib_info['samples_total']}")
+                    self.log_message(f"   Dataset RSRP (median): {calib_info['median_rsrp_dbm']:.2f} dBm")
+                    self.log_message(f"   Dataset SNR (median): {calib_info['median_snr_db']:.2f} dB")
+                else:
+                    self.log_message(f"⚠️ Calibration failed, using thermal noise floor: {THERMAL_NOISE_FLOOR_DBM:.2f} dBm")
+            elif NOISE_CALIBRATION_MODE == 'thermal':
+                self.log_message(f"\n📊 Using theoretical thermal noise floor: {THERMAL_NOISE_FLOOR_DBM:.2f} dBm")
+            else:
+                self.log_message(f"\n⚠️ Cannot calibrate (missing SNR/RSRP data), using thermal: {THERMAL_NOISE_FLOOR_DBM:.2f} dBm")
             
             # Find routes
             self.log_message(f"\n📍 Computing routes for {NUM_WAYPOINTS} waypoints...")
