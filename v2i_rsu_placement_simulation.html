@@ -379,9 +379,9 @@
             <div class="panel">
                 <div class="panel-title">📂 Data Source</div>
                 <label for="parquet-upload" class="upload-btn">
-                    📁 Upload Parquet File
+                    📁 Upload Dataset (JSON/Parquet)
                 </label>
-                <input type="file" id="parquet-upload" accept=".parquet" style="display: none;">
+                <input type="file" id="parquet-upload" accept=".json,.parquet" style="display: none;">
                 <div class="file-info" id="file-info">
                     Using synthetic Berlin cellular data
                 </div>
@@ -814,34 +814,70 @@
         }
 
         // ========================================================================
-        // Parquet File Loading
+        // File Loading (JSON/Parquet)
         // ========================================================================
         async function loadParquetFile(file) {
             try {
-                updateStatus('Loading parquet file: ' + file.name);
+                updateStatus('Loading file: ' + file.name);
                 document.getElementById('file-info').textContent = `Loading ${file.name}...`;
 
-                const arrayBuffer = await file.arrayBuffer();
+                // Detect file type by extension
+                const fileName = file.name.toLowerCase();
+                const isJSON = fileName.endsWith('.json');
+                const isParquet = fileName.endsWith('.parquet');
 
-                // Try to use parquet-wasm if available
-                if (typeof parquet !== 'undefined') {
-                    const parquetData = await parquet.readParquet(new Uint8Array(arrayBuffer));
-                    cellularData = parseParquetData(parquetData);
+                if (isJSON) {
+                    // Handle JSON file
+                    const text = await file.text();
+                    const jsonData = JSON.parse(text);
+
+                    // Check if it's our converted format with metadata
+                    if (jsonData.metadata && jsonData.records) {
+                        cellularData = jsonData.records;
+                        console.log('Loaded with metadata:', jsonData.metadata);
+
+                        // Update map center if available
+                        if (jsonData.metadata.bounds) {
+                            const bounds = jsonData.metadata.bounds;
+                            map.setView([bounds.center_lat, bounds.center_lon], 12);
+                        }
+                    } else if (Array.isArray(jsonData)) {
+                        // Direct array of records
+                        cellularData = jsonData;
+                    } else {
+                        throw new Error('Unexpected JSON format. Expected array or {metadata, records}.');
+                    }
+
+                    updateUI();
+                    updateStatus(`✓ Loaded ${cellularData.length} records from ${file.name}`);
+                    document.getElementById('file-info').textContent = `✓ ${file.name} (${cellularData.length.toLocaleString()} records)`;
+
+                } else if (isParquet) {
+                    // Handle Parquet file (experimental)
+                    const arrayBuffer = await file.arrayBuffer();
+
+                    // Try to use parquet-wasm if available
+                    if (typeof parquet !== 'undefined') {
+                        const parquetData = await parquet.readParquet(new Uint8Array(arrayBuffer));
+                        cellularData = parseParquetData(parquetData);
+
+                        updateUI();
+                        updateStatus(`✓ Loaded ${cellularData.length} records from ${file.name}`);
+                        document.getElementById('file-info').textContent = `✓ ${file.name} (${cellularData.length.toLocaleString()} records)`;
+                    } else {
+                        throw new Error('Parquet library not loaded. Please upload JSON file instead.');
+                    }
                 } else {
-                    // Fallback: inform user to use conversion script
-                    throw new Error('Parquet library not loaded. Please convert to JSON first.');
+                    throw new Error('Unsupported file type. Please upload .json or .parquet file.');
                 }
 
-                updateUI();
-                updateStatus(`Loaded ${cellularData.length} records from ${file.name}`);
-                document.getElementById('file-info').textContent = `✓ ${file.name} (${cellularData.length} records)`;
-
             } catch (error) {
-                console.error('Error loading parquet:', error);
-                updateStatus('Error: ' + error.message + ' - Please use the Python conversion script or use synthetic data.');
+                console.error('Error loading file:', error);
+                updateStatus('❌ Error: ' + error.message);
                 document.getElementById('file-info').innerHTML =
-                    `⚠️ Direct parquet loading not available.<br>` +
-                    `Use convert_cellular_data_for_web.py to create JSON file, then reload this page.`;
+                    `⚠️ Failed to load ${file.name}<br>` +
+                    `<small>${error.message}</small><br>` +
+                    `<small>Try uploading the JSON file created by convert_cellular_data_for_web.py</small>`;
             }
         }
 
