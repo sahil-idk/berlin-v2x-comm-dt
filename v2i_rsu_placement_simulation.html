@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V2I RSU/Cell Tower Placement - Berlin Dataset</title>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apache-arrow@14.0.1/Arrow.es2015.min.js"></script>
+    <script src="https://unpkg.com/parquet-wasm@0.5.0/esm/parquet_wasm.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            overflow: hidden;
+        }
+
+        #header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1000;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        #main-container {
+            display: flex;
+            height: calc(100vh - 140px);
+            gap: 15px;
+            padding: 15px;
+        }
+
+        #map-container {
+            flex: 1;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #sidebar {
+            width: 350px;
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+
+        .panel {
+            background: #0f1620;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #2a3f5f;
+        }
+
+        .panel-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #64b5f6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #0f1620;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .tower-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .tower-item {
+            background: #1a2332;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid;
+        }
+
+        .tower-item:hover {
+            background: #2a3f5f;
+            transform: translateX(5px);
+        }
+
+        .tower-item.operator-1 {
+            border-left-color: #ff6b6b;
+        }
+
+        .tower-item.operator-2 {
+            border-left-color: #4ecdc4;
+        }
+
+        .tower-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .tower-id {
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .tower-measurements {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+
+        .legend {
+            background: #0f1620;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .checkbox-group {
+            margin: 10px 0;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #2a3f5f;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #4fc3f7;
+        }
+
+        #status {
+            padding: 15px;
+            background: #0f3460;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a3f5f;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            opacity: 0.8;
+            font-size: 12px;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #4fc3f7;
+        }
+
+        .upload-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-info {
+            font-size: 12px;
+            padding: 8px;
+            background: #0f1620;
+            border-radius: 4px;
+            border-left: 3px solid #4fc3f7;
+            color: #aaa;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f1620;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a3f5f;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a5f8f;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading cellular dataset...</div>
+    </div>
+
+    <div id="header">
+        <h1>
+            <span>📡</span>
+            V2I RSU/Cell Tower Intelligent Placement
+        </h1>
+        <div class="subtitle">
+            Berlin Cellular Dataset Analysis - Automated Infrastructure Localization
+        </div>
+    </div>
+
+    <div id="main-container">
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div id="sidebar">
+            <div class="panel">
+                <div class="panel-title">📂 Data Source</div>
+                <label for="parquet-upload" class="upload-btn">
+                    📁 Upload Parquet File
+                </label>
+                <input type="file" id="parquet-upload" accept=".parquet" style="display: none;">
+                <div class="file-info" id="file-info">
+                    Using synthetic Berlin cellular data
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">📊 Dataset Statistics</div>
+                <div class="stat-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Records</div>
+                        <div class="stat-value" id="total-records">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">GPS Locations</div>
+                        <div class="stat-value" id="gps-count">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Unique Cells</div>
+                        <div class="stat-value" id="unique-cells">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Devices</div>
+                        <div class="stat-value" id="device-count">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">🎯 Tower Placement</div>
+                <button id="analyze-btn">Analyze & Place Towers</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress" style="width: 0%"></div>
+                </div>
+                <div id="status">
+                    Click "Analyze" to intelligently place RSUs/cell towers based on signal patterns
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">🗺️ Display Options</div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-towers" checked>
+                        <span>Show Cell Towers</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-coverage" checked>
+                        <span>Show Coverage Areas</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-vehicles">
+                        <span>Show Vehicle Traces</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-heatmap">
+                        <span>Show Signal Heatmap</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">🏢 Detected Towers</div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff6b6b;"></div>
+                        <span>Operator 1</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4ecdc4;"></div>
+                        <span>Operator 2</span>
+                    </div>
+                </div>
+                <div class="tower-list" id="tower-list">
+                    No towers placed yet
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================================
+        // Global State
+        // ========================================================================
+        let map = null;
+        let cellularData = [];
+        let towers = [];
+        let vehicleTraces = {};
+        let towerMarkers = L.layerGroup();
+        let coverageCircles = L.layerGroup();
+        let vehiclePaths = L.layerGroup();
+        let signalHeatmap = L.layerGroup();
+
+        // ========================================================================
+        // Initialize Map
+        // ========================================================================
+        function initMap() {
+            map = L.map('map').setView([52.520, 13.405], 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            towerMarkers.addTo(map);
+            coverageCircles.addTo(map);
+            vehiclePaths.addTo(map);
+            signalHeatmap.addTo(map);
+        }
+
+        // ========================================================================
+        // Load Cellular Data
+        // ========================================================================
+        async function loadCellularData() {
+            try {
+                // Note: In production, you would load the actual parquet file
+                // For this demo, we'll generate synthetic data based on the known structure
+                updateStatus('Loading cellular dataset...');
+
+                // Simulate loading (in production, fetch the actual file)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Generate representative data based on Berlin area
+                cellularData = generateSyntheticData();
+
+                updateUI();
+                hideLoading();
+                updateStatus('Dataset loaded successfully!');
+            } catch (error) {
+                console.error('Error loading data:', error);
+                updateStatus('Error loading dataset: ' + error.message);
+                hideLoading();
+            }
+        }
+
+        // ========================================================================
+        // Generate Synthetic Data (Replace with actual parquet loading)
+        // ========================================================================
+        function generateSyntheticData() {
+            const data = [];
+            const devices = ['pc1', 'pc2', 'pc3', 'pc4'];
+            const cellIds = [
+                { id: 246, operator: 1, lat: 52.512, lon: 13.385 },
+                { id: 431, operator: 1, lat: 52.518, lon: 13.402 },
+                { id: 223, operator: 2, lat: 52.526, lon: 13.418 },
+                { id: 53, operator: 2, lat: 52.508, lon: 13.395 }
+            ];
+
+            // Generate 5000 sample measurements
+            for (let i = 0; i < 5000; i++) {
+                const device = devices[i % devices.length];
+                const cell = cellIds[Math.floor(Math.random() * cellIds.length)];
+
+                // Generate GPS location around Berlin
+                const lat = 52.520 + (Math.random() - 0.5) * 0.05;
+                const lon = 13.405 + (Math.random() - 0.5) * 0.05;
+
+                // Calculate distance to cell tower
+                const distance = calculateDistance(lat, lon, cell.lat, cell.lon) * 1000; // meters
+
+                // Calculate RSRP based on distance (simplified)
+                const pathLoss = 128.1 + 37.6 * Math.log10(distance / 1000); // in dB
+                const rsrp = 23 - pathLoss + (Math.random() - 0.5) * 10;
+                const snr = 25 - pathLoss / 5 + (Math.random() - 0.5) * 5;
+
+                data.push({
+                    device: device,
+                    Latitude: lat,
+                    Longitude: lon,
+                    PCell_Cell_ID: cell.id,
+                    PCell_RSRP_max: rsrp,
+                    PCell_SNR_1: snr,
+                    operator: cell.operator,
+                    timestamp: Date.now() + i * 1000
+                });
+            }
+
+            return data;
+        }
+
+        // ========================================================================
+        // Tower Placement Algorithm
+        // ========================================================================
+        async function analyzeTowers() {
+            updateStatus('Starting intelligent tower placement algorithm...');
+            setProgress(10);
+
+            // Step 1: Group measurements by Cell ID
+            const cellGroups = groupByCellId(cellularData);
+            setProgress(30);
+
+            // Step 2: Estimate tower locations using centroid of strongest signals
+            towers = estimateTowerLocations(cellGroups);
+            setProgress(60);
+
+            // Step 3: Calculate coverage areas
+            calculateCoverageAreas(towers, cellularData);
+            setProgress(80);
+
+            // Step 4: Place towers on map
+            placeTowersOnMap();
+            setProgress(100);
+
+            updateTowerList();
+            updateStatus(`Successfully placed ${towers.length} cell towers/RSUs based on signal analysis!`);
+        }
+
+        function groupByCellId(data) {
+            const groups = {};
+
+            data.forEach(record => {
+                if (record.Latitude && record.Longitude && record.PCell_Cell_ID) {
+                    const cellId = record.PCell_Cell_ID;
+                    if (!groups[cellId]) {
+                        groups[cellId] = {
+                            cellId: cellId,
+                            measurements: [],
+                            operator: record.operator || 1
+                        };
+                    }
+                    groups[cellId].measurements.push(record);
+                }
+            });
+
+            return groups;
+        }
+
+        function estimateTowerLocations(cellGroups) {
+            const towers = [];
+
+            Object.values(cellGroups).forEach(group => {
+                // Sort by signal strength (RSRP)
+                const sortedMeasurements = group.measurements
+                    .filter(m => m.PCell_RSRP_max)
+                    .sort((a, b) => b.PCell_RSRP_max - a.PCell_RSRP_max);
+
+                // Take top 20% strongest signals to estimate tower location
+                const topSignals = sortedMeasurements.slice(0, Math.max(5, sortedMeasurements.length * 0.2));
+
+                // Calculate weighted centroid (stronger signals have more weight)
+                let weightedLat = 0;
+                let weightedLon = 0;
+                let totalWeight = 0;
+
+                topSignals.forEach(m => {
+                    const weight = Math.pow(10, m.PCell_RSRP_max / 10); // Convert dBm to linear
+                    weightedLat += m.Latitude * weight;
+                    weightedLon += m.Longitude * weight;
+                    totalWeight += weight;
+                });
+
+                if (totalWeight > 0) {
+                    const towerLat = weightedLat / totalWeight;
+                    const towerLon = weightedLon / totalWeight;
+
+                    // Calculate average signal strength
+                    const avgRSRP = group.measurements.reduce((sum, m) =>
+                        sum + (m.PCell_RSRP_max || 0), 0) / group.measurements.length;
+
+                    towers.push({
+                        cellId: group.cellId,
+                        lat: towerLat,
+                        lon: towerLon,
+                        measurementCount: group.measurements.length,
+                        operator: group.operator,
+                        avgRSRP: avgRSRP,
+                        frequency: determinePrimaryFrequency(group.measurements)
+                    });
+                }
+            });
+
+            return towers;
+        }
+
+        function determinePrimaryFrequency(measurements) {
+            // Simplified - assume 1800/2600 MHz based on typical LTE bands
+            return Math.random() > 0.5 ? 1800 : 2600;
+        }
+
+        function calculateCoverageAreas(towers, data) {
+            towers.forEach(tower => {
+                // Find measurements for this tower
+                const towerMeasurements = data.filter(m => m.PCell_Cell_ID === tower.cellId);
+
+                // Calculate max distance where signal is still usable (RSRP > -110 dBm)
+                let maxDistance = 0;
+
+                towerMeasurements.forEach(m => {
+                    if (m.PCell_RSRP_max && m.PCell_RSRP_max > -110) {
+                        const distance = calculateDistance(
+                            tower.lat, tower.lon,
+                            m.Latitude, m.Longitude
+                        ) * 1000; // Convert to meters
+
+                        if (distance > maxDistance) {
+                            maxDistance = distance;
+                        }
+                    }
+                });
+
+                tower.coverageRadius = Math.min(maxDistance || 500, 2000); // Cap at 2km
+            });
+        }
+
+        function placeTowersOnMap() {
+            towerMarkers.clearLayers();
+            coverageCircles.clearLayers();
+
+            towers.forEach(tower => {
+                const color = tower.operator === 1 ? '#ff6b6b' : '#4ecdc4';
+
+                // Tower marker
+                const towerIcon = L.divIcon({
+                    html: `<div style="
+                        background: ${color};
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        border: 3px solid white;
+                        box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                    ">📡</div>`,
+                    className: '',
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 15]
+                });
+
+                const marker = L.marker([tower.lat, tower.lon], { icon: towerIcon })
+                    .bindPopup(`
+                        <div style="color: #333; font-family: monospace;">
+                            <strong>Cell Tower ${tower.cellId}</strong><br>
+                            Operator: ${tower.operator}<br>
+                            Measurements: ${tower.measurementCount}<br>
+                            Avg RSRP: ${tower.avgRSRP.toFixed(2)} dBm<br>
+                            Frequency: ${tower.frequency} MHz<br>
+                            Coverage: ~${Math.round(tower.coverageRadius)}m
+                        </div>
+                    `);
+
+                towerMarkers.addLayer(marker);
+
+                // Coverage circle
+                const circle = L.circle([tower.lat, tower.lon], {
+                    radius: tower.coverageRadius,
+                    color: color,
+                    fillColor: color,
+                    fillOpacity: 0.1,
+                    weight: 2,
+                    dashArray: '5, 5'
+                });
+
+                coverageCircles.addLayer(circle);
+            });
+
+            // Auto-fit map to show all towers
+            if (towers.length > 0) {
+                const bounds = L.latLngBounds(towers.map(t => [t.lat, t.lon]));
+                map.fitBounds(bounds, { padding: [50, 50] });
+            }
+        }
+
+        // ========================================================================
+        // UI Updates
+        // ========================================================================
+        function updateUI() {
+            const gpsCount = cellularData.filter(d => d.Latitude && d.Longitude).length;
+            const uniqueCells = new Set(cellularData.map(d => d.PCell_Cell_ID)).size;
+            const devices = new Set(cellularData.map(d => d.device)).size;
+
+            document.getElementById('total-records').textContent = cellularData.length.toLocaleString();
+            document.getElementById('gps-count').textContent = gpsCount.toLocaleString();
+            document.getElementById('unique-cells').textContent = uniqueCells;
+            document.getElementById('device-count').textContent = devices;
+        }
+
+        function updateTowerList() {
+            const list = document.getElementById('tower-list');
+
+            if (towers.length === 0) {
+                list.innerHTML = 'No towers placed yet';
+                return;
+            }
+
+            list.innerHTML = towers.map(tower => `
+                <div class="tower-item operator-${tower.operator}" onclick="focusTower(${tower.cellId})">
+                    <div class="tower-header">
+                        <span class="tower-id">Cell ${tower.cellId}</span>
+                        <span class="tower-measurements">${tower.measurementCount} measurements</span>
+                    </div>
+                    <div style="font-size: 11px; opacity: 0.7;">
+                        RSRP: ${tower.avgRSRP.toFixed(1)} dBm | Range: ${Math.round(tower.coverageRadius)}m
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function focusTower(cellId) {
+            const tower = towers.find(t => t.cellId === cellId);
+            if (tower) {
+                map.setView([tower.lat, tower.lon], 15);
+            }
+        }
+
+        function setProgress(percent) {
+            document.getElementById('progress').style.width = percent + '%';
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // ========================================================================
+        // Utilities
+        // ========================================================================
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // ========================================================================
+        // Parquet File Loading
+        // ========================================================================
+        async function loadParquetFile(file) {
+            try {
+                updateStatus('Loading parquet file: ' + file.name);
+                document.getElementById('file-info').textContent = `Loading ${file.name}...`;
+
+                const arrayBuffer = await file.arrayBuffer();
+
+                // Try to use parquet-wasm if available
+                if (typeof parquet !== 'undefined') {
+                    const parquetData = await parquet.readParquet(new Uint8Array(arrayBuffer));
+                    cellularData = parseParquetData(parquetData);
+                } else {
+                    // Fallback: inform user to use conversion script
+                    throw new Error('Parquet library not loaded. Please convert to JSON first.');
+                }
+
+                updateUI();
+                updateStatus(`Loaded ${cellularData.length} records from ${file.name}`);
+                document.getElementById('file-info').textContent = `✓ ${file.name} (${cellularData.length} records)`;
+
+            } catch (error) {
+                console.error('Error loading parquet:', error);
+                updateStatus('Error: ' + error.message + ' - Please use the Python conversion script or use synthetic data.');
+                document.getElementById('file-info').innerHTML =
+                    `⚠️ Direct parquet loading not available.<br>` +
+                    `Use convert_cellular_data_for_web.py to create JSON file, then reload this page.`;
+            }
+        }
+
+        function parseParquetData(parquetData) {
+            // Convert parquet data to our internal format
+            const data = [];
+            const numRows = parquetData.numRows || 0;
+
+            for (let i = 0; i < numRows; i++) {
+                const row = {};
+                // Extract columns we need
+                const cols = ['Latitude', 'Longitude', 'PCell_Cell_ID', 'PCell_RSRP_max',
+                             'operator', 'device_id', 'Time'];
+
+                cols.forEach(col => {
+                    if (parquetData.getColumn) {
+                        const column = parquetData.getColumn(col);
+                        row[col] = column ? column.get(i) : null;
+                    }
+                });
+
+                if (row.Latitude && row.Longitude && row.PCell_Cell_ID) {
+                    data.push(row);
+                }
+            }
+
+            return data;
+        }
+
+        // ========================================================================
+        // Event Listeners
+        // ========================================================================
+        document.getElementById('analyze-btn').addEventListener('click', analyzeTowers);
+
+        document.getElementById('parquet-upload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                await loadParquetFile(file);
+            }
+        });
+
+        document.getElementById('show-towers').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                map.addLayer(towerMarkers);
+            } else {
+                map.removeLayer(towerMarkers);
+            }
+        });
+
+        document.getElementById('show-coverage').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                map.addLayer(coverageCircles);
+            } else {
+                map.removeLayer(coverageCircles);
+            }
+        });
+
+        // ========================================================================
+        // Initialize
+        // ========================================================================
+        window.addEventListener('load', async () => {
+            initMap();
+            await loadCellularData();
+        });
+    </script>
+</body>
+</html>
