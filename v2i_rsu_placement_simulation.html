@@ -369,6 +369,19 @@
             animation: pulse 1s ease-in-out infinite;
         }
 
+        .tower-secondary {
+            animation: pulse-subtle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-subtle {
+            0%, 100% {
+                filter: brightness(1.2) drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            }
+            50% {
+                filter: brightness(1.4) drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+            }
+        }
+
         .communication-beam {
             stroke-dasharray: 5, 5;
             animation: dash 1s linear infinite;
@@ -898,6 +911,19 @@
                     const avgRSRP = group.measurements.reduce((sum, m) =>
                         sum + (m.PCell_RSRP_max || 0), 0) / group.measurements.length;
 
+                    // Calculate signal strength variance (for quality assessment)
+                    const rsrpVariance = group.measurements.reduce((sum, m) => {
+                        const diff = (m.PCell_RSRP_max || avgRSRP) - avgRSRP;
+                        return sum + (diff * diff);
+                    }, 0) / group.measurements.length;
+                    const rsrpStdDev = Math.sqrt(rsrpVariance);
+
+                    // Calculate placement confidence (lower variance = better)
+                    // Good placement: measurements concentrated near tower
+                    const placementQuality = rsrpStdDev < 5 ? 'excellent' :
+                                            rsrpStdDev < 10 ? 'good' :
+                                            rsrpStdDev < 15 ? 'fair' : 'poor';
+
                     towers.push({
                         cellId: group.cellId,
                         lat: towerLat,
@@ -905,7 +931,10 @@
                         measurementCount: group.measurements.length,
                         operator: group.operator,
                         avgRSRP: avgRSRP,
-                        frequency: determinePrimaryFrequency(group.measurements)
+                        rsrpStdDev: rsrpStdDev,
+                        placementQuality: placementQuality,
+                        frequency: determinePrimaryFrequency(group.measurements),
+                        allMeasurements: group.measurements // Keep for analysis
                     });
                 }
             });
@@ -923,23 +952,52 @@
                 // Find measurements for this tower
                 const towerMeasurements = data.filter(m => m.PCell_Cell_ID === tower.cellId);
 
-                // Calculate max distance where signal is still usable (RSRP > -110 dBm)
-                let maxDistance = 0;
-
+                // Calculate distances for all usable signals
+                const distances = [];
                 towerMeasurements.forEach(m => {
                     if (m.PCell_RSRP_max && m.PCell_RSRP_max > -110) {
                         const distance = calculateDistance(
                             tower.lat, tower.lon,
                             m.Latitude, m.Longitude
                         ) * 1000; // Convert to meters
-
-                        if (distance > maxDistance) {
-                            maxDistance = distance;
-                        }
+                        distances.push(distance);
                     }
                 });
 
-                tower.coverageRadius = Math.min(maxDistance || 500, 2000); // Cap at 2km
+                if (distances.length > 0) {
+                    // Sort distances
+                    distances.sort((a, b) => a - b);
+
+                    // Use 95th percentile instead of max (more robust to outliers)
+                    const percentile95Index = Math.floor(distances.length * 0.95);
+                    const coverage95 = distances[percentile95Index];
+                    const maxDistance = distances[distances.length - 1];
+                    const medianDistance = distances[Math.floor(distances.length / 2)];
+
+                    // Classify tower type based on coverage
+                    let towerType = 'Small Cell';
+                    if (coverage95 > 1500) {
+                        towerType = 'Macro Cell';
+                    } else if (coverage95 > 800) {
+                        towerType = 'Micro Cell';
+                    } else if (coverage95 > 300) {
+                        towerType = 'Small Cell';
+                    } else {
+                        towerType = 'Pico Cell';
+                    }
+
+                    tower.coverageRadius = Math.min(coverage95, 2000); // Use 95th percentile
+                    tower.maxCoverageRadius = Math.min(maxDistance, 3000);
+                    tower.medianCoverageRadius = medianDistance;
+                    tower.towerType = towerType;
+                    tower.measurementSpread = maxDistance - medianDistance; // Indicates consistency
+                } else {
+                    tower.coverageRadius = 500;
+                    tower.maxCoverageRadius = 500;
+                    tower.medianCoverageRadius = 500;
+                    tower.towerType = 'Unknown';
+                    tower.measurementSpread = 0;
+                }
             });
         }
 
@@ -969,18 +1027,38 @@
                     iconAnchor: [15, 15]
                 });
 
+                // Quality indicator emoji
+                const qualityEmoji = tower.placementQuality === 'excellent' ? '⭐⭐⭐' :
+                                    tower.placementQuality === 'good' ? '⭐⭐' :
+                                    tower.placementQuality === 'fair' ? '⭐' : '⚠️';
+
                 const marker = L.marker([tower.lat, tower.lon], {
                     icon: towerIcon,
                     cellId: tower.cellId  // Store cellId for animation
                 })
                     .bindPopup(`
-                        <div style="color: #333; font-family: monospace;">
-                            <strong>Cell Tower ${tower.cellId}</strong><br>
-                            Operator: ${tower.operator}<br>
-                            Measurements: ${tower.measurementCount}<br>
-                            Avg RSRP: ${tower.avgRSRP.toFixed(2)} dBm<br>
-                            Frequency: ${tower.frequency} MHz<br>
-                            Coverage: ~${Math.round(tower.coverageRadius)}m
+                        <div style="color: #333; font-family: monospace; font-size: 12px;">
+                            <strong>📡 Cell ${tower.cellId}</strong> ${qualityEmoji}<br>
+                            <hr style="margin: 5px 0; border: 1px solid #ddd;">
+                            <strong>Type:</strong> ${tower.towerType}<br>
+                            <strong>Operator:</strong> ${tower.operator}<br>
+                            <strong>Quality:</strong> ${tower.placementQuality}<br>
+                            <hr style="margin: 5px 0; border: 1px solid #ddd;">
+                            <strong>Measurements:</strong> ${tower.measurementCount.toLocaleString()}<br>
+                            <strong>Avg RSRP:</strong> ${tower.avgRSRP.toFixed(1)} dBm<br>
+                            <strong>Std Dev:</strong> ±${tower.rsrpStdDev.toFixed(1)} dB<br>
+                            <hr style="margin: 5px 0; border: 1px solid #ddd;">
+                            <strong>Coverage (95%):</strong> ${Math.round(tower.coverageRadius)}m<br>
+                            <strong>Median Range:</strong> ${Math.round(tower.medianCoverageRadius)}m<br>
+                            <strong>Max Range:</strong> ${Math.round(tower.maxCoverageRadius)}m<br>
+                            <strong>Spread:</strong> ${Math.round(tower.measurementSpread)}m<br>
+                            <hr style="margin: 5px 0; border: 1px solid #ddd;">
+                            <small style="color: #666;">
+                            ${tower.placementQuality === 'excellent' ? '✓ Very accurate placement' :
+                              tower.placementQuality === 'good' ? '✓ Good placement accuracy' :
+                              tower.placementQuality === 'fair' ? '~ Fair placement accuracy' :
+                              '⚠ Low confidence placement'}
+                            </small>
                         </div>
                     `);
 
@@ -1722,11 +1800,57 @@
             return { tower: nearest, distance: minDistance };
         }
 
+        function findAllNearbyTowers(lat, lon, currentCellId) {
+            // Find ALL towers that vehicle can receive signal from
+            // Not just the nearest - this shows realistic overlap
+            if (towers.length === 0) return [];
+
+            const nearbyTowers = [];
+            const MIN_USABLE_RSRP = -110; // Minimum signal for connection
+
+            towers.forEach(tower => {
+                const distance = calculateDistance(lat, lon, tower.lat, tower.lon) * 1000; // meters
+
+                // Estimate RSRP based on distance and tower's known average RSRP
+                // Simple path loss model: RSRP decreases with distance
+                // If we're within tower's coverage radius, we can likely receive signal
+                const isWithinCoverage = distance <= tower.coverageRadius;
+
+                // Estimate signal strength using simplified path loss
+                // RSRP_estimated = RSRP_avg - (10 * log10(distance/reference_distance))
+                const referenceDistance = 100; // meters
+                const pathLoss = distance > referenceDistance ?
+                    10 * Math.log10(distance / referenceDistance) : 0;
+                const estimatedRSRP = tower.avgRSRP - pathLoss;
+
+                // Tower is "nearby" if within coverage OR estimated signal is usable
+                if (isWithinCoverage || estimatedRSRP > MIN_USABLE_RSRP) {
+                    nearbyTowers.push({
+                        tower: tower,
+                        distance: distance / 1000, // km
+                        estimatedRSRP: estimatedRSRP,
+                        isPrimary: tower.cellId === currentCellId // Actual connected tower
+                    });
+                }
+            });
+
+            // Sort by signal strength (strongest first)
+            nearbyTowers.sort((a, b) => b.estimatedRSRP - a.estimatedRSRP);
+
+            return nearbyTowers;
+        }
+
+        function getSignalColor(rsrp) {
+            // Return color based on signal strength (RSRP in dBm)
+            // Green = excellent, Yellow = good, Orange = fair, Red = poor
+            const normalized = Math.max(0, Math.min(1, (rsrp + 120) / 80));
+            const hue = normalized * 120; // 0 (red) to 120 (green)
+            return `hsl(${hue}, 100%, 50%)`;
+        }
+
         function drawCommunicationBeam(vehicleLat, vehicleLon, towerLat, towerLon, rsrp) {
             // Color based on signal strength
-            const normalized = Math.max(0, Math.min(1, (rsrp + 120) / 80));
-            const hue = normalized * 120;
-            const color = `hsl(${hue}, 100%, 50%)`;
+            const color = getSignalColor(rsrp);
 
             // Create animated polyline
             const beam = L.polyline(
@@ -1776,30 +1900,48 @@
                     `);
                 }
 
-                // Find nearest tower and draw communication beam
-                const nearestTower = findNearestTower(currentPoint.Latitude, currentPoint.Longitude);
-                if (nearestTower && nearestTower.tower) {
+                // Find ALL nearby towers (not just nearest - shows realistic overlap)
+                const nearbyTowers = findAllNearbyTowers(
+                    currentPoint.Latitude,
+                    currentPoint.Longitude,
+                    currentPoint.PCell_Cell_ID
+                );
+
+                if (nearbyTowers.length > 0) {
                     connectionCount++;
-                    const rsrp = currentPoint.PCell_RSRP_max || -100;
 
-                    // Draw beam
-                    const beam = drawCommunicationBeam(
-                        currentPoint.Latitude,
-                        currentPoint.Longitude,
-                        nearestTower.tower.lat,
-                        nearestTower.tower.lon,
-                        rsrp
-                    );
-                    communicationBeams.addLayer(beam);
+                    // Draw beams to ALL nearby towers
+                    nearbyTowers.forEach((towerInfo, index) => {
+                        const isPrimary = towerInfo.isPrimary; // Actual connected tower from data
+                        const rsrp = isPrimary ? (currentPoint.PCell_RSRP_max || towerInfo.estimatedRSRP) : towerInfo.estimatedRSRP;
 
-                    // Mark tower as active
-                    activeConnections.set(nearestTower.tower.cellId, {
-                        vehicles: (activeConnections.get(nearestTower.tower.cellId)?.vehicles || 0) + 1,
-                        tower: nearestTower.tower
+                        // Draw beam - primary connection is solid, secondary are dashed
+                        const beam = L.polyline(
+                            [[currentPoint.Latitude, currentPoint.Longitude],
+                             [towerInfo.tower.lat, towerInfo.tower.lon]],
+                            {
+                                color: isPrimary ? getSignalColor(rsrp) : '#888',
+                                weight: isPrimary ? 2 : 1,
+                                opacity: isPrimary ? 0.7 : 0.3,
+                                dashArray: isPrimary ? '5, 5' : '2, 6',
+                                className: 'communication-beam'
+                            }
+                        );
+                        communicationBeams.addLayer(beam);
+
+                        // Mark tower as active
+                        activeConnections.set(towerInfo.tower.cellId, {
+                            vehicles: (activeConnections.get(towerInfo.tower.cellId)?.vehicles || 0) + 1,
+                            tower: towerInfo.tower,
+                            isPrimary: isPrimary
+                        });
                     });
 
-                    // Update focus mode stats and visualization
+                    // Update focus mode stats (use primary/strongest tower)
+                    const primaryTower = nearbyTowers[0]; // Strongest signal
                     if (focusModeEnabled && vehicle.deviceId === focusedVehicle) {
+                        const nearestTower = { tower: primaryTower.tower, distance: primaryTower.distance };
+                        const rsrp = currentPoint.PCell_RSRP_max || primaryTower.estimatedRSRP;
                         updateFocusStats(vehicle.deviceId, vehicle.currentIndex, rsrp, nearestTower);
                         drawFocusedVehiclePath(vehicle.deviceId, vehicle.currentIndex);
                         followVehicle(currentPoint.Latitude, currentPoint.Longitude);
@@ -1828,15 +1970,21 @@
             towerMarkers.eachLayer(layer => {
                 if (layer._icon) {
                     layer._icon.classList.remove('tower-active');
+                    layer._icon.classList.remove('tower-secondary');
                 }
             });
 
-            // Highlight active towers
+            // Highlight active towers (now shows BOTH primary and secondary connections!)
             activeConnections.forEach((data, cellId) => {
                 towerMarkers.eachLayer(layer => {
                     if (layer.options && layer.options.cellId === cellId) {
                         if (layer._icon) {
-                            layer._icon.classList.add('tower-active');
+                            // Primary connections get stronger pulse, secondary get subtle glow
+                            if (data.isPrimary) {
+                                layer._icon.classList.add('tower-active');
+                            } else {
+                                layer._icon.classList.add('tower-secondary');
+                            }
                         }
                     }
                 });
