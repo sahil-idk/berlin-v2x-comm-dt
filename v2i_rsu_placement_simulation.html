@@ -469,6 +469,54 @@
         .communicating-glow {
             animation: pathGlow 2s ease-in-out infinite;
         }
+
+        /* Tower Notification Popup */
+        .tower-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            z-index: 3000;
+            font-size: 14px;
+            font-weight: 600;
+            animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-in 2.7s;
+            pointer-events: none;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+
+        .notification-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .vibrant-trace {
+            filter: brightness(1.3) saturate(1.5);
+            box-shadow: 0 0 10px currentColor;
+        }
     </style>
 </head>
 <body>
@@ -607,6 +655,17 @@
                         <option value="pc4">🚗 Vehicle 4 (pc4)</option>
                     </select>
                 </div>
+                <div class="speed-control">
+                    <div class="speed-label">Data Sampling: <span id="sample-rate-value">Every 5 points</span></div>
+                    <input type="range" id="sample-rate-slider" min="1" max="20" step="1" value="5">
+                    <div style="font-size: 10px; color: #888; margin-top: 3px;">Lower = More detail, Higher = Faster/Smoother</div>
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-tower-notifications" checked>
+                        <span>Show Tower Notifications</span>
+                    </label>
+                </div>
                 <div class="animation-stats" id="focus-stats" style="display: none;">
                     <div>📍 Position: <span id="focus-position">0/0</span></div>
                     <div>📶 Signal: <span id="focus-signal">N/A</span></div>
@@ -665,6 +724,10 @@
         let dimCoverageEnabled = false;
         let activePathLayer = L.layerGroup();
         let traversedPathLayer = L.layerGroup();
+        let dataSampleRate = 5; // Use every Nth point
+        let showTowerNotifications = true;
+        let lastConnectedTower = {}; // Track last tower per vehicle
+        let notificationTimeout = null;
 
         // ========================================================================
         // Initialize Map
@@ -1173,6 +1236,29 @@
         document.getElementById('auto-follow').addEventListener('change', updateFocusMode);
         document.getElementById('dim-coverage').addEventListener('change', updateFocusMode);
 
+        // Data sampling control
+        document.getElementById('sample-rate-slider').addEventListener('input', (e) => {
+            dataSampleRate = parseInt(e.target.value);
+            document.getElementById('sample-rate-value').textContent = dataSampleRate === 1 ? 'All points' : `Every ${dataSampleRate} points`;
+
+            // Re-prepare animation data with new sample rate
+            if (vehicleAnimationData.length > 0) {
+                prepareAnimationData();
+                initializeVehicleMarkers();
+                updateStatus(`📊 Sampling updated: ${dataSampleRate === 1 ? 'Using all data points' : 'Using every ' + dataSampleRate + ' points'}`);
+            }
+        });
+
+        // Tower notifications toggle
+        document.getElementById('show-tower-notifications').addEventListener('change', (e) => {
+            showTowerNotifications = e.target.checked;
+            if (!showTowerNotifications) {
+                // Remove any existing notification
+                const existing = document.querySelector('.tower-notification');
+                if (existing) existing.remove();
+            }
+        });
+
         // ========================================================================
         // Vehicle Traces and Heatmap
         // ========================================================================
@@ -1375,14 +1461,15 @@
             };
             const color = deviceColors[deviceId] || '#888';
 
-            // Draw traversed path (dimmed)
+            // Draw traversed path (VIBRANT - shows where vehicle has been)
             if (currentIndex > 0) {
                 const traversedPoints = vehicle.points.slice(0, currentIndex + 1).map(p => [p.Latitude, p.Longitude]);
                 const traversedPath = L.polyline(traversedPoints, {
                     color: color,
-                    weight: 3,
-                    opacity: 0.4,
-                    smoothFactor: 1
+                    weight: 5,
+                    opacity: 0.9,  // Much more visible!
+                    smoothFactor: 1,
+                    className: 'vibrant-trace'
                 });
                 traversedPathLayer.addLayer(traversedPath);
             }
@@ -1440,6 +1527,61 @@
             });
         }
 
+        function showTowerNotification(vehicleId, towerInfo, rsrp) {
+            if (!showTowerNotifications) return;
+            if (!focusModeEnabled || focusedVehicle === 'all') return;
+            if (vehicleId !== focusedVehicle) return;
+
+            // Check if tower changed
+            const currentTowerId = towerInfo?.tower?.cellId;
+            if (!currentTowerId) return;
+
+            // Only show notification if tower changed or initial connection
+            if (lastConnectedTower[vehicleId] === currentTowerId) return;
+            lastConnectedTower[vehicleId] = currentTowerId;
+
+            // Remove existing notification
+            const existing = document.querySelector('.tower-notification');
+            if (existing) existing.remove();
+
+            // Clear existing timeout
+            if (notificationTimeout) {
+                clearTimeout(notificationTimeout);
+            }
+
+            // Determine signal quality
+            let signalQuality = '';
+            let signalIcon = '';
+            if (rsrp >= -80) {
+                signalQuality = 'Excellent Signal';
+                signalIcon = '📶';
+            } else if (rsrp >= -90) {
+                signalQuality = 'Good Signal';
+                signalIcon = '📶';
+            } else if (rsrp >= -100) {
+                signalQuality = 'Fair Signal';
+                signalIcon = '📡';
+            } else {
+                signalQuality = 'Weak Signal';
+                signalIcon = '📉';
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'tower-notification';
+            notification.innerHTML = `
+                <span class="notification-icon">${signalIcon}</span>
+                <strong>Connected to Cell ${currentTowerId}</strong><br>
+                <small>${signalQuality} (${rsrp.toFixed(1)} dBm)</small>
+            `;
+            document.body.appendChild(notification);
+
+            // Auto-remove after 3 seconds
+            notificationTimeout = setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
         // ========================================================================
         // Live Animation System
         // ========================================================================
@@ -1465,15 +1607,31 @@
                 }
             });
 
-            // Convert to animation frames
+            // Convert to animation frames with sampling
             vehicleAnimationData = [];
             Object.entries(deviceData).forEach(([deviceId, points]) => {
                 if (points.length > 1) {
                     // Sort by timestamp
                     points.sort((a, b) => a.timestamp - b.timestamp);
+
+                    // Sample points based on dataSampleRate
+                    let sampledPoints = [];
+                    if (dataSampleRate > 1) {
+                        for (let i = 0; i < points.length; i += dataSampleRate) {
+                            sampledPoints.push(points[i]);
+                        }
+                        // Always include the last point
+                        if (sampledPoints[sampledPoints.length - 1] !== points[points.length - 1]) {
+                            sampledPoints.push(points[points.length - 1]);
+                        }
+                    } else {
+                        sampledPoints = points;
+                    }
+
                     vehicleAnimationData.push({
                         deviceId: deviceId,
-                        points: points,
+                        points: sampledPoints,
+                        originalPoints: points, // Keep original for reference
                         currentIndex: 0
                     });
                 }
@@ -1645,6 +1803,7 @@
                         updateFocusStats(vehicle.deviceId, vehicle.currentIndex, rsrp, nearestTower);
                         drawFocusedVehiclePath(vehicle.deviceId, vehicle.currentIndex);
                         followVehicle(currentPoint.Latitude, currentPoint.Longitude);
+                        showTowerNotification(vehicle.deviceId, nearestTower, rsrp);
                     }
                 }
 
@@ -1740,6 +1899,11 @@
             activeConnections.clear();
             activePathLayer.clearLayers();
             traversedPathLayer.clearLayers();
+            lastConnectedTower = {}; // Reset tower tracking
+
+            // Remove any existing notification
+            const existing = document.querySelector('.tower-notification');
+            if (existing) existing.remove();
 
             document.getElementById('active-vehicles').textContent = '0';
             document.getElementById('active-connections').textContent = '0';
