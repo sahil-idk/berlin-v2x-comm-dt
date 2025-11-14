@@ -1296,7 +1296,7 @@
                 focusModeEnabled && focusedVehicle !== 'all' ? 'block' : 'none';
 
             // Apply dimming to coverage circles
-            if (dimCoverageEnabled) {
+            if (focusModeEnabled && dimCoverageEnabled) {
                 coverageCircles.eachLayer(layer => {
                     if (layer.setStyle) {
                         layer.setStyle({ fillOpacity: 0.05, opacity: 0.3 });
@@ -1310,16 +1310,51 @@
                 });
             }
 
-            // Hide non-focused vehicles
+            // Apply dimming to vehicle markers IMMEDIATELY
             Object.entries(vehicleMarkers).forEach(([deviceId, marker]) => {
                 if (focusModeEnabled && focusedVehicle !== 'all' && deviceId !== focusedVehicle) {
+                    // Dim non-focused vehicles
                     marker.setOpacity(0.2);
-                } else {
+                    marker.setZIndexOffset(500); // Lower z-index
+                } else if (focusModeEnabled && deviceId === focusedVehicle) {
+                    // Highlight focused vehicle
                     marker.setOpacity(1);
+                    marker.setZIndexOffset(2000); // Bring to front
+                } else {
+                    // Reset all vehicles when focus mode is off
+                    marker.setOpacity(1);
+                    marker.setZIndexOffset(1000);
                 }
             });
 
-            updateStatus(focusModeEnabled ? `🎯 Focus mode enabled${focusedVehicle !== 'all' ? ' - ' + focusedVehicle : ''}` : 'Focus mode disabled');
+            // If focused on a specific vehicle, show its complete path and zoom to it
+            if (focusModeEnabled && focusedVehicle !== 'all') {
+                const focusedMarkerData = vehicleAnimationData.find(v => v.deviceId === focusedVehicle);
+                if (focusedMarkerData && focusedMarkerData.points.length > 0) {
+                    // Show complete upcoming path even before animation starts
+                    if (!animationRunning) {
+                        drawFocusedVehiclePath(focusedVehicle, 0);
+                        const firstPoint = focusedMarkerData.points[0];
+                        map.setView([firstPoint.Latitude, firstPoint.Longitude], 15, {
+                            animate: true,
+                            duration: 0.5
+                        });
+                    }
+                }
+            } else {
+                // Clear path layers when not in focus mode
+                activePathLayer.clearLayers();
+                traversedPathLayer.clearLayers();
+            }
+
+            // Update status message
+            if (focusModeEnabled && focusedVehicle !== 'all') {
+                updateStatus(`🎯 Focus mode enabled - Tracking ${focusedVehicle}. Press Play to start animation.`);
+            } else if (focusModeEnabled) {
+                updateStatus(`🎯 Focus mode enabled - All vehicles visible. Select a specific vehicle to focus.`);
+            } else {
+                updateStatus('Focus mode disabled');
+            }
         }
 
         function drawFocusedVehiclePath(deviceId, currentIndex) {
@@ -1703,12 +1738,19 @@
 
             communicationBeams.clearLayers();
             activeConnections.clear();
+            activePathLayer.clearLayers();
+            traversedPathLayer.clearLayers();
 
             document.getElementById('active-vehicles').textContent = '0';
             document.getElementById('active-connections').textContent = '0';
             document.getElementById('anim-time').textContent = '0.0s';
 
-            updateStatus('🔄 Animation reset');
+            // Reapply focus mode to show path if enabled
+            if (focusModeEnabled && focusedVehicle !== 'all') {
+                updateFocusMode();
+            }
+
+            updateStatus('🔄 Animation reset' + (focusModeEnabled && focusedVehicle !== 'all' ? ` - ${focusedVehicle} ready` : ''));
         }
 
         function updateAnimationSpeed(speed) {
