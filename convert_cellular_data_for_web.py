@@ -102,7 +102,7 @@ def convert_cellular_data_to_json(parquet_file, output_json, sample_size=None):
     with open(output_json, 'w') as f:
         json.dump(output_data, f, indent=2)
 
-    file_size_mb = pd.io.common.get_filepath_or_buffer(output_json)[0]
+    # Calculate file size
     import os
     file_size = os.path.getsize(output_json) / (1024 * 1024)
 
