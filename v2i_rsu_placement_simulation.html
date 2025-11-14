@@ -435,6 +435,40 @@
         .animation-stats div {
             margin: 3px 0;
         }
+
+        /* Focus Mode Styles */
+        .vehicle-marker-focused {
+            z-index: 2000 !important;
+        }
+
+        .vehicle-marker-dimmed {
+            opacity: 0.3;
+        }
+
+        .coverage-dimmed {
+            opacity: 0.2;
+        }
+
+        .active-path {
+            stroke-width: 4px !important;
+            opacity: 1 !important;
+            z-index: 1500;
+        }
+
+        .active-segment-communicating {
+            stroke-width: 5px !important;
+            opacity: 1 !important;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        @keyframes pathGlow {
+            0%, 100% { filter: drop-shadow(0 0 8px currentColor); }
+            50% { filter: drop-shadow(0 0 15px currentColor); }
+        }
+
+        .communicating-glow {
+            animation: pathGlow 2s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -537,13 +571,47 @@
                     <button class="control-btn" id="reset-btn">🔄 Reset</button>
                 </div>
                 <div class="speed-control">
-                    <div class="speed-label">Animation Speed: <span id="speed-value">1x</span></div>
-                    <input type="range" id="speed-slider" min="0.5" max="5" step="0.5" value="1">
+                    <div class="speed-label">Animation Speed: <span id="speed-value">0.3x</span></div>
+                    <input type="range" id="speed-slider" min="0.1" max="5" step="0.1" value="0.3">
                 </div>
                 <div class="animation-stats" id="animation-stats">
                     <div>⏱️ Time: <span id="anim-time">0.0s</span></div>
                     <div>🚗 Active Vehicles: <span id="active-vehicles">0</span></div>
                     <div>📡 Active Connections: <span id="active-connections">0</span></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">🎯 Focus Mode</div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="focus-mode-enabled">
+                        <span>Enable Focus Mode</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="auto-follow" checked>
+                        <span>Auto-Follow Camera</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="dim-coverage">
+                        <span>Dim Coverage Circles</span>
+                    </label>
+                </div>
+                <div class="speed-control">
+                    <div class="speed-label">Focus Vehicle</div>
+                    <select id="focus-vehicle" style="width: 100%; padding: 8px; border-radius: 4px; background: #0f1620; color: #eee; border: 1px solid #2a3f5f; margin-top: 5px;">
+                        <option value="all">All Vehicles</option>
+                        <option value="pc1">🚗 Vehicle 1 (pc1)</option>
+                        <option value="pc2">🚗 Vehicle 2 (pc2)</option>
+                        <option value="pc3">🚗 Vehicle 3 (pc3)</option>
+                        <option value="pc4">🚗 Vehicle 4 (pc4)</option>
+                    </select>
+                </div>
+                <div class="animation-stats" id="focus-stats" style="display: none;">
+                    <div>📍 Position: <span id="focus-position">0/0</span></div>
+                    <div>📶 Signal: <span id="focus-signal">N/A</span></div>
+                    <div>📡 Tower: <span id="focus-tower">N/A</span></div>
+                    <div>📏 Distance: <span id="focus-distance">N/A</span></div>
                 </div>
             </div>
 
@@ -582,13 +650,21 @@
         // Animation state
         let animationRunning = false;
         let animationFrame = 0;
-        let animationSpeed = 1;
+        let animationSpeed = 0.3;  // Start slower for better visibility
         let animationTime = 0;
         let animationInterval = null;
         let vehicleMarkers = {};
         let communicationBeams = L.layerGroup();
         let activeConnections = new Map();
         let vehicleAnimationData = [];
+
+        // Focus mode state
+        let focusModeEnabled = false;
+        let focusedVehicle = 'all';
+        let autoFollowEnabled = true;
+        let dimCoverageEnabled = false;
+        let activePathLayer = L.layerGroup();
+        let traversedPathLayer = L.layerGroup();
 
         // ========================================================================
         // Initialize Map
@@ -606,6 +682,8 @@
             vehiclePaths.addTo(map);
             signalHeatmap.addTo(map);
             communicationBeams.addTo(map);
+            traversedPathLayer.addTo(map);
+            activePathLayer.addTo(map);
         }
 
         // ========================================================================
@@ -1089,6 +1167,12 @@
             updateAnimationSpeed(e.target.value);
         });
 
+        // Focus mode controls
+        document.getElementById('focus-mode-enabled').addEventListener('change', updateFocusMode);
+        document.getElementById('focus-vehicle').addEventListener('change', updateFocusMode);
+        document.getElementById('auto-follow').addEventListener('change', updateFocusMode);
+        document.getElementById('dim-coverage').addEventListener('change', updateFocusMode);
+
         // ========================================================================
         // Vehicle Traces and Heatmap
         // ========================================================================
@@ -1199,6 +1283,129 @@
         }
 
         // ========================================================================
+        // Focus Mode System
+        // ========================================================================
+        function updateFocusMode() {
+            focusModeEnabled = document.getElementById('focus-mode-enabled').checked;
+            focusedVehicle = document.getElementById('focus-vehicle').value;
+            autoFollowEnabled = document.getElementById('auto-follow').checked;
+            dimCoverageEnabled = document.getElementById('dim-coverage').checked;
+
+            // Show/hide focus stats
+            document.getElementById('focus-stats').style.display =
+                focusModeEnabled && focusedVehicle !== 'all' ? 'block' : 'none';
+
+            // Apply dimming to coverage circles
+            if (dimCoverageEnabled) {
+                coverageCircles.eachLayer(layer => {
+                    if (layer.setStyle) {
+                        layer.setStyle({ fillOpacity: 0.05, opacity: 0.3 });
+                    }
+                });
+            } else {
+                coverageCircles.eachLayer(layer => {
+                    if (layer.setStyle) {
+                        layer.setStyle({ fillOpacity: 0.1, opacity: 1 });
+                    }
+                });
+            }
+
+            // Hide non-focused vehicles
+            Object.entries(vehicleMarkers).forEach(([deviceId, marker]) => {
+                if (focusModeEnabled && focusedVehicle !== 'all' && deviceId !== focusedVehicle) {
+                    marker.setOpacity(0.2);
+                } else {
+                    marker.setOpacity(1);
+                }
+            });
+
+            updateStatus(focusModeEnabled ? `🎯 Focus mode enabled${focusedVehicle !== 'all' ? ' - ' + focusedVehicle : ''}` : 'Focus mode disabled');
+        }
+
+        function drawFocusedVehiclePath(deviceId, currentIndex) {
+            if (!focusModeEnabled || focusedVehicle === 'all') return;
+            if (deviceId !== focusedVehicle) return;
+
+            activePathLayer.clearLayers();
+            traversedPathLayer.clearLayers();
+
+            const vehicle = vehicleAnimationData.find(v => v.deviceId === deviceId);
+            if (!vehicle) return;
+
+            const deviceColors = {
+                'pc1': '#FF6B6B',
+                'pc2': '#4ECDC4',
+                'pc3': '#45B7D1',
+                'pc4': '#FFA07A'
+            };
+            const color = deviceColors[deviceId] || '#888';
+
+            // Draw traversed path (dimmed)
+            if (currentIndex > 0) {
+                const traversedPoints = vehicle.points.slice(0, currentIndex + 1).map(p => [p.Latitude, p.Longitude]);
+                const traversedPath = L.polyline(traversedPoints, {
+                    color: color,
+                    weight: 3,
+                    opacity: 0.4,
+                    smoothFactor: 1
+                });
+                traversedPathLayer.addLayer(traversedPath);
+            }
+
+            // Draw upcoming path (highlighted)
+            if (currentIndex < vehicle.points.length - 1) {
+                const upcomingPoints = vehicle.points.slice(currentIndex).map(p => [p.Latitude, p.Longitude]);
+                const upcomingPath = L.polyline(upcomingPoints, {
+                    color: color,
+                    weight: 4,
+                    opacity: 0.8,
+                    smoothFactor: 1,
+                    dashArray: '10, 5'
+                });
+                activePathLayer.addLayer(upcomingPath);
+            }
+
+            // Draw current segment with special highlighting if communicating
+            if (currentIndex < vehicle.points.length - 1) {
+                const currentPoint = vehicle.points[currentIndex];
+                const nextPoint = vehicle.points[currentIndex + 1];
+                const currentSegment = L.polyline(
+                    [[currentPoint.Latitude, currentPoint.Longitude], [nextPoint.Latitude, nextPoint.Longitude]],
+                    {
+                        color: '#00FF00',  // Bright green for active segment
+                        weight: 6,
+                        opacity: 1,
+                        smoothFactor: 1,
+                        className: 'active-segment-communicating'
+                    }
+                );
+                activePathLayer.addLayer(currentSegment);
+            }
+        }
+
+        function updateFocusStats(deviceId, currentIndex, rsrp, towerInfo) {
+            if (!focusModeEnabled || focusedVehicle === 'all' || deviceId !== focusedVehicle) return;
+
+            const vehicle = vehicleAnimationData.find(v => v.deviceId === deviceId);
+            if (!vehicle) return;
+
+            document.getElementById('focus-position').textContent = `${currentIndex + 1}/${vehicle.points.length}`;
+            document.getElementById('focus-signal').textContent = rsrp ? `${rsrp.toFixed(1)} dBm` : 'N/A';
+            document.getElementById('focus-tower').textContent = towerInfo ? `Cell ${towerInfo.tower.cellId}` : 'N/A';
+            document.getElementById('focus-distance').textContent = towerInfo ? `${(towerInfo.distance * 1000).toFixed(0)}m` : 'N/A';
+        }
+
+        function followVehicle(lat, lon) {
+            if (!focusModeEnabled || !autoFollowEnabled || focusedVehicle === 'all') return;
+
+            // Smoothly pan to vehicle position with zoom 16
+            map.setView([lat, lon], 16, {
+                animate: true,
+                duration: 0.3
+            });
+        }
+
+        // ========================================================================
         // Live Animation System
         // ========================================================================
         function prepareAnimationData() {
@@ -1256,38 +1463,44 @@
                 const color = deviceColors[vehicle.deviceId] || '#888';
                 const firstPoint = vehicle.points[0];
 
-                // Create custom vehicle icon
+                // Create custom vehicle icon - larger and more visible
                 const vehicleIcon = L.divIcon({
                     html: `<div style="
                         background: ${color};
-                        width: 16px;
-                        height: 16px;
+                        width: 24px;
+                        height: 24px;
                         border-radius: 50%;
-                        border: 2px solid white;
-                        box-shadow: 0 0 10px ${color};
+                        border: 3px solid white;
+                        box-shadow: 0 0 15px ${color};
                         position: relative;
-                    ">
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 14px;
+                    ">🚗
                         <div style="
                             position: absolute;
-                            top: -20px;
+                            top: -25px;
                             left: 50%;
                             transform: translateX(-50%);
-                            background: rgba(0,0,0,0.7);
+                            background: rgba(0,0,0,0.8);
                             color: white;
-                            padding: 2px 6px;
-                            border-radius: 3px;
-                            font-size: 10px;
+                            padding: 3px 8px;
+                            border-radius: 4px;
+                            font-size: 11px;
                             white-space: nowrap;
+                            font-weight: bold;
                         ">${vehicle.deviceId}</div>
                     </div>`,
                     className: 'vehicle-marker',
-                    iconSize: [16, 16],
-                    iconAnchor: [8, 8]
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 12]
                 });
 
                 const marker = L.marker([firstPoint.Latitude, firstPoint.Longitude], {
                     icon: vehicleIcon,
-                    zIndexOffset: 1000
+                    zIndexOffset: 1000,
+                    deviceId: vehicle.deviceId  // Store for focus mode
                 }).bindPopup(`
                     <strong>🚗 ${vehicle.deviceId}</strong><br>
                     Points: ${vehicle.points.length}<br>
@@ -1346,6 +1559,11 @@
             let connectionCount = 0;
 
             vehicleAnimationData.forEach(vehicle => {
+                // Skip non-focused vehicles in focus mode
+                if (focusModeEnabled && focusedVehicle !== 'all' && vehicle.deviceId !== focusedVehicle) {
+                    return;
+                }
+
                 const currentPoint = vehicle.points[vehicle.currentIndex];
                 if (!currentPoint) return;
 
@@ -1386,6 +1604,13 @@
                         vehicles: (activeConnections.get(nearestTower.tower.cellId)?.vehicles || 0) + 1,
                         tower: nearestTower.tower
                     });
+
+                    // Update focus mode stats and visualization
+                    if (focusModeEnabled && vehicle.deviceId === focusedVehicle) {
+                        updateFocusStats(vehicle.deviceId, vehicle.currentIndex, rsrp, nearestTower);
+                        drawFocusedVehiclePath(vehicle.deviceId, vehicle.currentIndex);
+                        followVehicle(currentPoint.Latitude, currentPoint.Longitude);
+                    }
                 }
 
                 // Move to next point
