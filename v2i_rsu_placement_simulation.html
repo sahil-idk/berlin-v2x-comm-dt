@@ -935,6 +935,133 @@
             }
         });
 
+        document.getElementById('show-vehicles').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                drawVehicleTraces();
+                map.addLayer(vehiclePaths);
+            } else {
+                map.removeLayer(vehiclePaths);
+            }
+        });
+
+        document.getElementById('show-heatmap').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                drawSignalHeatmap();
+                map.addLayer(signalHeatmap);
+            } else {
+                map.removeLayer(signalHeatmap);
+            }
+        });
+
+        // ========================================================================
+        // Vehicle Traces and Heatmap
+        // ========================================================================
+        function drawVehicleTraces() {
+            vehiclePaths.clearLayers();
+
+            if (cellularData.length === 0) {
+                updateStatus('No data available for vehicle traces');
+                return;
+            }
+
+            // Group by device_id
+            const devicePaths = {};
+            const deviceColors = {
+                'pc1': '#FF6B6B',
+                'pc2': '#4ECDC4',
+                'pc3': '#45B7D1',
+                'pc4': '#FFA07A'
+            };
+
+            cellularData.forEach(record => {
+                const deviceId = record.device_id || 'unknown';
+                if (!devicePaths[deviceId]) {
+                    devicePaths[deviceId] = [];
+                }
+                if (record.Latitude && record.Longitude) {
+                    devicePaths[deviceId].push([record.Latitude, record.Longitude]);
+                }
+            });
+
+            // Draw polylines for each device
+            Object.entries(devicePaths).forEach(([deviceId, points]) => {
+                if (points.length > 1) {
+                    const color = deviceColors[deviceId] || '#888';
+                    const polyline = L.polyline(points, {
+                        color: color,
+                        weight: 2,
+                        opacity: 0.6,
+                        smoothFactor: 1
+                    }).bindPopup(`Device: ${deviceId}<br>Points: ${points.length}`);
+
+                    vehiclePaths.addLayer(polyline);
+                }
+            });
+
+            updateStatus(`✓ Drew vehicle traces for ${Object.keys(devicePaths).length} devices`);
+        }
+
+        function drawSignalHeatmap() {
+            signalHeatmap.clearLayers();
+
+            if (cellularData.length === 0) {
+                updateStatus('No data available for heatmap');
+                return;
+            }
+
+            // Draw circles colored by RSRP value
+            const validData = cellularData.filter(r =>
+                r.Latitude && r.Longitude && r.PCell_RSRP_max != null
+            );
+
+            if (validData.length === 0) {
+                updateStatus('No RSRP data available for heatmap');
+                return;
+            }
+
+            // Sample if too many points (for performance)
+            const maxPoints = 2000;
+            const sampledData = validData.length > maxPoints
+                ? validData.filter((_, i) => i % Math.ceil(validData.length / maxPoints) === 0)
+                : validData;
+
+            sampledData.forEach(record => {
+                const rsrp = record.PCell_RSRP_max;
+
+                // Color based on RSRP: green (strong) to red (weak)
+                // RSRP range: -120 (worst) to -40 (best)
+                const normalized = Math.max(0, Math.min(1, (rsrp + 120) / 80)); // 0 to 1
+                const hue = normalized * 120; // 0 (red) to 120 (green)
+                const color = `hsl(${hue}, 100%, 50%)`;
+
+                const circle = L.circleMarker([record.Latitude, record.Longitude], {
+                    radius: 4,
+                    fillColor: color,
+                    color: color,
+                    weight: 1,
+                    opacity: 0.6,
+                    fillOpacity: 0.4
+                }).bindPopup(`
+                    <strong>Signal Strength</strong><br>
+                    RSRP: ${rsrp.toFixed(1)} dBm<br>
+                    Quality: ${getRSRPQuality(rsrp)}<br>
+                    ${record.device_id ? `Device: ${record.device_id}` : ''}
+                `);
+
+                signalHeatmap.addLayer(circle);
+            });
+
+            updateStatus(`✓ Drew signal heatmap with ${sampledData.length} points`);
+        }
+
+        function getRSRPQuality(rsrp) {
+            if (rsrp >= -80) return '⭐⭐⭐⭐⭐ Excellent';
+            if (rsrp >= -90) return '⭐⭐⭐⭐ Good';
+            if (rsrp >= -100) return '⭐⭐⭐ Fair';
+            if (rsrp >= -110) return '⭐⭐ Poor';
+            return '⭐ Very Poor';
+        }
+
         // ========================================================================
         // Initialize
         // ========================================================================
