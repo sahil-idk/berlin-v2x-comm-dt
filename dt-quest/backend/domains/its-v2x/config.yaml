@@ -1,0 +1,274 @@
+# ============================================================
+# DT-QUEST Domain Config: ITS / V2X
+# ============================================================
+# Intelligent Transport Systems — Vehicle-to-Everything
+# Compliance: 3GPP TS 36/37/38 series, 5.9 GHz C-V2X
+# ============================================================
+
+domain:
+  id: "its-v2x"
+  name: "ITS / V2X"
+  description: "Vehicular communication datasets — 3GPP C-V2X, Sidelink, and Cellular V2X"
+  version: "1.0.0"
+  icon: "🚗"
+
+parameters:
+  - key: "snr"
+    label: "SNR"
+    unit: "dB"
+    category: "signal"
+    required: true
+    range:
+      min: -10
+      max: 30
+    description: "Signal-to-Noise Ratio"
+
+  - key: "rsrp"
+    label: "RSRP"
+    unit: "dBm"
+    category: "signal"
+    required: false
+    range:
+      min: -140
+      max: -44
+    description: "Reference Signal Received Power"
+
+  - key: "rssi"
+    label: "RSSI"
+    unit: "dBm"
+    category: "signal"
+    required: false
+    range:
+      min: -120
+      max: -25
+    description: "Received Signal Strength Indicator"
+
+  - key: "noise_power"
+    label: "Noise Power"
+    unit: "dBm"
+    category: "signal"
+    required: false
+    range:
+      min: -120
+      max: -90
+    description: "Thermal + receiver noise floor"
+
+  - key: "tx_power"
+    label: "Tx Power"
+    unit: "dBm"
+    category: "signal"
+    required: false
+    range:
+      min: 10
+      max: 30
+    description: "Transmit power level"
+
+  - key: "rx_power"
+    label: "Rx Power"
+    unit: "dBm"
+    category: "signal"
+    required: true
+    range:
+      min: -120
+      max: -40
+    description: "Received power level"
+
+  - key: "path_loss"
+    label: "Path Loss"
+    unit: "dB"
+    category: "signal"
+    required: false
+    range:
+      min: 70
+      max: 180
+    description: "Signal attenuation over distance"
+
+  - key: "distance"
+    label: "Distance"
+    unit: "meters"
+    category: "location"
+    required: true
+    range:
+      min: 0
+      max: .inf
+    description: "Distance between transmitter and receiver"
+
+  - key: "latitude"
+    label: "Latitude"
+    unit: "degrees"
+    category: "location"
+    required: true
+    range:
+      min: -90
+      max: 90
+    description: "GPS latitude"
+
+  - key: "longitude"
+    label: "Longitude"
+    unit: "degrees"
+    category: "location"
+    required: true
+    range:
+      min: -180
+      max: 180
+    description: "GPS longitude"
+
+  - key: "timestamp"
+    label: "Timestamp"
+    unit: "any"
+    category: "metadata"
+    required: false
+    range:
+      min: ~
+      max: ~
+    description: "Time of measurement"
+
+  - key: "vehicle_id"
+    label: "Vehicle ID"
+    unit: "any"
+    category: "metadata"
+    required: false
+    range:
+      min: ~
+      max: ~
+    description: "Identifier for transmitting/receiving vehicle"
+
+presets:
+  tihan_v2i:
+    name: "TiHAN V2I"
+    description: "TiHAN testbed Vehicle-to-Infrastructure dataset"
+    mappings:
+      snr: "SNR (dB)"
+      rx_power: "Rx_Power (dBm)"
+      noise_power: "Noise_Power (dBm)"
+      tx_power: "Tx_Power (dB)"
+      path_loss: "Path_Loss (dB)"
+      distance: "Distance (m)"
+      latitude: "Transmitted_Latitude (degrees)"
+      longitude: "Transmitted_Longitude (degrees)"
+      timestamp: "Time_Epoch (s)"
+      vehicle_id: "Scenario"
+
+  berlin_sidelink:
+    name: "Berlin V2X Sidelink"
+    description: "Berlin V2X campaign — PC5 Sidelink mode"
+    mappings:
+      snr: "SNR"
+      rsrp: "RSRP"
+      rssi: "RSSI"
+      rx_power: "RxPower"
+      noise_power: "NoisePower"
+      tx_power: "TxPower"
+      distance: "distance"
+      latitude: "latitude"
+      longitude: "longitude"
+      timestamp: "timestamp"
+      vehicle_id: "vehicle_id"
+
+  berlin_cellular:
+    name: "Berlin V2X Cellular"
+    description: "Berlin V2X campaign — Uu Cellular mode"
+    mappings:
+      snr: "SNR"
+      rsrp: "RSRP"
+      rssi: "RSSI"
+      rx_power: "RxPower"
+      noise_power: "NoisePower"
+      latitude: "latitude"
+      longitude: "longitude"
+      timestamp: "timestamp"
+      vehicle_id: "vehicle_id"
+
+consistency_rules:
+  - id: "snr_derivation"
+    name: "SNR Derivation Check"
+    description: "Verify SNR ≈ Rx Power − Noise Power (within ±3 dB)"
+    type: "relationship"
+    criticality: "required"
+    formula:
+      derived_param: "snr"
+      component_a: "rx_power"
+      component_b: "noise_power"
+      operator: "subtract"
+    tolerance_db: 3
+
+unit_detection:
+  - param_key: "rx_power"
+    expected_scale: "dbm"
+    rules:
+      - condition: "all_positive_and_small"
+        detected: "linear_watts"
+        message: "Values are small positive numbers — likely linear watts, needs 10*log10() conversion"
+      - condition: "very_negative"
+        detected: "suspicious_offset"
+        message: "Suspiciously low values — possible systematic offset error"
+      - condition: "negative_range"
+        detected: "dbm"
+        message: "Negative values consistent with dBm scale"
+
+  - param_key: "noise_power"
+    expected_scale: "dbm"
+    rules:
+      - condition: "all_positive_and_small"
+        detected: "linear_watts"
+        message: "Values are small positive numbers — likely linear watts"
+      - condition: "negative_range"
+        detected: "dbm"
+        message: "Negative values consistent with dBm scale"
+
+  - param_key: "tx_power"
+    expected_scale: "dbm"
+    rules:
+      - condition: "all_positive_and_small"
+        detected: "linear_watts"
+        message: "Values are small positive numbers — likely linear watts"
+      - condition: "positive_typical_dbm"
+        detected: "dbm"
+        message: "Positive values in typical dBm range (10–30)"
+
+reference_models:
+  - id: "fspl"
+    name: "Free Space Path Loss"
+    type: "reference_model"
+    frequency_ghz: 5.9
+    equation: "20*log10(d) + 20*log10(f) + 20*log10(4*pi/c)"
+    input_vars: ["d", "f"]
+    measured_param: "path_loss"
+    variable_mapping:
+      d: "distance"
+    tolerance_db: 10
+    color: "#10b981"
+    dash_pattern: "5 5"
+
+  - id: "3gpp_v2v_los"
+    name: "3GPP V2V LOS"
+    type: "reference_model"
+    frequency_ghz: 5.9
+    equation: "38.77 + 16.7*log10(d)"
+    input_vars: ["d"]
+    measured_param: "path_loss"
+    variable_mapping:
+      d: "distance"
+    tolerance_db: 10
+    color: "#f59e0b"
+    dash_pattern: "5 5"
+
+  - id: "3gpp_v2v_nlos"
+    name: "3GPP V2V NLOS"
+    type: "reference_model"
+    frequency_ghz: 5.9
+    equation: "51.41 + 30*log10(d)"
+    input_vars: ["d"]
+    measured_param: "path_loss"
+    variable_mapping:
+      d: "distance"
+    tolerance_db: 10
+    color: "#ef4444"
+    dash_pattern: "5 5"
+
+readiness_weights:
+  range_compliance: 0.25
+  cross_param_consistency: 0.25
+  no_placeholders: 0.15
+  completeness: 0.25
+  unit_consistency: 0.10
