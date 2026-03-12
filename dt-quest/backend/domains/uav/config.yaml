@@ -1,0 +1,328 @@
+# ============================================================
+# DT-QUEST Domain Config: UAV
+# ============================================================
+# Unmanned Aerial Vehicles — drone telemetry and communication
+# Covers flight dynamics, GNSS positioning, RF link quality,
+# and battery/motor telemetry for Digital Twin validation.
+# ============================================================
+
+domain:
+  id: "uav"
+  name: "UAV / Drone"
+  description: "Unmanned Aerial Vehicle telemetry — flight dynamics, GNSS, RF link, and battery data"
+  version: "1.0.0"
+  icon: "🛸"
+
+parameters:
+  # ---- Flight Dynamics ----
+  - key: "altitude"
+    label: "Altitude (AGL)"
+    unit: "meters"
+    category: "flight"
+    required: true
+    range:
+      min: 0
+      max: 400
+    description: "Above Ground Level altitude (FAA/EASA limit typically 120m/400ft)"
+
+  - key: "ground_speed"
+    label: "Ground Speed"
+    unit: "m/s"
+    category: "flight"
+    required: true
+    range:
+      min: 0
+      max: 55
+    description: "Horizontal speed over ground (max ~200 km/h for racing drones)"
+
+  - key: "vertical_speed"
+    label: "Vertical Speed"
+    unit: "m/s"
+    category: "flight"
+    required: false
+    range:
+      min: -15
+      max: 15
+    description: "Rate of climb (+) or descent (-)"
+
+  - key: "roll"
+    label: "Roll Angle"
+    unit: "degrees"
+    category: "flight"
+    required: false
+    range:
+      min: -180
+      max: 180
+    description: "Roll attitude angle"
+
+  - key: "pitch"
+    label: "Pitch Angle"
+    unit: "degrees"
+    category: "flight"
+    required: false
+    range:
+      min: -90
+      max: 90
+    description: "Pitch attitude angle"
+
+  - key: "yaw"
+    label: "Yaw / Heading"
+    unit: "degrees"
+    category: "flight"
+    required: false
+    range:
+      min: 0
+      max: 360
+    description: "Heading relative to north"
+
+  # ---- GNSS / Location ----
+  - key: "latitude"
+    label: "Latitude"
+    unit: "degrees"
+    category: "location"
+    required: true
+    range:
+      min: -90
+      max: 90
+    description: "WGS-84 latitude"
+
+  - key: "longitude"
+    label: "Longitude"
+    unit: "degrees"
+    category: "location"
+    required: true
+    range:
+      min: -180
+      max: 180
+    description: "WGS-84 longitude"
+
+  - key: "gps_hdop"
+    label: "GPS HDOP"
+    unit: "dimensionless"
+    category: "location"
+    required: false
+    range:
+      min: 0
+      max: 50
+    description: "Horizontal Dilution of Precision — lower is better (<2 ideal)"
+
+  - key: "num_satellites"
+    label: "Satellites"
+    unit: "count"
+    category: "location"
+    required: false
+    range:
+      min: 0
+      max: 40
+    description: "Number of visible GNSS satellites"
+
+  # ---- RF Link Quality ----
+  - key: "rssi"
+    label: "RSSI"
+    unit: "dBm"
+    category: "signal"
+    required: false
+    range:
+      min: -120
+      max: -20
+    description: "Received Signal Strength Indicator — control/telemetry link"
+
+  - key: "snr"
+    label: "SNR"
+    unit: "dB"
+    category: "signal"
+    required: false
+    range:
+      min: -5
+      max: 40
+    description: "Signal-to-Noise Ratio of communication link"
+
+  - key: "link_distance"
+    label: "Link Distance"
+    unit: "meters"
+    category: "signal"
+    required: false
+    range:
+      min: 0
+      max: 15000
+    description: "Distance between UAV and ground control station"
+
+  # ---- Battery & Motor ----
+  - key: "battery_voltage"
+    label: "Battery Voltage"
+    unit: "V"
+    category: "power"
+    required: false
+    range:
+      min: 6
+      max: 50
+    description: "Battery terminal voltage (typical 3S–12S LiPo: 11.1–44.4V)"
+
+  - key: "battery_current"
+    label: "Battery Current"
+    unit: "A"
+    category: "power"
+    required: false
+    range:
+      min: 0
+      max: 150
+    description: "Total current draw"
+
+  - key: "battery_percent"
+    label: "Battery %"
+    unit: "%"
+    category: "power"
+    required: false
+    range:
+      min: 0
+      max: 100
+    description: "Estimated remaining battery capacity"
+
+  # ---- Metadata ----
+  - key: "timestamp"
+    label: "Timestamp"
+    unit: "any"
+    category: "metadata"
+    required: false
+    range:
+      min: ~
+      max: ~
+    description: "Time of telemetry record"
+
+  - key: "vehicle_id"
+    label: "Vehicle / Flight ID"
+    unit: "any"
+    category: "metadata"
+    required: false
+    range:
+      min: ~
+      max: ~
+    description: "Identifier for the UAV or flight session"
+
+presets:
+  ardupilot_log:
+    name: "ArduPilot Log"
+    description: "Standard ArduPilot .bin/.tlog export (converted to CSV)"
+    mappings:
+      latitude: "Lat"
+      longitude: "Lng"
+      altitude: "Alt"
+      ground_speed: "Spd"
+      vertical_speed: "VSpd"
+      roll: "Roll"
+      pitch: "Pitch"
+      yaw: "Yaw"
+      battery_voltage: "Volt"
+      battery_current: "Curr"
+      battery_percent: "RemPct"
+      num_satellites: "NSats"
+      gps_hdop: "HDop"
+      timestamp: "TimeUS"
+      vehicle_id: "FlightId"
+
+  px4_ulg:
+    name: "PX4 ULog Export"
+    description: "PX4 .ulg converted to CSV via ulog2csv"
+    mappings:
+      latitude: "vehicle_gps_position_lat"
+      longitude: "vehicle_gps_position_lon"
+      altitude: "vehicle_gps_position_alt"
+      ground_speed: "vehicle_local_position_vx"
+      vertical_speed: "vehicle_local_position_vz"
+      roll: "vehicle_attitude_roll"
+      pitch: "vehicle_attitude_pitch"
+      yaw: "vehicle_attitude_yaw"
+      battery_voltage: "battery_status_voltage_v"
+      battery_current: "battery_status_current_a"
+      battery_percent: "battery_status_remaining"
+      timestamp: "timestamp"
+      vehicle_id: "session_id"
+
+  dji_csv:
+    name: "DJI Flight Log"
+    description: "DJI .txt/.csv export (via DatCon or Airdata)"
+    mappings:
+      latitude: "latitude"
+      longitude: "longitude"
+      altitude: "altitude(meters)"
+      ground_speed: "speed(m/s)"
+      vertical_speed: "ascent(m/s)"
+      battery_voltage: "battery:voltage(v)"
+      battery_current: "battery:current(A)"
+      battery_percent: "battery:percent"
+      num_satellites: "satellites"
+      timestamp: "time(millisecond)"
+
+consistency_rules:
+  - id: "altitude_vs_vertical_speed"
+    name: "Altitude-Vertical Speed Consistency"
+    description: "If vertical speed is ~0, altitude should be roughly constant over short windows"
+    type: "correlation"
+    criticality: "required"
+    correlation:
+      param_a: "altitude"
+      param_b: "vertical_speed"
+      expected_direction: "positive"
+      min_abs_correlation: 0.2
+
+  - id: "speed_vs_battery_current"
+    name: "Speed-Current Correlation"
+    description: "Higher speed generally requires higher current draw"
+    type: "correlation"
+    criticality: "recommended"
+    correlation:
+      param_a: "ground_speed"
+      param_b: "battery_current"
+      expected_direction: "positive"
+      min_abs_correlation: 0.3
+
+  - id: "rssi_vs_link_distance"
+    name: "RSSI-Distance Correlation"
+    description: "RSSI should decrease as link distance increases"
+    type: "correlation"
+    criticality: "optional"
+    correlation:
+      param_a: "rssi"
+      param_b: "link_distance"
+      expected_direction: "negative"
+      min_abs_correlation: 0.3
+
+unit_detection:
+  - param_key: "altitude"
+    expected_scale: "meters"
+    rules:
+      - condition: "values_above_1000"
+        detected: "feet"
+        message: "Values exceed 1000 — likely in feet, needs ×0.3048 conversion"
+      - condition: "typical_range"
+        detected: "meters"
+        message: "Values consistent with meters"
+
+  - param_key: "ground_speed"
+    expected_scale: "m/s"
+    rules:
+      - condition: "values_above_100"
+        detected: "km/h"
+        message: "Values exceed 100 — likely in km/h, needs ÷3.6 conversion"
+      - condition: "typical_range"
+        detected: "m/s"
+        message: "Values consistent with m/s"
+
+  - param_key: "battery_voltage"
+    expected_scale: "V"
+    rules:
+      - condition: "values_above_100"
+        detected: "millivolts"
+        message: "Values exceed 100 — likely in mV, needs ÷1000 conversion"
+      - condition: "typical_range"
+        detected: "V"
+        message: "Values consistent with volts"
+
+reference_models: []
+
+readiness_weights:
+  range_compliance: 0.25
+  cross_param_consistency: 0.20
+  no_placeholders: 0.15
+  completeness: 0.30
+  unit_consistency: 0.10
